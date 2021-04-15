@@ -630,11 +630,12 @@ MonoBehaviour:
   decel: 0.3
   maxSpeed: 10
   jumpStrenght: 12
+  jumpBufferLenght: 0.1
   wallJumpHorizontal: 10
   wallJumpVertical: 7
-  bufferLenght: 0.1
   upGrav: 0.075
   downGrav: 0.15
+  clingDuration: 0.25
   colisionDistance: 0.05
 --- !u!1 &1921334178
 GameObject:
