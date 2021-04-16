@@ -1275,16 +1275,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec2f91fabfa38f47b3b8939778a56ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accel: 0.2
+  accel: 0.1
   decel: 0.3
+  airDecel: 0.1
   maxSpeed: 10
   jumpStrenght: 10
   jumpBufferLenght: 0.1
   wallJumpHorizontal: 8
   wallJumpVertical: 8
-  upGrav: 0.075
-  downGrav: 0.15
+  gravity: 0.075
+  gravZoneMult: 1
+  upGravMult: 1
+  downGravMult: 2
+  wallGravMult: 0.25
   clingDuration: 0.25
+  maxDownSlideSpeed: 2.5
+  wallJumpBuffer: 0.15
   colisionDistance: 0.02
 --- !u!50 &1420913404
 Rigidbody2D:

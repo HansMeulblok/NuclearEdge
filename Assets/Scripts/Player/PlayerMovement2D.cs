@@ -8,6 +8,8 @@ public class PlayerMovement2D : MonoBehaviour
     [Header("Horizontal variables")]
     public float accel;
     public float decel;
+    public float airDecel;
+    float tempDecel;
     public float maxSpeed;
 
     //Vertical movement variables
@@ -16,13 +18,24 @@ public class PlayerMovement2D : MonoBehaviour
     public float jumpBufferLenght;
     public float wallJumpHorizontal;
     public float wallJumpVertical;
-    public float upGrav;
-    public float downGrav;
-    public float clingDuration;
 
+    [Header("Gravity variables")]
+    public float gravity;
+    public float gravZoneMult;
+    public float upGravMult;
+    public float downGravMult;
+    public float wallGravMult;
+    float tempGrav;
+
+    [Header("Walljump variables")]
+    public float clingDuration;
+    public float maxDownSlideSpeed;
+    public float wallJumpBuffer;
     float jumpBuffer;
     float onLeftWallCling;
     float onRightWallCling;
+    float wallJumpBufferL;
+    float wallJumpBufferR;
 
     //Collisions
     [Header("Collision")]
@@ -69,7 +82,14 @@ public class PlayerMovement2D : MonoBehaviour
             //When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x > 0)
             {
-                moveSpeed.x -= accel + decel;
+                if (wallJumpBufferL > 0)
+                {
+                    moveSpeed.x -= accel;
+                }
+                else
+                {
+                    moveSpeed.x -= accel + decel;
+                }
             }
             //Accelerate left
             else if (!(onRightWallCling > 0))
@@ -83,7 +103,14 @@ public class PlayerMovement2D : MonoBehaviour
             //When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x < 0)
             {
-                moveSpeed.x += accel + decel;
+                if (wallJumpBufferL > 0)
+                {
+                    moveSpeed.x += accel;
+                }
+                else
+                {
+                    moveSpeed.x += accel + decel;
+                }
             }
             //Accelerate right
             else if (!(onLeftWallCling > 0))
@@ -94,17 +121,22 @@ public class PlayerMovement2D : MonoBehaviour
         //No horizontal input or both decelerate
         else
         {
-            //Decelerate
-            if (moveSpeed.x >= decel)
+            tempDecel = decel;
+            if (!grounded)
             {
-                moveSpeed.x -= decel;
+                tempDecel = airDecel;
             }
-            if (moveSpeed.x <= -decel)
+            //Decelerate
+            if (moveSpeed.x >= tempDecel)
             {
-                moveSpeed.x += decel;
+                moveSpeed.x -= tempDecel;
+            }
+            if (moveSpeed.x <= -tempDecel)
+            {
+                moveSpeed.x += tempDecel;
             }
             //When current speed is lower then the decel amount set speed to 0
-            if (moveSpeed.x > -decel && moveSpeed.x < decel)
+            if (moveSpeed.x > -tempDecel && moveSpeed.x < tempDecel)
             {
                 moveSpeed.x = 0;
             }
@@ -136,7 +168,34 @@ public class PlayerMovement2D : MonoBehaviour
             jumpBuffer = jumpBufferLenght;
         }
 
-        //
+        //Decrease wallJump buffer
+        if (wallJumpBufferL > 0)
+        {
+            //No buffer when on the ground
+            if (grounded)
+            {
+                wallJumpBufferL = 0;
+            }
+            else
+            {
+                wallJumpBufferL -= Time.deltaTime;
+            }
+            
+        }
+        if (wallJumpBufferR > 0)
+        {
+            //No buffer when on the ground
+            if (grounded)
+            {
+                wallJumpBufferR = 0;
+            }
+            else
+            {
+                wallJumpBufferR -= Time.deltaTime;
+            }
+        }
+
+        //After inputing jump
         if (jumpBuffer > 0)
         {
             //Lower jumpbuffer value overtime
@@ -153,6 +212,7 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 moveSpeed.y = wallJumpHorizontal;
                 moveSpeed.x = wallJumpVertical;
+                wallJumpBufferL = wallJumpBuffer;
                 onLeftWallCling = 0;
             }
             //When you cling onto a wall do a walljump
@@ -160,6 +220,7 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 moveSpeed.y = wallJumpHorizontal;
                 moveSpeed.x = -wallJumpVertical;
+                wallJumpBufferR = wallJumpBuffer;
                 onRightWallCling = 0;
             }
         }
@@ -167,21 +228,41 @@ public class PlayerMovement2D : MonoBehaviour
         //When in the air apply gravity
         if (!grounded)
         {
+            tempGrav = gravity;
+
+            //Apply zone gravity multiplier
+            tempGrav *= gravZoneMult;
+
+            //When clinging on wall lower gravity
+            if (onLeftWallCling > 0 || onRightWallCling > 0)
+            {
+                tempGrav *= 0.25f;
+            }
+
             if (moveSpeed.y > 0)
             {
                 //Create jump variance based on holding jump
                 if (Input.GetKey(KeyCode.UpArrow))
                 {
-                    moveSpeed.y -= upGrav;
+                    moveSpeed.y -= tempGrav * 1;
                 }
                 else
                 {
-                    moveSpeed.y -= downGrav;
+                    moveSpeed.y -= tempGrav * 2;
                 }
             }
             if (moveSpeed.y <= 0)
             {
-                moveSpeed.y -= downGrav;
+                moveSpeed.y -= tempGrav * 2;
+            }
+        }
+
+        //Have a maximum speed to slide down walls
+        if (onLeftWallCling > 0 || onRightWallCling > 0)
+        {
+            if (moveSpeed.y < -maxDownSlideSpeed)
+            {
+                moveSpeed.y = -maxDownSlideSpeed;
             }
         }
 
@@ -211,12 +292,21 @@ public class PlayerMovement2D : MonoBehaviour
             rightCol = false;
         }
         //Check down for collision
+
         if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance))
         {
             grounded = true;
         }
         else
         {
+            if (rb.velocity.y < 0)
+            {
+                RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance);
+                Vector3 test = transform.position;
+                test.y += hit.distance;
+
+            }
+
             grounded = false;
         }
 
