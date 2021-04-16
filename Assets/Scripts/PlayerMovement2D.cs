@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using MLAPI;
 using UnityEngine;
 
-public class PlayerMovement2D : MonoBehaviour
+public class PlayerMovement2D : NetworkBehaviour
 {
     //Horizontal movement variables
     [Header("Horizontal variables")]
@@ -51,6 +50,12 @@ public class PlayerMovement2D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!IsLocalPlayer)
+        {
+            GameObject camera = transform.GetChild(0).gameObject;
+            camera.SetActive(false);
+        }
+
         //Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
         //Reset movespeed on start
@@ -60,14 +65,17 @@ public class PlayerMovement2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Check for colisions
-        CheckColision();
-        //Change horizontal movement
-        HorizontalMove();
-        //Change vertical movement
-        VerticalMove();
+        if (IsLocalPlayer)
+        {
+            //Check for colisions
+            CheckColision();
+            //Change horizontal movement
+            HorizontalMove();
+            //Change vertical movement
+            VerticalMove();
+        }
 
-        Debug.Log(grounded);
+        //Debug.Log(grounded);
     }
 
     //This fuction handles horizontal movement
@@ -180,7 +188,7 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 wallJumpBufferL -= Time.deltaTime;
             }
-            
+
         }
         if (wallJumpBufferR > 0)
         {
