@@ -67,7 +67,6 @@ public class PlayerMovement2D : MonoBehaviour
         //Change vertical movement
         VerticalMove();
 
-        Debug.Log(grounded);
     }
 
     //This fuction handles horizontal movement

@@ -23,7 +23,7 @@ public class GravityManipulationActivation : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        print(timeActivatedCurrent);
+        //print(timeActivatedCurrent);
         if (animator.GetBool("manipulationStarted")){
             if (timeActivatedCurrent <= 0)
             {
@@ -57,7 +57,8 @@ public class GravityManipulationActivation : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //lower gravity
+            GameObject player = collision.gameObject;
+            player.GetComponent<PlayerMovement2D>().gravZoneMult = 0.01f;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -65,6 +66,8 @@ public class GravityManipulationActivation : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //reset gravity back to normal
+            GameObject player = collision.gameObject;
+            player.GetComponent<PlayerMovement2D>().gravZoneMult = 1f;
         }
     }
 
