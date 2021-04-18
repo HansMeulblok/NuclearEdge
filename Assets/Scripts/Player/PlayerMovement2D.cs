@@ -67,6 +67,8 @@ public class PlayerMovement2D : MonoBehaviour
         //Change vertical movement
         VerticalMove();
 
+        print(gravZoneMult);
+
     }
 
     //This fuction handles horizontal movement

@@ -15,7 +15,6 @@ public class GravityManipulationActivation : MonoBehaviour
     }
     private void Update()
     {
-        //should be (button) trigger
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Activate();
@@ -23,7 +22,7 @@ public class GravityManipulationActivation : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //print(timeActivatedCurrent);
+
         if (animator.GetBool("manipulationStarted")){
             if (timeActivatedCurrent <= 0)
             {
@@ -41,7 +40,6 @@ public class GravityManipulationActivation : MonoBehaviour
         if (!animator.GetBool("manipulationStarted"))
         {
             animator.SetBool("manipulationEnded", false);
-
             animator.SetBool("manipulationStarted", true);
         }
     }
