@@ -1628,6 +1628,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: accel
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: decel
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: gravity
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: airDecel
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: maxSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: downGravMult
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: jumpStrenght
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: maxFallSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: upWallGravMult
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: neutralGravMult
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: downWallGravMult
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: wallJumpVertical
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: maxDownSlideSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
+      propertyPath: wallJumpHorizontal
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3081606822016883215, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
       propertyPath: m_Name
       value: Player
