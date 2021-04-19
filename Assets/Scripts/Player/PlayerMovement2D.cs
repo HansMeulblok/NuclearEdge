@@ -16,6 +16,7 @@ public class PlayerMovement2D : MonoBehaviour
     [Header("Vertical variables")]
     public float jumpStrenght;
     public float jumpBufferLenght;
+    public float maxFallSpeed;
     public float wallJumpHorizontal;
     public float wallJumpVertical;
 
@@ -24,7 +25,8 @@ public class PlayerMovement2D : MonoBehaviour
     public float gravZoneMult;
     public float upGravMult;
     public float downGravMult;
-    public float wallGravMult;
+    public float upWallGravMult;
+    public float downWallGravMult;
     float tempGrav;
 
     [Header("Walljump variables")]
@@ -150,17 +152,17 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 if (wallJumpBufferL > 0)
                 {
-                    moveSpeed.x -= accel;
+                    moveSpeed.x -= accel * Time.deltaTime;
                 }
                 else
                 {
-                    moveSpeed.x -= accel + decel;
+                    moveSpeed.x -= (accel + decel) * Time.deltaTime;
                 }
             }
             //Accelerate left
             else if (!(onRightWallCling > 0))
             {
-                moveSpeed.x -= accel;
+                moveSpeed.x -= accel * Time.deltaTime;
             }
         }
         //Right (and not right input) for moving right
@@ -171,17 +173,17 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 if (wallJumpBufferR > 0)
                 {
-                    moveSpeed.x += accel;
+                    moveSpeed.x += accel * Time.deltaTime;
                 }
                 else
                 {
-                    moveSpeed.x += accel + decel;
+                    moveSpeed.x += (accel + decel) * Time.deltaTime;
                 }
             }
             //Accelerate right
             else if (!(onLeftWallCling > 0))
             {
-                moveSpeed.x += accel;
+                moveSpeed.x += accel * Time.deltaTime;
             }
         }
         //No horizontal input or both decelerate
@@ -193,16 +195,16 @@ public class PlayerMovement2D : MonoBehaviour
                 tempDecel = airDecel;
             }
             //Decelerate
-            if (moveSpeed.x >= tempDecel)
+            if (moveSpeed.x >= tempDecel * Time.deltaTime)
             {
-                moveSpeed.x -= tempDecel;
+                moveSpeed.x -= tempDecel * Time.deltaTime;
             }
-            if (moveSpeed.x <= -tempDecel)
+            if (moveSpeed.x <= -tempDecel * Time.deltaTime)
             {
-                moveSpeed.x += tempDecel;
+                moveSpeed.x += tempDecel * Time.deltaTime;
             }
             //When current speed is lower then the decel amount set speed to 0
-            if (moveSpeed.x > -tempDecel && moveSpeed.x < tempDecel)
+            if (moveSpeed.x > -tempDecel * Time.deltaTime && moveSpeed.x < tempDecel * Time.deltaTime)
             {
                 moveSpeed.x = 0;
             }
@@ -298,11 +300,18 @@ public class PlayerMovement2D : MonoBehaviour
 
             //Apply zone gravity multiplier
             tempGrav *= gravZoneMult;
-
+            
             //When clinging on wall lower gravity
             if (onLeftWallCling > 0 || onRightWallCling > 0)
             {
-                tempGrav *= 0.25f;
+                if (moveSpeed.y > 0)
+                {
+                    tempGrav *= upWallGravMult;
+                }
+                else
+                {
+                    tempGrav *= downWallGravMult;
+                }
             }
 
             if (moveSpeed.y > 0)
@@ -310,16 +319,16 @@ public class PlayerMovement2D : MonoBehaviour
                 //Create jump variance based on holding jump
                 if (upHold)
                 {
-                    moveSpeed.y -= tempGrav * 1;
+                    moveSpeed.y -= tempGrav * upGravMult * Time.deltaTime;
                 }
                 else
                 {
-                    moveSpeed.y -= tempGrav * 2;
+                    moveSpeed.y -= tempGrav * downGravMult * Time.deltaTime;
                 }
             }
             if (moveSpeed.y <= 0)
             {
-                moveSpeed.y -= tempGrav * 2;
+                moveSpeed.y -= tempGrav * downGravMult * Time.deltaTime;
             }
         }
 
@@ -330,6 +339,11 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 moveSpeed.y = -maxDownSlideSpeed;
             }
+        }
+
+        if (moveSpeed.y < -maxFallSpeed)
+        {
+            moveSpeed.y = -maxFallSpeed;
         }
 
         //Apply movement
