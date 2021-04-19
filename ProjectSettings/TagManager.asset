@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Zone
+  - GMTrigger
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - GMTrigger
   - Water
   - UI
   - 

@@ -15,10 +15,10 @@ public class GravityManipulationActivation : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Activate();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    Activate();
+        //}
     }
     private void FixedUpdate()
     {
@@ -35,7 +35,7 @@ public class GravityManipulationActivation : MonoBehaviour
         }
     }
 
-    private void Activate()
+    public void Activate()
     {
         if (!animator.GetBool("manipulationStarted"))
         {
