@@ -83,8 +83,7 @@ public class PlayerMovement2D : MonoBehaviour
         VerticalMove();
         //Pressed should always be in effect one fixedUpdate after keydown
         ResetPressed();
-
-        Debug.Log(wallJumpBufferL + "  " + wallJumpBufferR);
+        
     }
 
     // This function checks the relevant inputs
