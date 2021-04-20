@@ -11,6 +11,7 @@ public class CannonScript : MonoBehaviour
 
     [Header("Rotation variables")]
     public float lerpSpeed;
+    [Range(0,1f)]public float waitForLerpTime;
     private int degreeChange;
     private int currentAngle = 0;
     private int minRotation = 0, maxRotation = 180;
@@ -19,6 +20,7 @@ public class CannonScript : MonoBehaviour
     private float waitTime = 2;
     private float elapsedTime = 0;
     private bool lerping = false;
+    
 
     private int[] angles = new int[] {12, 6, 3};
     private int angleDivision;
@@ -71,7 +73,7 @@ public class CannonScript : MonoBehaviour
         }
 
         lerping = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(waitForLerpTime);
         lerping = false;
 
 
