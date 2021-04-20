@@ -50,16 +50,19 @@ public class PlayerMovement2D : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!IsLocalPlayer)
-        {
-            GameObject camera = transform.GetChild(0).gameObject;
-            camera.SetActive(false);
-        }
-
         //Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
         //Reset movespeed on start
         moveSpeed = Vector3.zero;
+
+        if (!IsLocalPlayer)
+        {
+            Camera camera = transform.GetChild(0).GetComponent<Camera>();
+            gameObject.layer = camera.gameObject.layer = LayerMask.NameToLayer("PlayerTwo");
+            camera.rect = new Rect(0, 0, 1, 0.5f);
+            camera.cullingMask = ~(1 << LayerMask.NameToLayer("PlayerOne"));
+            rb.isKinematic = true;
+        }
     }
 
     // Update is called once per frame
