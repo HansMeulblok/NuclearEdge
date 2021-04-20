@@ -222,8 +222,8 @@ MonoBehaviour:
   pivot: {fileID: 1484293046}
   firePoint: {fileID: 971173555}
   shootingInterval: 2
-  lerpSpeed: 0.5
-  amountOfAngles: 0
+  lerpSpeed: 5
+  amountOfAngles: 2
 --- !u!1 &687102780
 GameObject:
   m_ObjectHideFlags: 0

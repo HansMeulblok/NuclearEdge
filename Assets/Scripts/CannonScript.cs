@@ -1,27 +1,29 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CannonScript : MonoBehaviour
 {
+    [Header("Shooting variables")]
     public GameObject pivot;
     public GameObject firePoint;
-
     public float shootingInterval;
+
+    [Header("Rotation variables")]
     public float lerpSpeed;
     private int degreeChange;
-
     private int currentAngle = 0;
     private int minRotation = 0, maxRotation = 180;
-
     private Vector3 newRotation = new Vector3(0,0,0);
     private bool changeDir = true;
-
     private float waitTime = 2;
     private float elapsedTime = 0;
     private bool lerping = false;
-    private int angleDivision;
-    public MyEnum amountOfAngles = new MyEnum();
 
+    private int[] angles = new int[] {12, 6, 3};
+    private int angleDivision;
+    [Header("Angle determination")]
+    public MyEnum amountOfAngles = new MyEnum();
     public enum MyEnum
     {
        High,
@@ -33,14 +35,15 @@ public class CannonScript : MonoBehaviour
     {
       if (amountOfAngles == MyEnum.High)
         {
-            angleDivision = 12;
-        }else if(amountOfAngles == MyEnum.Medium)
+            angleDivision = angles[0];
+        }
+        else if(amountOfAngles == MyEnum.Medium)
         {
-            angleDivision = 6;
+            angleDivision = angles[1];
         }
         else if (amountOfAngles == MyEnum.Low)
         {
-            angleDivision = 3;
+            angleDivision = angles[2];
         }
         degreeChange = maxRotation / angleDivision;
 
@@ -68,7 +71,7 @@ public class CannonScript : MonoBehaviour
         }
 
         lerping = true;
-        yield return new WaitForSeconds(1 + 1 *0.1f);
+        yield return new WaitForSeconds(2f);
         lerping = false;
 
 
