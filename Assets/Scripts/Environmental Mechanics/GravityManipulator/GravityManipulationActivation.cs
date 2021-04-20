@@ -9,16 +9,11 @@ public class GravityManipulationActivation : MonoBehaviour
     private float timeActivatedCurrent;
     public float timeActivatedOriginal = 5f;
 
+    private float gravInGM = 0.01f, gravOutGM = 1f;
+
     private void Start()
     {
         timeActivatedCurrent = timeActivatedOriginal;
-    }
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    Activate();
-        //}
     }
     private void FixedUpdate()
     {
@@ -35,6 +30,7 @@ public class GravityManipulationActivation : MonoBehaviour
         }
     }
 
+    //activates the GM activation animation
     public void Activate()
     {
         if (!animator.GetBool("manipulationStarted"))
@@ -44,6 +40,7 @@ public class GravityManipulationActivation : MonoBehaviour
         }
     }
 
+    //deactivates the GM activation animation
     private void Deactivate()
     {
         animator.SetBool("manipulationStarted", false);
@@ -56,7 +53,7 @@ public class GravityManipulationActivation : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             GameObject player = collision.gameObject;
-            player.GetComponent<PlayerMovement2D>().gravZoneMult = 0.01f;
+            player.GetComponent<PlayerMovement2D>().gravZoneMult = gravInGM;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -65,7 +62,7 @@ public class GravityManipulationActivation : MonoBehaviour
         {
             //reset gravity back to normal
             GameObject player = collision.gameObject;
-            player.GetComponent<PlayerMovement2D>().gravZoneMult = 1f;
+            player.GetComponent<PlayerMovement2D>().gravZoneMult = gravOutGM;
         }
     }
 
