@@ -16,6 +16,7 @@ public class PlayerMovement2D : MonoBehaviour
     [Header("Vertical variables")]
     public float jumpStrenght;
     public float jumpBufferLenght;
+    public float maxFallSpeed;
     public float wallJumpHorizontal;
     public float wallJumpVertical;
 
@@ -23,8 +24,10 @@ public class PlayerMovement2D : MonoBehaviour
     public float gravity;
     public float gravZoneMult;
     public float upGravMult;
+    public float neutralGravMult;
     public float downGravMult;
-    public float wallGravMult;
+    public float upWallGravMult;
+    public float downWallGravMult;
     float tempGrav;
 
     [Header("Walljump variables")]
@@ -148,19 +151,20 @@ public class PlayerMovement2D : MonoBehaviour
             //When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x > 0)
             {
+                //Prevent moving back to a wall too quickly
                 if (wallJumpBufferL > 0)
                 {
-                    moveSpeed.x -= accel;
+                    moveSpeed.x -= accel * Time.deltaTime;
                 }
                 else
                 {
-                    moveSpeed.x -= accel + decel;
+                    moveSpeed.x -= (accel + decel) * Time.deltaTime;
                 }
             }
             //Accelerate left
             else if (!(onRightWallCling > 0))
             {
-                moveSpeed.x -= accel;
+                moveSpeed.x -= accel * Time.deltaTime;
             }
         }
         //Right (and not right input) for moving right
@@ -169,40 +173,44 @@ public class PlayerMovement2D : MonoBehaviour
             //When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x < 0)
             {
+                //Prevent moving back to a wall too quickly
                 if (wallJumpBufferR > 0)
                 {
-                    moveSpeed.x += accel;
+                    moveSpeed.x += accel * Time.deltaTime;
                 }
                 else
                 {
-                    moveSpeed.x += accel + decel;
+                    moveSpeed.x += (accel + decel) * Time.deltaTime;
                 }
             }
             //Accelerate right
             else if (!(onLeftWallCling > 0))
             {
-                moveSpeed.x += accel;
+                moveSpeed.x += accel * Time.deltaTime;
             }
         }
         //No horizontal input or both decelerate
         else
         {
+            //The temporary instance of deceleration
             tempDecel = decel;
+
+            //Have a different decelaretion while in the air
             if (!grounded)
             {
                 tempDecel = airDecel;
             }
             //Decelerate
-            if (moveSpeed.x >= tempDecel)
+            if (moveSpeed.x >= tempDecel * Time.deltaTime)
             {
-                moveSpeed.x -= tempDecel;
+                moveSpeed.x -= tempDecel * Time.deltaTime;
             }
-            if (moveSpeed.x <= -tempDecel)
+            if (moveSpeed.x <= -tempDecel * Time.deltaTime)
             {
-                moveSpeed.x += tempDecel;
+                moveSpeed.x += tempDecel * Time.deltaTime;
             }
             //When current speed is lower then the decel amount set speed to 0
-            if (moveSpeed.x > -tempDecel && moveSpeed.x < tempDecel)
+            if (moveSpeed.x > -tempDecel * Time.deltaTime && moveSpeed.x < tempDecel * Time.deltaTime)
             {
                 moveSpeed.x = 0;
             }
@@ -298,38 +306,57 @@ public class PlayerMovement2D : MonoBehaviour
 
             //Apply zone gravity multiplier
             tempGrav *= gravZoneMult;
-
+            
             //When clinging on wall lower gravity
             if (onLeftWallCling > 0 || onRightWallCling > 0)
             {
-                tempGrav *= 0.25f;
+                if (moveSpeed.y > 0)
+                {
+                    tempGrav *= upWallGravMult;
+                }
+                else
+                {
+                    tempGrav *= downWallGravMult;
+                }
             }
 
+            //When moving up
             if (moveSpeed.y > 0)
             {
                 //Create jump variance based on holding jump
                 if (upHold)
                 {
-                    moveSpeed.y -= tempGrav * 1;
+                    //Have a lower gravity when holding up to create short and long hops
+                    moveSpeed.y -= tempGrav * upGravMult * Time.deltaTime;
                 }
                 else
                 {
-                    moveSpeed.y -= tempGrav * 2;
+                    //Have a neutral gravity between falling and holding up
+                    moveSpeed.y -= tempGrav * neutralGravMult * Time.deltaTime;
                 }
             }
+            //When falling
             if (moveSpeed.y <= 0)
             {
-                moveSpeed.y -= tempGrav * 2;
+                //Have a higher gravity
+                moveSpeed.y -= tempGrav * downGravMult * Time.deltaTime;
             }
         }
 
         //Have a maximum speed to slide down walls
         if (onLeftWallCling > 0 || onRightWallCling > 0)
         {
+            //Have a maximum speed at which you can slide down a wall
             if (moveSpeed.y < -maxDownSlideSpeed)
             {
                 moveSpeed.y = -maxDownSlideSpeed;
             }
+        }
+
+        //Have a maximum fallspeed
+        if (moveSpeed.y < -maxFallSpeed)
+        {
+            moveSpeed.y = -maxFallSpeed;
         }
 
         //Apply movement
@@ -379,13 +406,29 @@ public class PlayerMovement2D : MonoBehaviour
         //Wall cling duration decrease
         if (onLeftWallCling > 0)
         {
-            onLeftWallCling -= Time.deltaTime;
+            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance))
+            {
+                onLeftWallCling -= Time.deltaTime;
+            }
+            else
+            {
+                onLeftWallCling = 0;
+            }
+            
         }
         if (onRightWallCling > 0)
         {
-            onRightWallCling -= Time.deltaTime;
+            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance))
+            {
+                onRightWallCling -= Time.deltaTime;
+            }
+            else
+            {
+                onRightWallCling = 0;
+            }
         }
-        //Wall cling detection
+
+        //Wall cling detection if you are still on the wall
         if (rightCol && !grounded && rightHold)
         {
             onRightWallCling = clingDuration;

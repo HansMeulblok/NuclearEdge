@@ -1097,19 +1097,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec2f91fabfa38f47b3b8939778a56ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accel: 0.25
-  decel: 1
-  airDecel: 0.25
+  accel: 15
+  decel: 30
+  airDecel: 15
   maxSpeed: 12
-  jumpStrenght: 9
+  jumpStrenght: 15
   jumpBufferLenght: 0.1
-  wallJumpHorizontal: 8
+  maxFallSpeed: 15
+  wallJumpHorizontal: 10
   wallJumpVertical: 10
-  gravity: 0.25
+  gravity: 24
   gravZoneMult: 1
   upGravMult: 1
-  downGravMult: 2.5
-  wallGravMult: 0.25
+  neutralGravMult: 2
+  downGravMult: 3
+  upWallGravMult: 0.75
+  downWallGravMult: 0.25
   clingDuration: 0.3
   maxDownSlideSpeed: 3
   wallJumpBuffer: 0.15
