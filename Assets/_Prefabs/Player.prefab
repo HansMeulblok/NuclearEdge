@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 3081606822016883208}
   - component: {fileID: 3081606822016883209}
   - component: {fileID: 3081606822016883214}
+  - component: {fileID: 4078651198949443754}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,14 +151,32 @@ MonoBehaviour:
   maxSpeed: 10
   jumpStrenght: 9
   jumpBufferLenght: 0.1
+  maxFallSpeed: 0
   wallJumpHorizontal: 6.4
   wallJumpVertical: 8
   gravity: 0.25
   gravZoneMult: 1
   upGravMult: 1
+  neutralGravMult: 0
   downGravMult: 2.5
-  wallGravMult: 0.25
+  upWallGravMult: 0
+  downWallGravMult: 0
   clingDuration: 0.3
   maxDownSlideSpeed: 2
   wallJumpBuffer: 0.15
   colisionDistance: 0.02
+--- !u!114 &4078651198949443754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081606822016883215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3aeaaae066a4554ca2230183aa3e1b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowed: 0
+  slowedTimer: 0
+  slowPercentage: 0
