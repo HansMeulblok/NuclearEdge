@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CannonScript : MonoBehaviour
@@ -10,6 +9,7 @@ public class CannonScript : MonoBehaviour
     public float speed;
     private int minRotation = 0, maxRotation = 180;
     public GameObject pivot;
+    public GameObject firepoint;
     private Vector3 newRotation = new Vector3(0,0,0);
     private bool changeDir = true;
 
@@ -22,6 +22,7 @@ public class CannonScript : MonoBehaviour
     {
         StartCoroutine(ChangeAngles());
     }
+    
     private IEnumerator ChangeAngles()
     {
         //rotate
@@ -46,13 +47,14 @@ public class CannonScript : MonoBehaviour
         lerping = true;
         yield return new WaitForSeconds(2);
         lerping = false;
-       
-        
+
+
         //shoot
-
-
+        // GameObject bullet = bulletPool.bulletPoolInstance.GetBullet();
+        // bullet.transform.position = ;
+        // bullet.SetActive(true);
         //repeat
-        
+
         yield return new WaitForSeconds(shootingInterval);
         StartCoroutine(ChangeAngles());
     }
