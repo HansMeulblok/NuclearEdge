@@ -44,6 +44,15 @@ public class PlayerMovement2D : MonoBehaviour
     bool leftCol;
     bool rightCol;
 
+    //Input
+    bool upPressed;
+    bool upHold;
+    bool leftPressed;
+    bool leftHold;
+    bool rightPressed;
+    bool rightHold;
+
+
     //Global variables
     Vector3 moveSpeed;
     Rigidbody2D rb;
@@ -60,25 +69,81 @@ public class PlayerMovement2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        InputCheck();
+    }
+
+    // FixedUpdate is called at a fixed interval
+    void FixedUpdate()
+    {
         //Check for colisions
         CheckColision();
         //Change horizontal movement
         HorizontalMove();
         //Change vertical movement
         VerticalMove();
+        //Pressed should always be in effect one fixedUpdate after keydown
+        ResetPressed();
+        
+    }
 
-        print(gravZoneMult);
+    // This function checks the relevant inputs
+    void InputCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            upPressed = true;
+        }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            upHold = true;
+        }
+        else
+        {
+            upHold = false;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            leftPressed = true;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            leftHold = true;
+        }
+        else
+        {
+            leftHold = false;
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            rightPressed = true;
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rightHold = true;
+        }
+        else
+        {
+            rightHold = false;
+        }
 
     }
 
-    //This fuction handles horizontal movement
+    //To use keyDown with FixedUpdate it should reset only after one FixedUpdate
+    void ResetPressed()
+    {
+        upPressed = false;
+        leftPressed = false;
+        rightPressed = false;
+    }
+
+    //This function handles horizontal movement
     void HorizontalMove()
     {
         //Horizontal movement
         //Get the current velocity to prevent clipping
         moveSpeed = rb.velocity;
         //Left (and not right input) for moving left
-        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        if (leftHold && !rightHold)
         {
             //When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x > 0)
@@ -99,12 +164,12 @@ public class PlayerMovement2D : MonoBehaviour
             }
         }
         //Right (and not right input) for moving right
-        else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+        else if (rightHold && !leftHold)
         {
             //When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x < 0)
             {
-                if (wallJumpBufferL > 0)
+                if (wallJumpBufferR > 0)
                 {
                     moveSpeed.x += accel;
                 }
@@ -164,7 +229,7 @@ public class PlayerMovement2D : MonoBehaviour
         moveSpeed = rb.velocity;
 
         //When you try to jump create a buffer for better feel
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (upPressed)
         {
             jumpBuffer = jumpBufferLenght;
         }
@@ -243,7 +308,7 @@ public class PlayerMovement2D : MonoBehaviour
             if (moveSpeed.y > 0)
             {
                 //Create jump variance based on holding jump
-                if (Input.GetKey(KeyCode.UpArrow))
+                if (upHold)
                 {
                     moveSpeed.y -= tempGrav * 1;
                 }
@@ -321,11 +386,11 @@ public class PlayerMovement2D : MonoBehaviour
             onRightWallCling -= Time.deltaTime;
         }
         //Wall cling detection
-        if (rightCol && !grounded && Input.GetKey(KeyCode.RightArrow))
+        if (rightCol && !grounded && rightHold)
         {
             onRightWallCling = clingDuration;
         }
-        if (leftCol && !grounded && Input.GetKey(KeyCode.LeftArrow))
+        if (leftCol && !grounded && leftHold)
         {
             onLeftWallCling = clingDuration;
         }
