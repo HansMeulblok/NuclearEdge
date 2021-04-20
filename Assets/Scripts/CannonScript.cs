@@ -3,29 +3,52 @@ using UnityEngine;
 
 public class CannonScript : MonoBehaviour
 {
-    public float shootingInterval;
-    public int degreeChange = 45;
-    private int currentAngle = 0;
-    public float speed;
-    private int minRotation = 0, maxRotation = 180;
     public GameObject pivot;
-    public GameObject firepoint;
+    public GameObject firePoint;
+
+    public float shootingInterval;
+    public float lerpSpeed;
+    private int degreeChange;
+
+    private int currentAngle = 0;
+    private int minRotation = 0, maxRotation = 180;
+
     private Vector3 newRotation = new Vector3(0,0,0);
     private bool changeDir = true;
 
-    float waitTime = 2;
-    float elapsedTime = 0;
-    bool lerping = false;
+    private float waitTime = 2;
+    private float elapsedTime = 0;
+    private bool lerping = false;
+    private int angleDivision;
+    public MyEnum amountOfAngles = new MyEnum();
 
+    public enum MyEnum
+    {
+       High,
+       Medium,
+       Low
+    };
 
     private void Start()
     {
+      if (amountOfAngles == MyEnum.High)
+        {
+            angleDivision = 12;
+        }else if(amountOfAngles == MyEnum.Medium)
+        {
+            angleDivision = 6;
+        }
+        else if (amountOfAngles == MyEnum.Low)
+        {
+            angleDivision = 3;
+        }
+        degreeChange = maxRotation / angleDivision;
+
         StartCoroutine(ChangeAngles());
     }
-    
+
     private IEnumerator ChangeAngles()
     {
-        //rotate
         if(currentAngle == maxRotation)
         {
             changeDir = false;
@@ -45,14 +68,16 @@ public class CannonScript : MonoBehaviour
         }
 
         lerping = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1 + 1 *0.1f);
         lerping = false;
 
 
         //shoot
-        // GameObject bullet = bulletPool.bulletPoolInstance.GetBullet();
-        // bullet.transform.position = ;
-        // bullet.SetActive(true);
+        Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
+        GameObject bullet = BulletPool.bulletPoolInstance.GetBullet();
+        bullet.transform.position = firePoint.transform.position;
+        bullet.SetActive(true);
+        bullet.GetComponent<Bullet>().SetMoveDirection(bulDir);
         //repeat
 
         yield return new WaitForSeconds(shootingInterval);
@@ -62,7 +87,7 @@ public class CannonScript : MonoBehaviour
     private void Update()
     {
         if(lerping)
-        pivot.transform.rotation = Quaternion.Lerp(pivot.transform.rotation, Quaternion.Euler(0, 0, currentAngle), Time.deltaTime * speed);
+        pivot.transform.rotation = Quaternion.Lerp(pivot.transform.rotation, Quaternion.Euler(0, 0, currentAngle), Time.deltaTime * lerpSpeed);
     }
 
 }
