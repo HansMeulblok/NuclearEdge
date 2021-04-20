@@ -1,4 +1,4 @@
-using MLAPI;
+using Mirror;
 using UnityEngine;
 
 public class PlayerMovement2D : NetworkBehaviour
@@ -55,9 +55,10 @@ public class PlayerMovement2D : NetworkBehaviour
         //Reset movespeed on start
         moveSpeed = Vector3.zero;
 
-        if (!IsLocalPlayer)
+        if (!isLocalPlayer)
         {
             Camera camera = transform.GetChild(0).GetComponent<Camera>();
+            camera.GetComponent<AudioListener>().enabled = false;
             gameObject.layer = camera.gameObject.layer = LayerMask.NameToLayer("PlayerTwo");
             camera.rect = new Rect(0, 0, 1, 0.5f);
             camera.cullingMask = ~(1 << LayerMask.NameToLayer("PlayerOne"));
@@ -68,15 +69,14 @@ public class PlayerMovement2D : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsLocalPlayer)
-        {
-            //Check for colisions
-            CheckColision();
-            //Change horizontal movement
-            HorizontalMove();
-            //Change vertical movement
-            VerticalMove();
-        }
+        if (!isLocalPlayer) return;
+
+        //Check for colisions
+        CheckColision();
+        //Change horizontal movement
+        HorizontalMove();
+        //Change vertical movement
+        VerticalMove();
 
         //Debug.Log(grounded);
     }
