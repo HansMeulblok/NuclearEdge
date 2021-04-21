@@ -17,6 +17,8 @@ public class Bullet : MonoBehaviour
         transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
     }
 
+
+    //variables that are set in the shooting method in the Cannon.
     public void SetMoveDirection(Vector2 dir)
     {
         moveDirection = dir;

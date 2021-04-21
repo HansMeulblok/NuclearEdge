@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CannonScript : MonoBehaviour
+public class Cannon : MonoBehaviour
 {
     public GameObject pivot;
     public GameObject firePoint;
@@ -20,10 +20,11 @@ public class CannonScript : MonoBehaviour
     private int minRotation = 0, maxRotation = 180;
     private bool changeDir = true;
     private bool lerping = false;
-    
+
 
     private int[] angles = new int[] {12, 6, 3};
     private int angleDivision;
+
     [Header("Angle determination")]
     public MyEnum amountOfAngles = new MyEnum();
     public enum MyEnum
@@ -42,8 +43,10 @@ public class CannonScript : MonoBehaviour
 
     private IEnumerator ChangeAngles()
     {
+        // check at which angle the canon should stop and should fire
         AngleOptions();
 
+        //give lerping time to lerp
         lerping = true;
         yield return new WaitForSeconds(waitForLerpTime);
         lerping = false;
@@ -56,6 +59,7 @@ public class CannonScript : MonoBehaviour
 
     private void Update()
     {
+      //lerp to the next angle in the angles section
         if(lerping)
         pivot.transform.localRotation = Quaternion.Lerp(pivot.transform.localRotation, Quaternion.Euler(0, 0, currentAngle), Time.deltaTime * lerpSpeed);
     }
@@ -64,6 +68,7 @@ public class CannonScript : MonoBehaviour
 
     private void AmountOfAngles()
     {
+        //check what the degree change should be
         if (amountOfAngles == MyEnum.High)
         {
             angleDivision = angles[0];
@@ -107,6 +112,7 @@ public class CannonScript : MonoBehaviour
     #region firing bullet
     private void Fire()
     {
+        // get bullet from the bulletPool, set the position to the fire point. set the firing direction, bulletLifespan and the bullet movepseed.
         Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
         GameObject bullet = BulletPool.bulletPoolInstance.GetBullet();
         bullet.transform.position = firePoint.transform.position;

@@ -16,10 +16,12 @@ public class BulletPool : MonoBehaviour
 
     private void Start()
     {
+      //initlialize list
         bullets = new List<GameObject>();
     }
     public GameObject GetBullet()
     {
+      //loop through bullets in pool
         if(bullets.Count > 0)
         {
             for (int i = 0; i < bullets.Count; i++)
@@ -33,6 +35,7 @@ public class BulletPool : MonoBehaviour
 
         if(notEnoughBulletsInPool)
         {
+          // if there are no bullet in the bool make a new one
             GameObject bullet = Instantiate(pooledBullet);
             bullet.SetActive(false);
             bullets.Add(bullet);
