@@ -18,9 +18,11 @@ public class PlayerStatusEffects : MonoBehaviour
     public float slowJumpModifier;
 
     // Globals
-    [Header("Status Checks")]
+    [Header("Player Globals")]
     public bool inSludge;
     public bool movementChanged;
+    public bool isDead;
+    public Vector2 respawnPosition;
 
     PlayerMovement2D playerMovement;
     SpriteRenderer statusVisual;
@@ -32,9 +34,22 @@ public class PlayerStatusEffects : MonoBehaviour
     {
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
         statusVisual = GameObject.FindGameObjectWithTag("Status").GetComponent<SpriteRenderer>();
+
         originalMaxSpeed = playerMovement.maxSpeed;
         originalJumpStrength = playerMovement.jumpStrenght;
         originalcanWallJump = playerMovement.canWallJump;
+
+        // For testing purposes only, this should be changed to the starting location of the level
+        respawnPosition = transform.position;
+    }
+
+    private void Update()
+    {
+        // Temp debug code to kill the player
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            isDead = true;
+        }
     }
 
     private void FixedUpdate()
@@ -55,19 +70,39 @@ public class PlayerStatusEffects : MonoBehaviour
             if (slowedTimer > 0 && !inSludge) { slowedTimer -= Time.deltaTime; }
             else if (slowedTimer <= 0)
             {
-                // Reset player visuals
-                statusVisual.enabled = false;
-
-                // Reset player movement stats
-                playerMovement.maxSpeed = originalMaxSpeed;
-                playerMovement.jumpStrenght = originalJumpStrength;
-                playerMovement.canWallJump = originalcanWallJump;
-
-                // Reset status effect checks
-                slowedTimer = 0;
-                movementChanged = false;
-                slowed = false;
+                ResetSlowedStats();
             }
         }
+
+        if (isDead)
+        {
+            ResetPlayer();   
+        }
+    }
+
+    private void ResetPlayer()
+    {
+        isDead = false;
+
+        // TODO: Reset all player debuffs
+        ResetSlowedStats();
+
+        transform.position = respawnPosition;
+    }
+
+    private void ResetSlowedStats()
+    {
+        // Reset player visuals
+        statusVisual.enabled = false;
+
+        // Reset player movement stats
+        playerMovement.maxSpeed = originalMaxSpeed;
+        playerMovement.jumpStrenght = originalJumpStrength;
+        playerMovement.canWallJump = originalcanWallJump;
+
+        // Reset status effect checks
+        slowedTimer = 0;
+        movementChanged = false;
+        slowed = false;
     }
 }

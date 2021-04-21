@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Zone
   - GMTrigger
+  - Status
   layers:
   - Default
   - TransparentFX
