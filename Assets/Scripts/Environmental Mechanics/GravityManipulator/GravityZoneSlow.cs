@@ -16,6 +16,7 @@ public class GravityZoneSlow : MonoBehaviour
 
     void FixedUpdate()
     {
+        //decreases velocity when in GM zone
         if (isInZone)
         {
             rb.velocity *= new Vector2(slow, slow);
