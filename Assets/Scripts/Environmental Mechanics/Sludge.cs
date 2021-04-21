@@ -6,7 +6,9 @@ public class Sludge : MonoBehaviour
 
 {
     [SerializeField]
-    float slowModifier = 0.5f;
+    float slowMovementModifier = 0.5f;
+    [SerializeField]
+    float slowJumpModifier = 0.75f;
     [SerializeField]
     float duration = 2f;
 
@@ -22,7 +24,8 @@ public class Sludge : MonoBehaviour
 
             playerStatusEffects.slowed = true;
             playerStatusEffects.inSludge = true;
-            playerStatusEffects.slowModifier = slowModifier;
+            playerStatusEffects.slowMovementModifier = slowMovementModifier;
+            playerStatusEffects.slowJumpModifier = slowJumpModifier;
             playerStatusEffects.slowedTimer = duration;
         }
     }

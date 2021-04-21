@@ -13,20 +13,24 @@ public class PlayerStatusEffects : MonoBehaviour
     public float slowedTimer;
 
     // Player status modifiers
-    [Header("Status Timers")]
-    public float slowModifier;
+    [Header("Status Modifiers")]
+    public float slowMovementModifier;
+    public float slowJumpModifier;
 
     // Globals
+    [Header("Status Checks")]
     public bool inSludge;
     public bool movementChanged;
 
     PlayerMovement2D playerMovement;
+    SpriteRenderer statusVisual;
     float originalMaxSpeed;
     float originalJumpStrength;
 
     private void Start()
     {
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
+        statusVisual = GameObject.FindGameObjectWithTag("Status").GetComponent<SpriteRenderer>();
         originalMaxSpeed = playerMovement.maxSpeed;
         originalJumpStrength = playerMovement.jumpStrenght;
     }
@@ -36,9 +40,11 @@ public class PlayerStatusEffects : MonoBehaviour
         // Slow debuff
         if (slowed)
         {
+            statusVisual.enabled = true;
+
             if (!movementChanged) { 
-                playerMovement.maxSpeed *= slowModifier;
-                playerMovement.jumpStrenght *= slowModifier + .5f;
+                playerMovement.maxSpeed *= slowMovementModifier;
+                playerMovement.jumpStrenght *= slowJumpModifier;
             }
 
             movementChanged = true;
@@ -46,6 +52,9 @@ public class PlayerStatusEffects : MonoBehaviour
             if (slowedTimer > 0 && !inSludge) { slowedTimer -= Time.deltaTime; }
             else if (slowedTimer <= 0)
             {
+                // Reset player visuals
+                statusVisual.enabled = false;
+
                 // Reset player movement stats
                 playerMovement.maxSpeed = originalMaxSpeed;
                 playerMovement.jumpStrenght = originalJumpStrength;
