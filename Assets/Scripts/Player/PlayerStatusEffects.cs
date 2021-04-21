@@ -26,6 +26,7 @@ public class PlayerStatusEffects : MonoBehaviour
     SpriteRenderer statusVisual;
     float originalMaxSpeed;
     float originalJumpStrength;
+    bool originalcanWallJump;
 
     private void Start()
     {
@@ -33,6 +34,7 @@ public class PlayerStatusEffects : MonoBehaviour
         statusVisual = GameObject.FindGameObjectWithTag("Status").GetComponent<SpriteRenderer>();
         originalMaxSpeed = playerMovement.maxSpeed;
         originalJumpStrength = playerMovement.jumpStrenght;
+        originalcanWallJump = playerMovement.canWallJump;
     }
 
     private void FixedUpdate()
@@ -45,6 +47,7 @@ public class PlayerStatusEffects : MonoBehaviour
             if (!movementChanged) { 
                 playerMovement.maxSpeed *= slowMovementModifier;
                 playerMovement.jumpStrenght *= slowJumpModifier;
+                playerMovement.canWallJump = false;
             }
 
             movementChanged = true;
@@ -58,6 +61,7 @@ public class PlayerStatusEffects : MonoBehaviour
                 // Reset player movement stats
                 playerMovement.maxSpeed = originalMaxSpeed;
                 playerMovement.jumpStrenght = originalJumpStrength;
+                playerMovement.canWallJump = originalcanWallJump;
 
                 // Reset status effect checks
                 slowedTimer = 0;
