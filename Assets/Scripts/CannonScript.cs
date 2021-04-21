@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class CannonScript : MonoBehaviour
 {
-    [Header("Shooting variables")]
     public GameObject pivot;
     public GameObject firePoint;
-    public float shootingInterval;
+
+    [Header("Shooting variables")]
+    [Range(0,1f)]public float shootingInterval;
 
     [Header("Rotation variables")]
-    public float lerpSpeed;
+    [Range(0, 20f)] public float lerpSpeed;
     [Range(0,1f)]public float waitForLerpTime;
     private int degreeChange;
     private int currentAngle = 0;
     private int minRotation = 0, maxRotation = 180;
-    private Vector3 newRotation = new Vector3(0,0,0);
     private bool changeDir = true;
-    private float waitTime = 2;
-    private float elapsedTime = 0;
     private bool lerping = false;
     
 
@@ -76,14 +74,11 @@ public class CannonScript : MonoBehaviour
         yield return new WaitForSeconds(waitForLerpTime);
         lerping = false;
 
-
-        //shoot
         Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
         GameObject bullet = BulletPool.bulletPoolInstance.GetBullet();
         bullet.transform.position = firePoint.transform.position;
         bullet.SetActive(true);
         bullet.GetComponent<Bullet>().SetMoveDirection(bulDir);
-        //repeat
 
         yield return new WaitForSeconds(shootingInterval);
         StartCoroutine(ChangeAngles());
