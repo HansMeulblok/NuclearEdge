@@ -4,7 +4,7 @@ using UnityEngine;
 public class TriggerPlatform : MonoBehaviour
 {
     [Header("enable/disable editting mode")]
-    public bool editting = true;
+    public bool editing = true;
 
     private bool platformBool = true;
     private Color platformColor;
@@ -16,9 +16,12 @@ public class TriggerPlatform : MonoBehaviour
 
     private void Update()
     {
-        if (editting)
+      //if you want to edit the platform enable editing.
+        if (editing)
         {
             transform.localScale = new Vector3(platformLength, platformHeight, transform.localScale.z);
+
+            //update the collider
             collider.enabled = false;
             collider.enabled = true;
         }
