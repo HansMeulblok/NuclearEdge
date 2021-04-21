@@ -34,6 +34,8 @@ public class PlayerMovement2D : MonoBehaviour
     public float clingDuration;
     public float maxDownSlideSpeed;
     public float wallJumpBuffer;
+    public bool canWallCling = true;
+    public bool canWallJump = true;
     float jumpBuffer;
     float onLeftWallCling;
     float onRightWallCling;
@@ -282,7 +284,7 @@ public class PlayerMovement2D : MonoBehaviour
                 moveSpeed.y = jumpStrenght;
             }
             //When you cling onto a wall do a walljump
-            if (onLeftWallCling > 0)
+            if (onLeftWallCling > 0 && canWallJump)
             {
                 moveSpeed.y = wallJumpHorizontal;
                 moveSpeed.x = wallJumpVertical;
@@ -290,7 +292,7 @@ public class PlayerMovement2D : MonoBehaviour
                 onLeftWallCling = 0;
             }
             //When you cling onto a wall do a walljump
-            if (onRightWallCling > 0)
+            if (onRightWallCling > 0 && canWallJump)
             {
                 moveSpeed.y = wallJumpHorizontal;
                 moveSpeed.x = -wallJumpVertical;
@@ -406,7 +408,7 @@ public class PlayerMovement2D : MonoBehaviour
         //Wall cling duration decrease
         if (onLeftWallCling > 0)
         {
-            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance))
+            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance) && canWallCling)
             {
                 onLeftWallCling -= Time.deltaTime;
             }
@@ -418,7 +420,7 @@ public class PlayerMovement2D : MonoBehaviour
         }
         if (onRightWallCling > 0)
         {
-            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance))
+            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance) && canWallCling)
             {
                 onRightWallCling -= Time.deltaTime;
             }
@@ -429,11 +431,11 @@ public class PlayerMovement2D : MonoBehaviour
         }
 
         //Wall cling detection if you are still on the wall
-        if (rightCol && !grounded && rightHold)
+        if (rightCol && !grounded && rightHold && canWallCling)
         {
             onRightWallCling = clingDuration;
         }
-        if (leftCol && !grounded && leftHold)
+        if (leftCol && !grounded && leftHold && canWallCling)
         {
             onLeftWallCling = clingDuration;
         }
