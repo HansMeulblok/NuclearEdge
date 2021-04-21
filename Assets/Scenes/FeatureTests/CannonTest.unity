@@ -223,7 +223,7 @@ MonoBehaviour:
   firePoint: {fileID: 971173555}
   shootingInterval: 0.2
   lerpSpeed: 5
-  waitForLerpTime: 1
+  waitForLerpTime: 0.17
   amountOfAngles: 0
 --- !u!1 &687102780
 GameObject:

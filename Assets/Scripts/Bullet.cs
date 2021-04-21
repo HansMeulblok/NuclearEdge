@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private Vector2 moveDirection;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float bulletLifeSpan;
+    private Vector2 moveDirection;
+    private float moveSpeed;
+    private float bulletLifeSpan;
     private void OnEnable()
     {
         Invoke("Destroy", bulletLifeSpan);
@@ -20,6 +20,16 @@ public class Bullet : MonoBehaviour
     public void SetMoveDirection(Vector2 dir)
     {
         moveDirection = dir;
+    }
+
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
+    }
+
+    public void SetBulletLifeSpan(float lifeSpan)
+    {
+        bulletLifeSpan = lifeSpan;
     }
 
     private void Destroy()
