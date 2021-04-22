@@ -24,6 +24,8 @@ public class PlayerStatusEffects : MonoBehaviour
     public bool isDead;
     public Vector2 respawnPosition;
 
+    Rigidbody2D rb;
+
     PlayerMovement2D playerMovement;
     SpriteRenderer statusVisual;
     float originalMaxSpeed;
@@ -32,6 +34,7 @@ public class PlayerStatusEffects : MonoBehaviour
 
     private void Start()
     {
+        rb = gameObject.GetComponent<Rigidbody2D>();
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
         statusVisual = GameObject.FindGameObjectWithTag("Status").GetComponent<SpriteRenderer>();
 
@@ -86,7 +89,7 @@ public class PlayerStatusEffects : MonoBehaviour
 
         // TODO: Reset all player debuffs
         ResetSlowedStats();
-
+        rb.velocity = Vector3.zero;
         transform.position = respawnPosition;
     }
 
