@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class ButtonTriggers : MonoBehaviour
 {
-    private GravityManipulationActivation gma;
-    private void Start()
-    {
-        gma = FindObjectOfType<GravityManipulationActivation>();
-    }
+    [Header("Place gameobject with activator here")]
+    public BaseActivator Activator;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("GMTrigger"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            gma.Activate();
+            Activator.Activate();
         }
     }
 }

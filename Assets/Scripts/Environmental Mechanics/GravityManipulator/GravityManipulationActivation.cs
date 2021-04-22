@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GravityManipulationActivation : MonoBehaviour
+public class GravityManipulationActivation : BaseActivator
 {
     public Animator animator;
 
@@ -31,7 +31,7 @@ public class GravityManipulationActivation : MonoBehaviour
     }
 
     //activates the GM activation animation
-    public void Activate()
+    public override void Activate()
     {
         if (!animator.GetBool("manipulationStarted"))
         {
