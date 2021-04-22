@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spikes : MonoBehaviour
+public class KillOnContact : MonoBehaviour
 {
     PlayerStatusEffects pse;
-    Rigidbody2D rb;
-
 
     //When something enters the trigger
     private void OnTriggerEnter2D(Collider2D other)
