@@ -1,46 +1,39 @@
 using UnityEngine;
 using TMPro;
-using Mirror;
 
 public class UIManager : MonoBehaviour
 {
     [Header("Menu")]
     public GameObject menuPanel;
-    public GameObject hostPanel;
-    public TMP_InputField hostPassInput;
-    public GameObject joinPanel;
-    public TMP_InputField clientIPInput;
-    public TMP_InputField clientPassInput;
+
+    [Header("Local")]
+    public GameObject localPanel;
+
+    [Header("Multiplayer")]
+    public GameObject multiplayerPanel;
+    public TMP_InputField hostLobbyNameInput;
+    public TMP_InputField clientLobbyNameInput;
 
     [Header("In Game")]
     public GameObject inGamePanel;
 
+    [Header("Network Manager")]
+    public NetworkManager networkManager;
+
     public void Host()
     {
-        NetworkManager.singleton.StartHost();
         menuPanel.SetActive(false);
     }
 
     public void Join()
     {
-        if (string.IsNullOrEmpty(clientIPInput.text))
+        if (string.IsNullOrEmpty(clientLobbyNameInput.text))
         {
-            clientIPInput.placeholder.color = Color.red;
+            clientLobbyNameInput.placeholder.color = Color.red;
             return;
         }
-        else if (clientIPInput.text == "localhost")
-        {
-            NetworkManager.singleton.networkAddress = "localhost";
-        }
-        else
-        {
-            NetworkManager.singleton.networkAddress = clientIPInput.text;
-        }
+        clientLobbyNameInput.placeholder.color = Color.white;
 
-        NetworkManager.singleton.networkAddress = clientIPInput.text;
-        NetworkManager.singleton.StartClient();
-        
-        clientIPInput.placeholder.color = Color.white;
         menuPanel.SetActive(false);
         inGamePanel.SetActive(true);
     }

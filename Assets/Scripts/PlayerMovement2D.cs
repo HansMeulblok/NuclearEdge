@@ -1,7 +1,6 @@
-using Mirror;
 using UnityEngine;
 
-public class PlayerMovement2D : NetworkBehaviour
+public class PlayerMovement2D : MonoBehaviour
 {
     //Horizontal movement variables
     [Header("Horizontal variables")]
@@ -55,7 +54,7 @@ public class PlayerMovement2D : NetworkBehaviour
         //Reset movespeed on start
         moveSpeed = Vector3.zero;
 
-        if (!isLocalPlayer)
+      /*  if (!isLocalPlayer)
         {
             Camera camera = transform.GetChild(0).GetComponent<Camera>();
             camera.GetComponent<AudioListener>().enabled = false;
@@ -63,13 +62,13 @@ public class PlayerMovement2D : NetworkBehaviour
             camera.rect = new Rect(0, 0, 1, 0.5f);
             camera.cullingMask = ~(1 << LayerMask.NameToLayer("PlayerOne"));
             rb.isKinematic = true;
-        }
+        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isLocalPlayer) return;
+        //if (!isLocalPlayer) return;
 
         //Check for colisions
         CheckColision();
