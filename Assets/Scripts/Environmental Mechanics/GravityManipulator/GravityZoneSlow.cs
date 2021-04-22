@@ -6,15 +6,17 @@ public class GravityZoneSlow : MonoBehaviour
 {
     bool isInZone = false;
     Rigidbody2D rb;
+
+    [Header("velocity decrease inside GM")]
     public float slow = 0.95f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
+        //decreases velocity when in GM zone
         if (isInZone)
         {
             rb.velocity *= new Vector2(slow, slow);
