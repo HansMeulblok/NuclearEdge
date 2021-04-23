@@ -1,10 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Sludge : MonoBehaviour
-
 {
+
+    [Header("Platform editting variables")]
+    [Range (1f, 10f)]public int platformLength;
+    [Range(1f, 2f)] public int platformHeight;
+    public new BoxCollider2D collider;
+
+    [SerializeField]
+    bool editing = false;
     [SerializeField]
     float slowMovementModifier = 0.5f;
     [SerializeField]
@@ -14,6 +20,18 @@ public class Sludge : MonoBehaviour
 
     GameObject player;
     PlayerStatusEffects playerStatusEffects;
+
+    void Update()
+    {
+        if(editing)
+        {
+            transform.localScale = new Vector3(platformLength, platformHeight, transform.localScale.z);
+
+            //update the collider
+            collider.enabled = false;
+            collider.enabled = true;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
