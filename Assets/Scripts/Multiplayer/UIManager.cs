@@ -19,19 +19,21 @@ public class UIManager : MonoBehaviour
     [Header("Lobby")]
     public GameObject lobbyPanel;
     public TMP_Text lobbyName;
+    public GameObject startButton;
 
     [Header("Network Manager")]
     public NetworkManager networkManager;
 
 
     #region Localplayer
-    public void UI_Localplayer()
+    public void Localplayer()
     {
         menuPanel.SetActive(false);
         localPanel.SetActive(true);
     }
 
-    public void UI_CreateRoomLocal()
+    // TODO Update code.
+    public void CreateRoomLocal()
     {
         if (string.IsNullOrEmpty(l_createRoomNameInput.text))
         {
@@ -45,7 +47,7 @@ public class UIManager : MonoBehaviour
         lobbyPanel.SetActive(true);
     }
 
-    public void UI_JoinRoomLocal()
+    public void JoinRoomLocal()
     {
         if (string.IsNullOrEmpty(l_joinNameInput.text))
         {
@@ -59,40 +61,11 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
-    #region Multiplayer
-    public void UI_Multiplayer()
+    public void Multiplayer()
     {
         menuPanel.SetActive(false);
         multiplayerPanel.SetActive(true);
     }
-
-    public void UI_CreateRoomMP()
-    {
-        if (string.IsNullOrEmpty(mp_createRoomNameInput.text))
-        {
-            mp_createRoomNameInput.placeholder.color = Color.red;
-            return;
-        }
-        mp_createRoomNameInput.placeholder.color = Color.white;
-
-        multiplayerPanel.SetActive(false);
-        lobbyName.text = "Room [" + mp_createRoomNameInput.text + "]";
-        lobbyPanel.SetActive(true);
-    }
-
-    public void UI_JoinRoomMP()
-    {
-        if (string.IsNullOrEmpty(mp_joinNameInput.text))
-        {
-            mp_joinNameInput.placeholder.color = Color.red;
-            return;
-        }
-        mp_joinNameInput.placeholder.color = Color.white;
-
-        multiplayerPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
-    }
-    #endregion
 
     public void Back()
     {
@@ -100,5 +73,25 @@ public class UIManager : MonoBehaviour
         multiplayerPanel.SetActive(false);
         lobbyPanel.SetActive(false);
         menuPanel.SetActive(true);
+    }
+
+    public void CreateLobby(string roomName)
+    {
+        multiplayerPanel.SetActive(false);
+        localPanel.SetActive(false);
+        lobbyName.text = "Room [" + roomName + "]";
+        lobbyPanel.SetActive(true);
+    }
+
+    public bool IsInputCorrect(TMP_InputField input)
+    {
+        if (string.IsNullOrEmpty(input.text))
+        {
+            input.placeholder.color = new Color32(255, 0, 0, 128);
+            return false;
+        }
+
+        input.placeholder.color = new Color32(50, 50, 50, 128); // Default placeholder color
+        return true;
     }
 }

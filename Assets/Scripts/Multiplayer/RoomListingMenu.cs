@@ -1,15 +1,14 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomListMenu : MonoBehaviourPunCallbacks
+public class RoomListingMenu : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private Transform content;
     [SerializeField]
-    private RoomListing room;
+    private RoomListing roomProperty;
 
     private List<RoomListing> listOfRooms = new List<RoomListing>();
 
@@ -21,7 +20,6 @@ public class RoomListMenu : MonoBehaviourPunCallbacks
             if (info.RemovedFromList)
             {
                 int index = listOfRooms.FindIndex(room => room.RoomInfo.Name == info.Name);
-
                 if (index != -1)
                 {
                     Destroy(listOfRooms[index].gameObject);
@@ -31,14 +29,23 @@ public class RoomListMenu : MonoBehaviourPunCallbacks
             // Added room to room list.
             else
             {
-                RoomListing listing = Instantiate(room, content);
-                if (listing != null)
+                int index = listOfRooms.FindIndex(room => room.RoomInfo.Name == info.Name);
+                if (index == -1)
                 {
-                    listing.SetRoomInfo(info);
-                    listOfRooms.Add(listing);
+                    // Not yet added.
+                    RoomListing listing = Instantiate(roomProperty, content);
+                    if (listing != null)
+                    {
+                        listing.SetRoomInfo(info);
+                        listOfRooms.Add(listing);
+                    }
+                    // Already added.
+                    else
+                    {
+                        // Modify listing here.
+                    }
                 }
             }
-
         }
     }
 }
