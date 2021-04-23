@@ -5,13 +5,16 @@ using UnityEngine;
 public class ButtonTriggers : MonoBehaviour
 {
     [Header("Place gameobject with activator here")]
-    public BaseActivator Activator;
+    public BaseActivator[] activators;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Activator.Activate();
+            for (int i = 0; i < activators.Length; i++)
+            {
+                activators[i].Activate();
+            }
         }
     }
 }
