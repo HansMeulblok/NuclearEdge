@@ -56,16 +56,18 @@ public class WallChange : MonoBehaviour
             if (!wallInStartPosition)
             {
                 transform.position = Vector2.Lerp(transform.position, destinationPosition, lerpValue);
-                if(Vector2.Distance(transform.position, destinationPosition) < 0.2f)
+                if(Vector2.Distance(transform.position, destinationPosition) < 0.01f)
                 {
+                    transform.position = destinationPosition;
                     isLerping = false;
                 }
             }
             else
             {
                 transform.position = Vector2.Lerp(transform.position, startPosition, lerpValue);
-                if (Vector2.Distance(transform.position, startPosition) < 0.2f)
+                if (Vector2.Distance(transform.position, startPosition) < 0.01f)
                 {
+                    transform.position = startPosition;
                     isLerping = false;
                 }
             }
