@@ -50,9 +50,12 @@ public class Sludge : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        player = collision.gameObject;
-        playerStatusEffects = player.GetComponent<PlayerStatusEffects>();
+        if (collision.CompareTag("Player"))
+        {
+            player = collision.gameObject;
+            playerStatusEffects = player.GetComponent<PlayerStatusEffects>();
 
-        playerStatusEffects.inSludge = false;
+            playerStatusEffects.inSludge = false;
+        }
     }
 }
