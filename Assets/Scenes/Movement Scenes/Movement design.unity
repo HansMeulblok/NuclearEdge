@@ -2016,7 +2016,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1558666332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.7313595, y: -0.22585082, z: -10}
+  m_LocalPosition: {x: -9.739595, y: -0.22585082, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 936782452}
@@ -2194,7 +2194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971623231}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.7313595, y: -0.22585082, z: -10}
+  m_LocalPosition: {x: -9.739595, y: -0.22585082, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2448,76 +2448,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: accel
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: decel
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: gravity
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: airDecel
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: maxSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: downGravMult
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: jumpStrenght
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: maxFallSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: upWallGravMult
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: wallJumpBuffer
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: neutralGravMult
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: downWallGravMult
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: jumpBufferLenght
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: wallJumpVertical
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: maxDownSlideSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883214, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: wallJumpHorizontal
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3081606822016883215, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3081606822016883215, guid: 00809a39718ffad48a44ccfae4bfb0c2, type: 3}
-      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []

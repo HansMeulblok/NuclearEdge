@@ -45,6 +45,7 @@ public class PlayerMovement2D : MonoBehaviour
     //Collisions
     [Header("Collision")]
     public float colisionDistance;
+    public LayerMask sludgeMask;
     bool grounded;
     bool leftCol;
     bool rightCol;
@@ -369,7 +370,7 @@ public class PlayerMovement2D : MonoBehaviour
     void CheckColision()
     {
         //Check left for collision
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance))
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance, sludgeMask))
         {
             leftCol = true;
         }
@@ -378,7 +379,7 @@ public class PlayerMovement2D : MonoBehaviour
             leftCol = false;
         }
         //Check right for collision
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance))
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance, sludgeMask))
         {
             rightCol = true;
         }
@@ -387,8 +388,7 @@ public class PlayerMovement2D : MonoBehaviour
             rightCol = false;
         }
         //Check down for collision
-
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance))
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance, sludgeMask))
         {
             grounded = true;
         }
