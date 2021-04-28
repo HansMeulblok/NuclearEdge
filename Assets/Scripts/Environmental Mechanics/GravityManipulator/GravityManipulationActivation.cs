@@ -8,14 +8,20 @@ public class GravityManipulationActivation : BaseActivator
 
     private float timeActivatedCurrent;
     public float timeActivatedOriginal = 5f;
+    public bool isStatic = false;
 
     private float gravInGM = 0.01f, gravOutGM = 1f;
 
     private void Start()
     {
         timeActivatedCurrent = timeActivatedOriginal;
+        if(isStatic)
+        {
+            Activate();
+        }
     }
-    private void FixedUpdate()
+
+    private void Update()
     {
 
         if (animator.GetBool("manipulationStarted")){
@@ -23,8 +29,9 @@ public class GravityManipulationActivation : BaseActivator
             {
                 Deactivate();
             }
-            else
+            else if(!isStatic)
             {
+
                 timeActivatedCurrent -= Time.deltaTime;
             }
         }
