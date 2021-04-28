@@ -106,6 +106,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         PhotonNetwork.LoadLevel(1);
+        print("Test");
     }
 
     public void LeaveRoom()

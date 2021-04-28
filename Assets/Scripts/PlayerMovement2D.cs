@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement2D : MonoBehaviour
+public class PlayerMovement2D : MonoBehaviourPun
 {
     //Horizontal movement variables
     [Header("Horizontal variables")]
@@ -75,12 +76,16 @@ public class PlayerMovement2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!photonView.IsMine) { return; }
+
         InputCheck();
     }
 
     // FixedUpdate is called at a fixed interval
     void FixedUpdate()
     {
+        if (!photonView.IsMine) { return; }
+
         //Check for colisions
         CheckColision();
         //Change horizontal movement
@@ -89,7 +94,7 @@ public class PlayerMovement2D : MonoBehaviour
         VerticalMove();
         //Pressed should always be in effect one fixedUpdate after keydown
         ResetPressed();
-        
+
     }
 
     // This function checks the relevant inputs
@@ -257,7 +262,7 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 wallJumpBufferL -= Time.deltaTime;
             }
-            
+
         }
         if (wallJumpBufferR > 0)
         {
@@ -309,7 +314,7 @@ public class PlayerMovement2D : MonoBehaviour
 
             //Apply zone gravity multiplier
             tempGrav *= gravZoneMult;
-            
+
             //When clinging on wall lower gravity
             if (onLeftWallCling > 0 || onRightWallCling > 0)
             {
@@ -416,7 +421,7 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 onLeftWallCling = 0;
             }
-            
+
         }
         if (onRightWallCling > 0)
         {
