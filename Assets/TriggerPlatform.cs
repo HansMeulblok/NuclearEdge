@@ -1,18 +1,27 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class TriggerPlatform : MonoBehaviour
+public class TriggerPlatform : BaseActivator
 {
     [Header("enable/disable editting mode")]
     public bool editing = true;
 
-    private bool platformBool = true;
+    public bool platformBool;
     private Color platformColor;
 
     [Header("platform editting variables")]
     [Range (1f, 10f)]public int platformLength;
     [Range(1f, 2f)] public int platformHeight;
     public new BoxCollider2D collider;
+
+    private void Start()
+    {
+        editing = false;
+        if (!editing)
+        {
+            Trigger();
+        }
+    }
 
     private void Update()
     {
@@ -25,6 +34,11 @@ public class TriggerPlatform : MonoBehaviour
             collider.enabled = false;
             collider.enabled = true;
         }
+    }
+
+    public override void Activate()
+    {
+        Trigger();
     }
 
     public void Trigger()

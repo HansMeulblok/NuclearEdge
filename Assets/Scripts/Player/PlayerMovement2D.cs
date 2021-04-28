@@ -45,6 +45,7 @@ public class PlayerMovement2D : MonoBehaviour
     //Collisions
     [Header("Collision")]
     public float colisionDistance;
+    public LayerMask sludgeMask;
     bool grounded;
     bool leftCol;
     bool rightCol;
@@ -94,11 +95,11 @@ public class PlayerMovement2D : MonoBehaviour
     // This function checks the relevant inputs
     void InputCheck()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
         {
             upPressed = true;
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
         {
             upHold = true;
         }
@@ -106,11 +107,11 @@ public class PlayerMovement2D : MonoBehaviour
         {
             upHold = false;
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             leftPressed = true;
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
             leftHold = true;
         }
@@ -118,11 +119,11 @@ public class PlayerMovement2D : MonoBehaviour
         {
             leftHold = false;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             rightPressed = true;
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
         {
             rightHold = true;
         }
@@ -369,7 +370,7 @@ public class PlayerMovement2D : MonoBehaviour
     void CheckColision()
     {
         //Check left for collision
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance))
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance, sludgeMask))
         {
             leftCol = true;
         }
@@ -378,7 +379,7 @@ public class PlayerMovement2D : MonoBehaviour
             leftCol = false;
         }
         //Check right for collision
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance))
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance, sludgeMask))
         {
             rightCol = true;
         }
@@ -387,8 +388,7 @@ public class PlayerMovement2D : MonoBehaviour
             rightCol = false;
         }
         //Check down for collision
-
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance))
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance, sludgeMask))
         {
             grounded = true;
         }

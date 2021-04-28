@@ -17,6 +17,15 @@ public class Bullet : MonoBehaviour
         transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerStatusEffects>().isDead = true;
+        }
+
+        Destroy();
+    }
 
     //variables that are set in the shooting method in the Cannon.
     public void SetMoveDirection(Vector2 dir)
