@@ -57,15 +57,25 @@ public class FallingPlatform : MonoBehaviour
         {
             transform.Translate(Vector2.down * (fallingSpeed * Time.deltaTime), Space.World);
         }
+
+        if(Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f))
+        {
+            RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f);
+            if (hit.transform.tag == "Player")
+            {
+                steppedOn = true;
+            }
+        }
+        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.CompareTag("Player") && (collision.transform.position.y - (collision.transform.localScale.y / 2)) >= (transform.position.y + (platformHeight / 2)))
-        {
-            steppedOn = true;
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if(collision.gameObject.CompareTag("Player") && (collision.transform.position.y - (collision.transform.localScale.y / 2)) >= (transform.position.y + (platformHeight / 2)))
+    //    {
+    //        steppedOn = true;
+    //    }
+    //}
 
     private void ResetPlatform()
     {

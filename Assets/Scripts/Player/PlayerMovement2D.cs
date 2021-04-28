@@ -391,6 +391,16 @@ public class PlayerMovement2D : MonoBehaviour
         if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance, sludgeMask))
         {
             grounded = true;
+
+            RaycastHit2D downHit = Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance);
+            if (downHit.transform.tag == "Falling Platform")
+            {
+                transform.parent = downHit.transform;
+            }
+            else
+            {
+                transform.parent = null;
+            }
         }
         else
         {
@@ -445,5 +455,8 @@ public class PlayerMovement2D : MonoBehaviour
             onLeftWallCling = 0;
             onRightWallCling = 0;
         }
+
+
+        
     }
 }
