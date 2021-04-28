@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement2D : MonoBehaviour
@@ -14,6 +16,7 @@ public class PlayerMovement2D : MonoBehaviour
     [Header("Vertical variables")]
     public float jumpStrenght;
     public float jumpBufferLenght;
+    public float maxFallSpeed;
     public float wallJumpHorizontal;
     public float wallJumpVertical;
 
@@ -21,14 +24,18 @@ public class PlayerMovement2D : MonoBehaviour
     public float gravity;
     public float gravZoneMult;
     public float upGravMult;
+    public float neutralGravMult;
     public float downGravMult;
-    public float wallGravMult;
+    public float upWallGravMult;
+    public float downWallGravMult;
     float tempGrav;
 
     [Header("Walljump variables")]
     public float clingDuration;
     public float maxDownSlideSpeed;
     public float wallJumpBuffer;
+    public bool canWallCling = true;
+    public bool canWallJump = true;
     float jumpBuffer;
     float onLeftWallCling;
     float onRightWallCling;
@@ -38,9 +45,19 @@ public class PlayerMovement2D : MonoBehaviour
     //Collisions
     [Header("Collision")]
     public float colisionDistance;
+    public LayerMask sludgeMask;
     bool grounded;
     bool leftCol;
     bool rightCol;
+
+    //Input
+    bool upPressed;
+    bool upHold;
+    bool leftPressed;
+    bool leftHold;
+    bool rightPressed;
+    bool rightHold;
+
 
     //Global variables
     Vector3 moveSpeed;
@@ -53,100 +70,150 @@ public class PlayerMovement2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         //Reset movespeed on start
         moveSpeed = Vector3.zero;
-
-      /*  if (!isLocalPlayer)
-        {
-            Camera camera = transform.GetChild(0).GetComponent<Camera>();
-            camera.GetComponent<AudioListener>().enabled = false;
-            gameObject.layer = camera.gameObject.layer = LayerMask.NameToLayer("PlayerTwo");
-            camera.rect = new Rect(0, 0, 1, 0.5f);
-            camera.cullingMask = ~(1 << LayerMask.NameToLayer("PlayerOne"));
-            rb.isKinematic = true;
-        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (!isLocalPlayer) return;
+        InputCheck();
+    }
 
+    // FixedUpdate is called at a fixed interval
+    void FixedUpdate()
+    {
         //Check for colisions
         CheckColision();
         //Change horizontal movement
         HorizontalMove();
         //Change vertical movement
         VerticalMove();
-
-        //Debug.Log(grounded);
+        //Pressed should always be in effect one fixedUpdate after keydown
+        ResetPressed();
+        
     }
 
-    //This fuction handles horizontal movement
+    // This function checks the relevant inputs
+    void InputCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
+        {
+            upPressed = true;
+        }
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
+        {
+            upHold = true;
+        }
+        else
+        {
+            upHold = false;
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            leftPressed = true;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            leftHold = true;
+        }
+        else
+        {
+            leftHold = false;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            rightPressed = true;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            rightHold = true;
+        }
+        else
+        {
+            rightHold = false;
+        }
+
+    }
+
+    //To use keyDown with FixedUpdate it should reset only after one FixedUpdate
+    void ResetPressed()
+    {
+        upPressed = false;
+        leftPressed = false;
+        rightPressed = false;
+    }
+
+    //This function handles horizontal movement
     void HorizontalMove()
     {
         //Horizontal movement
         //Get the current velocity to prevent clipping
         moveSpeed = rb.velocity;
         //Left (and not right input) for moving left
-        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        if (leftHold && !rightHold)
         {
             //When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x > 0)
             {
+                //Prevent moving back to a wall too quickly
                 if (wallJumpBufferL > 0)
                 {
-                    moveSpeed.x -= accel;
+                    moveSpeed.x -= accel * Time.deltaTime;
                 }
                 else
                 {
-                    moveSpeed.x -= accel + decel;
+                    moveSpeed.x -= (accel + decel) * Time.deltaTime;
                 }
             }
             //Accelerate left
             else if (!(onRightWallCling > 0))
             {
-                moveSpeed.x -= accel;
+                moveSpeed.x -= accel * Time.deltaTime;
             }
         }
         //Right (and not right input) for moving right
-        else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+        else if (rightHold && !leftHold)
         {
             //When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x < 0)
             {
-                if (wallJumpBufferL > 0)
+                //Prevent moving back to a wall too quickly
+                if (wallJumpBufferR > 0)
                 {
-                    moveSpeed.x += accel;
+                    moveSpeed.x += accel * Time.deltaTime;
                 }
                 else
                 {
-                    moveSpeed.x += accel + decel;
+                    moveSpeed.x += (accel + decel) * Time.deltaTime;
                 }
             }
             //Accelerate right
             else if (!(onLeftWallCling > 0))
             {
-                moveSpeed.x += accel;
+                moveSpeed.x += accel * Time.deltaTime;
             }
         }
         //No horizontal input or both decelerate
         else
         {
+            //The temporary instance of deceleration
             tempDecel = decel;
+
+            //Have a different decelaretion while in the air
             if (!grounded)
             {
                 tempDecel = airDecel;
             }
             //Decelerate
-            if (moveSpeed.x >= tempDecel)
+            if (moveSpeed.x >= tempDecel * Time.deltaTime)
             {
-                moveSpeed.x -= tempDecel;
+                moveSpeed.x -= tempDecel * Time.deltaTime;
             }
-            if (moveSpeed.x <= -tempDecel)
+            if (moveSpeed.x <= -tempDecel * Time.deltaTime)
             {
-                moveSpeed.x += tempDecel;
+                moveSpeed.x += tempDecel * Time.deltaTime;
             }
             //When current speed is lower then the decel amount set speed to 0
-            if (moveSpeed.x > -tempDecel && moveSpeed.x < tempDecel)
+            if (moveSpeed.x > -tempDecel * Time.deltaTime && moveSpeed.x < tempDecel * Time.deltaTime)
             {
                 moveSpeed.x = 0;
             }
@@ -173,7 +240,7 @@ public class PlayerMovement2D : MonoBehaviour
         moveSpeed = rb.velocity;
 
         //When you try to jump create a buffer for better feel
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (upPressed)
         {
             jumpBuffer = jumpBufferLenght;
         }
@@ -190,7 +257,7 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 wallJumpBufferL -= Time.deltaTime;
             }
-
+            
         }
         if (wallJumpBufferR > 0)
         {
@@ -218,7 +285,7 @@ public class PlayerMovement2D : MonoBehaviour
                 moveSpeed.y = jumpStrenght;
             }
             //When you cling onto a wall do a walljump
-            if (onLeftWallCling > 0)
+            if (onLeftWallCling > 0 && canWallJump)
             {
                 moveSpeed.y = wallJumpHorizontal;
                 moveSpeed.x = wallJumpVertical;
@@ -226,7 +293,7 @@ public class PlayerMovement2D : MonoBehaviour
                 onLeftWallCling = 0;
             }
             //When you cling onto a wall do a walljump
-            if (onRightWallCling > 0)
+            if (onRightWallCling > 0 && canWallJump)
             {
                 moveSpeed.y = wallJumpHorizontal;
                 moveSpeed.x = -wallJumpVertical;
@@ -242,38 +309,57 @@ public class PlayerMovement2D : MonoBehaviour
 
             //Apply zone gravity multiplier
             tempGrav *= gravZoneMult;
-
+            
             //When clinging on wall lower gravity
             if (onLeftWallCling > 0 || onRightWallCling > 0)
             {
-                tempGrav *= 0.25f;
-            }
-
-            if (moveSpeed.y > 0)
-            {
-                //Create jump variance based on holding jump
-                if (Input.GetKey(KeyCode.UpArrow))
+                if (moveSpeed.y > 0)
                 {
-                    moveSpeed.y -= tempGrav * 1;
+                    tempGrav *= upWallGravMult;
                 }
                 else
                 {
-                    moveSpeed.y -= tempGrav * 2;
+                    tempGrav *= downWallGravMult;
                 }
             }
+
+            //When moving up
+            if (moveSpeed.y > 0)
+            {
+                //Create jump variance based on holding jump
+                if (upHold)
+                {
+                    //Have a lower gravity when holding up to create short and long hops
+                    moveSpeed.y -= tempGrav * upGravMult * Time.deltaTime;
+                }
+                else
+                {
+                    //Have a neutral gravity between falling and holding up
+                    moveSpeed.y -= tempGrav * neutralGravMult * Time.deltaTime;
+                }
+            }
+            //When falling
             if (moveSpeed.y <= 0)
             {
-                moveSpeed.y -= tempGrav * 2;
+                //Have a higher gravity
+                moveSpeed.y -= tempGrav * downGravMult * Time.deltaTime;
             }
         }
 
         //Have a maximum speed to slide down walls
         if (onLeftWallCling > 0 || onRightWallCling > 0)
         {
+            //Have a maximum speed at which you can slide down a wall
             if (moveSpeed.y < -maxDownSlideSpeed)
             {
                 moveSpeed.y = -maxDownSlideSpeed;
             }
+        }
+
+        //Have a maximum fallspeed
+        if (moveSpeed.y < -maxFallSpeed)
+        {
+            moveSpeed.y = -maxFallSpeed;
         }
 
         //Apply movement
@@ -284,7 +370,7 @@ public class PlayerMovement2D : MonoBehaviour
     void CheckColision()
     {
         //Check left for collision
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance))
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance, sludgeMask))
         {
             leftCol = true;
         }
@@ -293,7 +379,7 @@ public class PlayerMovement2D : MonoBehaviour
             leftCol = false;
         }
         //Check right for collision
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance))
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance, sludgeMask))
         {
             rightCol = true;
         }
@@ -302,8 +388,7 @@ public class PlayerMovement2D : MonoBehaviour
             rightCol = false;
         }
         //Check down for collision
-
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance))
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance, sludgeMask))
         {
             grounded = true;
         }
@@ -323,18 +408,34 @@ public class PlayerMovement2D : MonoBehaviour
         //Wall cling duration decrease
         if (onLeftWallCling > 0)
         {
-            onLeftWallCling -= Time.deltaTime;
+            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance) && canWallCling)
+            {
+                onLeftWallCling -= Time.deltaTime;
+            }
+            else
+            {
+                onLeftWallCling = 0;
+            }
+            
         }
         if (onRightWallCling > 0)
         {
-            onRightWallCling -= Time.deltaTime;
+            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance) && canWallCling)
+            {
+                onRightWallCling -= Time.deltaTime;
+            }
+            else
+            {
+                onRightWallCling = 0;
+            }
         }
-        //Wall cling detection
-        if (rightCol && !grounded && Input.GetKey(KeyCode.RightArrow))
+
+        //Wall cling detection if you are still on the wall
+        if (rightCol && !grounded && rightHold && canWallCling)
         {
             onRightWallCling = clingDuration;
         }
-        if (leftCol && !grounded && Input.GetKey(KeyCode.LeftArrow))
+        if (leftCol && !grounded && leftHold && canWallCling)
         {
             onLeftWallCling = clingDuration;
         }

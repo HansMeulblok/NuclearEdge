@@ -3,17 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Zone
+  - GMTrigger
+  - Status
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PlayerOne
+  - GMTrigger
   - Water
   - UI
-  - PlayerTwo
-  - 
-  - 
+  - Canon
+  - Projectile
+  - Sludge
   - 
   - 
   - 
