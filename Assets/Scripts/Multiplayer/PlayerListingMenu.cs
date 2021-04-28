@@ -20,7 +20,7 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
         uIManager.Back();
     }
 
-    // Gets current players when lobby get joined
+    // Gets current players when lobby gets joined
     public override void OnEnable()
     {
         base.OnEnable();
@@ -74,7 +74,7 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
         AddPlayerListing(newPlayer);
     }
 
-    // When the joined player leaves the room removes from list.
+    // When the joined player leaves the room it gets removed from list.
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         int index = listOfPlayers.FindIndex(x => x.Player == otherPlayer);
