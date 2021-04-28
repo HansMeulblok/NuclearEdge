@@ -24,8 +24,8 @@ public class FallingPlatform : MonoBehaviour
 
     private void Start()
     {
+        editing = false;
         initialPosition = transform.position;
-        collider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
