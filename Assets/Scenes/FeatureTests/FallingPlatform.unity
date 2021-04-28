@@ -2566,6 +2566,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Falling Platform
       objectReference: {fileID: 0}
+    - target: {fileID: 3860048427860164810, guid: 40f9bceac98a4a6499deac777ba9c215, type: 3}
+      propertyPath: m_TagString
+      value: Falling Platform
+      objectReference: {fileID: 0}
     - target: {fileID: 3860048427860164820, guid: 40f9bceac98a4a6499deac777ba9c215, type: 3}
       propertyPath: editing
       value: 1
