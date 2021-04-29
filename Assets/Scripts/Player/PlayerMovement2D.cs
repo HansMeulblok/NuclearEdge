@@ -449,6 +449,7 @@ public class PlayerMovement2D : MonoBehaviour
 
         if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, 0.05f, sludgeMask))
         {
+          //check if falling platform is below the player and if it is parent it to it.s
             RaycastHit2D downHit = Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, 0.05f);
             if (downHit.transform.tag == "Falling Platform")
             {
@@ -470,6 +471,7 @@ public class PlayerMovement2D : MonoBehaviour
 
     public void UnParent()
     {
+        //unparent the object
         transform.parent = null;
     }
 }

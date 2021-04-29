@@ -40,11 +40,13 @@ public class FallingPlatform : MonoBehaviour
             collider.enabled = true;
         }
 
+        //start timer if the platform is stepped on
         if(steppedOn)
         {
             timer += Time.deltaTime;
         }
 
+        //if timer is maxed out start falling
         if(timer >= maxTime)
         {
             canFall = true;
@@ -53,11 +55,13 @@ public class FallingPlatform : MonoBehaviour
             Invoke("ResetPlatform", resetTime);
         }
 
+        //translate platform downwards
         if(canFall)
         {
             transform.Translate(Vector2.down * (fallingSpeed * Time.deltaTime), Space.World);
         }
 
+        //check if the player is on top of the platform
         if(Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f))
         {
             RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f);
@@ -69,6 +73,7 @@ public class FallingPlatform : MonoBehaviour
 
     }
 
+    //reset the platform after a while
     private void ResetPlatform()
     {
         FindObjectOfType<PlayerMovement2D>().UnParent();
