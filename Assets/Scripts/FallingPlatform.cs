@@ -66,19 +66,12 @@ public class FallingPlatform : MonoBehaviour
                 steppedOn = true;
             }
         }
-        
-    }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if(collision.gameObject.CompareTag("Player") && (collision.transform.position.y - (collision.transform.localScale.y / 2)) >= (transform.position.y + (platformHeight / 2)))
-    //    {
-    //        steppedOn = true;
-    //    }
-    //}
+    }
 
     private void ResetPlatform()
     {
+        FindObjectOfType<PlayerMovement2D>().UnParent();
         canFall = false;
         transform.position = initialPosition;
     }
