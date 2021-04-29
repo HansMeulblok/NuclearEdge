@@ -457,7 +457,6 @@ public class PlayerMovement2D : MonoBehaviour
             }
             else
             {
-                Debug.Log("called");
                 transform.parent = null;
             }
 
