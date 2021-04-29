@@ -89,7 +89,7 @@ public class PlayerMovement2D : MonoBehaviour
         VerticalMove();
         //Pressed should always be in effect one fixedUpdate after keydown
         ResetPressed();
-        
+
     }
 
     // This function checks the relevant inputs
@@ -257,7 +257,7 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 wallJumpBufferL -= Time.deltaTime;
             }
-            
+
         }
         if (wallJumpBufferR > 0)
         {
@@ -309,7 +309,7 @@ public class PlayerMovement2D : MonoBehaviour
 
             //Apply zone gravity multiplier
             tempGrav *= gravZoneMult;
-            
+
             //When clinging on wall lower gravity
             if (onLeftWallCling > 0 || onRightWallCling > 0)
             {
@@ -387,6 +387,7 @@ public class PlayerMovement2D : MonoBehaviour
         {
             rightCol = false;
         }
+
         //Check down for collision
         if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance, sludgeMask))
         {
@@ -416,7 +417,7 @@ public class PlayerMovement2D : MonoBehaviour
             {
                 onLeftWallCling = 0;
             }
-            
+
         }
         if (onRightWallCling > 0)
         {
@@ -445,5 +446,31 @@ public class PlayerMovement2D : MonoBehaviour
             onLeftWallCling = 0;
             onRightWallCling = 0;
         }
+
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, 0.05f, sludgeMask))
+        {
+          //check if falling platform is below the player and if it is parent it to it.s
+            RaycastHit2D downHit = Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, 0.05f);
+            if (downHit.transform.tag == "Falling Platform")
+            {
+                transform.parent = downHit.transform;
+            }
+            else
+            {
+                transform.parent = null;
+            }
+
+        }
+        else
+        {
+          transform.parent = null;
+        }
+
+    }
+
+    public void UnParent()
+    {
+        //unparent the object
+        transform.parent = null;
     }
 }
