@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviourPun
 {
-    // Start is called before the first frame update
     void Start()
     {
+        // Create player on level load
         PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
     }
 }

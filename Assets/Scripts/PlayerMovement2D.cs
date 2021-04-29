@@ -67,6 +67,9 @@ public class PlayerMovement2D : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
+        // Disable script if player is not the local player.
+        if (!photonView.IsMine) { enabled = false; }
+
         //Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
         //Reset movespeed on start
@@ -76,16 +79,12 @@ public class PlayerMovement2D : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (!photonView.IsMine) { return; }
-
         InputCheck();
     }
 
     // FixedUpdate is called at a fixed interval
     void FixedUpdate()
     {
-        if (!photonView.IsMine) { return; }
-
         //Check for colisions
         CheckColision();
         //Change horizontal movement
@@ -94,7 +93,6 @@ public class PlayerMovement2D : MonoBehaviourPun
         VerticalMove();
         //Pressed should always be in effect one fixedUpdate after keydown
         ResetPressed();
-
     }
 
     // This function checks the relevant inputs

@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class PlayerStatusEffects : MonoBehaviour
+public class PlayerStatusEffects : MonoBehaviourPun
 {
     // Player status effects
     [Header("Status effects")]
@@ -34,6 +33,9 @@ public class PlayerStatusEffects : MonoBehaviour
 
     private void Start()
     {
+        // Disable script if player is not the local player.
+        if (!photonView.IsMine) { enabled = false; }
+
         rb = gameObject.GetComponent<Rigidbody2D>();
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
         statusVisual = GameObject.FindGameObjectWithTag("Status").GetComponent<SpriteRenderer>();
@@ -48,6 +50,9 @@ public class PlayerStatusEffects : MonoBehaviour
 
     private void Update()
     {
+        // Return when it is not the local player
+        if (!photonView.IsMine) { return; }
+
         // Temp debug code to kill the player
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -62,7 +67,8 @@ public class PlayerStatusEffects : MonoBehaviour
         {
             statusVisual.enabled = true;
 
-            if (!movementChanged) { 
+            if (!movementChanged)
+            {
                 playerMovement.maxSpeed *= slowMovementModifier;
                 playerMovement.jumpStrenght *= slowJumpModifier;
                 playerMovement.canWallJump = false;
@@ -79,7 +85,7 @@ public class PlayerStatusEffects : MonoBehaviour
 
         if (isDead)
         {
-            ResetPlayer();   
+            ResetPlayer();
         }
     }
 

@@ -1,18 +1,18 @@
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public UIManager uIManager;
     void Start()
     {
+        // TODO: Add local play option
         if (!PhotonNetwork.IsConnected)
         {
             print("Connecting to server....");
 
             PhotonNetwork.GameVersion = "0.0.1";
-            PhotonNetwork.NickName = "Test";
+            PhotonNetwork.NickName = "Tester"; // TODO: Add ability to set name.
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -106,7 +106,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Lobby
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel(1);
+        PhotonNetwork.LoadLevel(1); // TODO: Change this to the scene which we will be using for the level
     }
 
     public void LeaveRoom()

@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
     [Header("Network Manager")]
     public NetworkManager networkManager;
 
-
+    // TODO: Update code for local player.
     #region Localplayer
     public void Localplayer()
     {
@@ -32,7 +32,6 @@ public class UIManager : MonoBehaviour
         localPanel.SetActive(true);
     }
 
-    // TODO Update code.
     public void CreateRoomLocal()
     {
         if (string.IsNullOrEmpty(l_createRoomNameInput.text))
@@ -85,9 +84,10 @@ public class UIManager : MonoBehaviour
 
     public bool IsInputCorrect(TMP_InputField input)
     {
+        // TODO: Add possible extra checks for numbers, special characters or length.
         if (string.IsNullOrEmpty(input.text))
         {
-            input.placeholder.color = new Color32(255, 0, 0, 128);
+            input.placeholder.color = new Color32(255, 0, 0, 128); // Red color
             return false;
         }
 
