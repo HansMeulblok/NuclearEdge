@@ -1230,7 +1230,12 @@ MonoBehaviour:
   clingDuration: 0.3
   maxDownSlideSpeed: 3
   wallJumpBuffer: 0.15
+  canWallCling: 1
+  canWallJump: 1
   colisionDistance: 0.02
+  sludgeMask:
+    serializedVersion: 2
+    m_Bits: 1791
 --- !u!1 &3335122455531540831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,6 +1270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4714dde0f2301f948b72fc6d5e8dd6ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activators: []
 --- !u!114 &3335122455531540833
 MonoBehaviour:
   m_ObjectHideFlags: 0

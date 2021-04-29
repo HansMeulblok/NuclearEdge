@@ -68,7 +68,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     void Start()
     {
         // Disable script if player is not the local player.
-        if (!photonView.IsMine) { enabled = false; }
+        if (photonView != null && !photonView.IsMine) { enabled = false; }
 
         //Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
@@ -93,6 +93,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         VerticalMove();
         //Pressed should always be in effect one fixedUpdate after keydown
         ResetPressed();
+
     }
 
     // This function checks the relevant inputs
@@ -390,6 +391,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         {
             rightCol = false;
         }
+
         //Check down for collision
         if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance, sludgeMask))
         {
@@ -448,5 +450,31 @@ public class PlayerMovement2D : MonoBehaviourPun
             onLeftWallCling = 0;
             onRightWallCling = 0;
         }
+
+        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, 0.05f, sludgeMask))
+        {
+            //check if falling platform is below the player and if it is parent it to it.s
+            RaycastHit2D downHit = Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, 0.05f);
+            if (downHit.transform.tag == "Falling Platform")
+            {
+                transform.parent = downHit.transform;
+            }
+            else
+            {
+                transform.parent = null;
+            }
+
+        }
+        else
+        {
+            transform.parent = null;
+        }
+
+    }
+
+    public void UnParent()
+    {
+        //unparent the object
+        transform.parent = null;
     }
 }

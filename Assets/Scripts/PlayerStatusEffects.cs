@@ -34,7 +34,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
     private void Start()
     {
         // Disable script if player is not the local player.
-        if (!photonView.IsMine) { enabled = false; }
+        if (photonView != null && !photonView.IsMine) { enabled = false; }
 
         rb = gameObject.GetComponent<Rigidbody2D>();
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
@@ -50,9 +50,6 @@ public class PlayerStatusEffects : MonoBehaviourPun
 
     private void Update()
     {
-        // Return when it is not the local player
-        if (!photonView.IsMine) { return; }
-
         // Temp debug code to kill the player
         if (Input.GetKeyDown(KeyCode.R))
         {
