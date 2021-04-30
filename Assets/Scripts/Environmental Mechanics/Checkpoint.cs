@@ -17,6 +17,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            sprite.color = Color.green;
             player = collision.gameObject;
             playerStatusEffects = player.GetComponent<PlayerStatusEffects>();
 
@@ -25,6 +26,5 @@ public class Checkpoint : MonoBehaviour
                 playerStatusEffects.respawnPosition = transform.position;
             }
         }
-        sprite.color = Color.green;
     }
 }

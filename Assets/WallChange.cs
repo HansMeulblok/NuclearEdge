@@ -40,11 +40,6 @@ public class WallChange : BaseActivator
             collider.enabled = false;
             collider.enabled = true;
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Trigger();
-        }
     }
 
     private void FixedUpdate()
