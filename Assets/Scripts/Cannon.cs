@@ -56,6 +56,10 @@ public class Cannon : BaseActivator
 
     private IEnumerator ChangeAngles()
     {
+        if(!activated)
+        {
+          yield break;
+        }
         // check at which angle the canon should stop and should fire
         AngleOptions();
 
