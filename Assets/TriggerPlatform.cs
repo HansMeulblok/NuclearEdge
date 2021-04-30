@@ -10,8 +10,8 @@ public class TriggerPlatform : BaseActivator
     private Color platformColor;
 
     [Header("platform editting variables")]
-    [Range (1f, 10f)]public int platformLength;
-    [Range(1f, 2f)] public int platformHeight;
+    [Range (1f, 50f)]public int platformLength;
+    [Range(1f, 50f)] public int platformHeight;
     public new BoxCollider2D collider;
 
     private void Start()
