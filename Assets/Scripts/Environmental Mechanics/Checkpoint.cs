@@ -23,7 +23,7 @@ public class Checkpoint : MonoBehaviour
 
             if (playerStatusEffects.respawnPosition.x < transform.position.x)
             {
-                playerStatusEffects.respawnPosition = transform.position;
+                playerStatusEffects.respawnPosition = player.transform.position;
             }
         }
     }
