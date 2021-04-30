@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class WallChange : MonoBehaviour
+public class WallChange : BaseActivator
 {
     [Header("enable/disable editting mode")]
     public bool editing = true;
@@ -21,8 +21,8 @@ public class WallChange : MonoBehaviour
     float lerpValue = 0;
 
     [Header("platform movement variables")]
-    [Range(0, 10)] public int moveX;
-    [Range(0, 10)] public int moveY;
+    [Range(-10, 10)] public int moveX;
+    [Range(-10, 10)] public int moveY;
 
     private void Start()
     {
@@ -72,6 +72,11 @@ public class WallChange : MonoBehaviour
                 }
             }
         }
+    }
+
+    public override void Activate()
+    {
+        Trigger();
     }
 
     public void Trigger()
