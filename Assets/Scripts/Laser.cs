@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Laser : BaseActivator
 {
+    [SerializeField] private float buildUpTime;
+    [SerializeField] private float duration;
+    [SerializeField] private GameObject buildUpFX;
 
     PlayerStatusEffects pse;
 
@@ -19,12 +19,11 @@ public class Laser : BaseActivator
     public bool isActivated = true;
 
     private float timer;
-    [SerializeField] private float buildUpTime;
-    [SerializeField] private float duration;
     private float durationTimer;
 
     public override void Activate()
     {
+        //toggle laser on of on activate
         isActivated = !isActivated;
         ToggleLaser();
     }
@@ -39,32 +38,40 @@ public class Laser : BaseActivator
     {
         if (!isActivated)
         {
+            //if not activated return
             timer = 0;
             durationTimer = 0;
             return;
         }
         else
         {
+            //if activated start build up time
             timer += Time.deltaTime;
             if(timer < buildUpTime)
             {
                 //visual feedback
+                buildUpFX.SetActive(true);
                 lineRenderer.enabled = false;
                 return;
             }
             else
             {
+                //if build up time is done fire laser for durationTimer
+
+                buildUpFX.SetActive(false);
                 lineRenderer.enabled = true;
                 durationTimer += Time.deltaTime;
 
                 if(durationTimer >= duration)
                 {
+                    //if the duration timer is equel to duration turn off the laser
                     timer = 0;
                     durationTimer = 0;
                 }
             }
         }
 
+        //raycast into right pos
         ray = new Ray2D(transform.position, transform.right);
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
@@ -74,10 +81,16 @@ public class Laser : BaseActivator
         {
             if(hit = Physics2D.Raycast(ray.origin, ray.direction, remainingLength))
             {
+                //check if we hit something if we do add to position count and update linerenderer positions
                 lineRenderer.positionCount += 1;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
+
+                //check how much remaining length the laser has
                 remainingLength -= Vector3.Distance(ray.origin, hit.point);
+                //reflect the laser of the surface
                 ray = new Ray2D(hit.point, Vector3.Reflect(ray.direction, hit.normal));
+
+                //if it hits the player kill the player
                 if(hit.collider.tag == "Player")
                 {
                     //Get the PlayerStatusEffects script from the player
@@ -86,6 +99,7 @@ public class Laser : BaseActivator
                     pse.isDead = true;
                 }
                     
+                //if the ray hit something else than the tilemap break
                 if (hit.collider.tag != "TileMap")
                 break;
 
