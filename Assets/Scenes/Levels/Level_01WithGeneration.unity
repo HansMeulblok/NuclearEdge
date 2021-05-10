@@ -222,7 +222,7 @@ MonoBehaviour:
   checkPointChunk: {fileID: 4123371465534611784, guid: c44e0471b02418d48a64b38b08d53166, type: 3}
   chunks: []
   finishChunk: {fileID: 4123371465534611784, guid: c44e0471b02418d48a64b38b08d53166, type: 3}
-  chunkHolder: {fileID: 0}
+  chunkHolder: {fileID: 604165450}
   checkpoints: {fileID: 2031888778}
 --- !u!4 &279440054
 Transform:
