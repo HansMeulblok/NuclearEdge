@@ -30,7 +30,6 @@ public class KillOnContact : MonoBehaviour
     //When something enters the trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other);
         //If it is the player
         if (other.CompareTag("Player"))
         {

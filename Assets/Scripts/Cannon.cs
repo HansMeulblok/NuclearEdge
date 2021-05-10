@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Cannon : MonoBehaviour
+public class Cannon : BaseActivator
 {
     public GameObject pivot;
     public GameObject firePoint;
@@ -24,6 +23,7 @@ public class Cannon : MonoBehaviour
 
     private int[] angles = new int[] {12, 6, 3};
     private int angleDivision;
+    public bool activated = true;
 
     [Header("Angle determination")]
     public MyEnum amountOfAngles = new MyEnum();
@@ -38,11 +38,28 @@ public class Cannon : MonoBehaviour
     {
         AmountOfAngles();
 
+        if(activated)
         StartCoroutine(ChangeAngles());
+    }
+
+    public override void Activate()
+    {
+        activated = !activated;
+        if(activated)
+        {
+          StartCoroutine(ChangeAngles());
+        } else
+        {
+          StopCoroutine(ChangeAngles());
+        }
     }
 
     private IEnumerator ChangeAngles()
     {
+        if(!activated)
+        {
+          yield break;
+        }
         // check at which angle the canon should stop and should fire
         AngleOptions();
 

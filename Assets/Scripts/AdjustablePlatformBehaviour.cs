@@ -7,7 +7,7 @@ public class AdjustablePlatformBehaviour : MonoBehaviour
     public bool editing = true;
 
     [Header("platform editting variables")]
-    [Range(1f, 10f)] public int platformLength;
+    [Range(2f, 30f)] public int platformLength;
     [Range(1f, 2f)] public int platformHeight;
     public new BoxCollider2D collider;
 

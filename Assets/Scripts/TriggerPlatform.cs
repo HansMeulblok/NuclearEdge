@@ -10,8 +10,8 @@ public class TriggerPlatform : BaseActivator
     private Color platformColor;
 
     [Header("platform editting variables")]
-    [Range (1f, 10f)]public int platformLength;
-    [Range(1f, 2f)] public int platformHeight;
+    [Range (1f, 50f)]public int platformLength;
+    [Range(1f, 50f)] public int platformHeight;
     public new BoxCollider2D collider;
 
     private void Start()
@@ -57,7 +57,7 @@ public class TriggerPlatform : BaseActivator
         {
             //turn off collider and set the alpha to 50%
             GetComponent<BoxCollider2D>().enabled = false;
-            GetComponent<SpriteRenderer>().color = new Color(platformColor.r, platformColor.g, platformColor.b, 0.5f);
+            GetComponent<SpriteRenderer>().color = new Color(platformColor.r, platformColor.g, platformColor.b, 0.1f);
         }
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - GMTrigger
   - Status
   - Falling Platform
+  - TileMap
   layers:
   - Default
   - TransparentFX

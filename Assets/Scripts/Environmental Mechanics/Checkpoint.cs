@@ -17,14 +17,14 @@ public class Checkpoint : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            sprite.color = Color.green;
             player = collision.gameObject;
             playerStatusEffects = player.GetComponent<PlayerStatusEffects>();
 
             if (playerStatusEffects.respawnPosition.x < transform.position.x)
             {
-                playerStatusEffects.respawnPosition = transform.position;
+                playerStatusEffects.respawnPosition = player.transform.position;
             }
         }
-        sprite.color = Color.green;
     }
 }
