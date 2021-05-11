@@ -51,15 +51,16 @@ public class Laser : BaseActivator
             {
                 //visual feedback
                 buildUpFX.SetActive(true);
-                lineRenderer.enabled = false;
-                return;
+                //lineRenderer.enabled = false;
+                lineRenderer.material.color = new Color(1, 0, 0, 0);
             }
             else
             {
                 //if build up time is done fire laser for durationTimer
 
                 buildUpFX.SetActive(false);
-                lineRenderer.enabled = true;
+                //lineRenderer.enabled = true;
+                lineRenderer.material.color = new Color(234, 0, 255, 1);
                 durationTimer += Time.deltaTime;
 
                 if(durationTimer >= duration)
@@ -91,7 +92,7 @@ public class Laser : BaseActivator
                 ray = new Ray2D(hit.point, Vector3.Reflect(ray.direction, hit.normal));
 
                 //if it hits the player kill the player
-                if(hit.collider.tag == "Player")
+                if(hit.collider.tag == "Player" && durationTimer != 0)
                 {
                     //Get the PlayerStatusEffects script from the player
                     pse = hit.collider.GetComponent<PlayerStatusEffects>();
