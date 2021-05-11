@@ -21,8 +21,9 @@ public class LevelGenerator : MonoBehaviour
             //grab de initial chunks as they are
             foreach (Transform chunk in chunkHolder)
             {
-                chunks.Add(transform.gameObject);
+                chunks.Add(chunk.gameObject);
             }
+
             //only do this once
             init = false;
         }
@@ -34,7 +35,7 @@ public class LevelGenerator : MonoBehaviour
             Instantiate(chunk, position + new Vector2(checkpointWidth, 0), Quaternion.identity, chunkHolder);
             chunks.Remove(chunk);
 
-            if(chunks.Count == 0)
+            if (chunks.Count == 0)
             {
                 //instantiate the finish if no more chunks left
                 GameObject finish = Instantiate(finishChunk, position + new Vector2(chunkWidth + checkpointWidth, 0), Quaternion.identity, chunkHolder);
