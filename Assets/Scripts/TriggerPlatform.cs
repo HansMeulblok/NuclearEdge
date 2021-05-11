@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[ExecuteInEditMode]
+
 public class TriggerPlatform : BaseActivator
 {
     [Header("enable/disable editting mode")]
@@ -16,12 +16,15 @@ public class TriggerPlatform : BaseActivator
 
     private void Start()
     {
-        editing = false;
         if (!editing)
         {
             Trigger();
         }
+        editing = false;
+
     }
+
+    [ExecuteInEditMode]
 
     private void Update()
     {

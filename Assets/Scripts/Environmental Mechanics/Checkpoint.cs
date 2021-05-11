@@ -6,6 +6,7 @@ public class Checkpoint : MonoBehaviour
 {
     GameObject player;
     PlayerStatusEffects playerStatusEffects;
+    public bool shouldGenerate = false;
 
     SpriteRenderer sprite;
 
@@ -25,6 +26,13 @@ public class Checkpoint : MonoBehaviour
             {
                 playerStatusEffects.respawnPosition = player.transform.position;
             }
+
+            if(shouldGenerate)
+            {
+                FindObjectOfType<LevelGenerator>().SpawnNewChunks(transform.parent.position);
+                shouldGenerate = false;
+            }
+
         }
     }
 }
