@@ -303,7 +303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081606822016883215, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4592117072935599856, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
       propertyPath: sceneViewId
@@ -329,7 +329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &826048165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8123,7 +8123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1316485202191978424, guid: bb25ca180683be84d9bb1fdfb548a264, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1316485202191978425, guid: bb25ca180683be84d9bb1fdfb548a264, type: 3}
       propertyPath: m_Follow
@@ -14809,6 +14809,14 @@ PrefabInstance:
     - target: {fileID: 6340688023113512827, guid: fa37571e7ea4a804797be52217efaac5, type: 3}
       propertyPath: m_Name
       value: Finish
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340688024271532139, guid: fa37571e7ea4a804797be52217efaac5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340688024271532148, guid: fa37571e7ea4a804797be52217efaac5, type: 3}
+      propertyPath: m_Color.a
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa37571e7ea4a804797be52217efaac5, type: 3}
