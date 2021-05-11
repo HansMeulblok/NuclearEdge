@@ -60,11 +60,11 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637563302610748407
+  lastModified: 637563322772070493
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 836
+    Value: 894
   Exists: 1
 --- !u!114 &-8834537167717516915
 MonoBehaviour:
@@ -736,7 +736,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637563302610728456
+  lastModified: 637563322772050548
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1030,12 +1030,13 @@ MonoBehaviour:
   - {fileID: 430877891017928416}
   EditorEvents:
   - {fileID: 6435866387926653961}
+  - {fileID: 8189284472024905974}
   EditorParameters: []
   MasterBanks:
   - {fileID: -3785463957421738849}
   StringsBanks:
   - {fileID: -8912418390795902800}
-  stringsBankWriteTime: 637563302610748407
+  stringsBankWriteTime: 637563322772070493
   cacheVersion: 6
 --- !u!114 &4976423215005704
 MonoBehaviour:
@@ -1132,7 +1133,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 637563302611277172
+  lastModified: 637563322772638973
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1913,6 +1914,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &8189284472024905974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/Jump
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player/Jump
+  guid: 94fc7f895a0af548a9cbbf988dfbf9f5
+  Banks:
+  - {fileID: 430877891017928416}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 417
 --- !u!114 &8216993183755625333
 MonoBehaviour:
   m_ObjectHideFlags: 0

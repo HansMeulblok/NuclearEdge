@@ -187,10 +187,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -4644063471574625511, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3081606822016883210, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -238,10 +234,6 @@ PrefabInstance:
     - target: {fileID: 3081606822016883215, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4592117072935599856, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
-      propertyPath: sceneViewId
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
@@ -1416,7 +1408,7 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1641268380
+--- !u!1 &1460471772
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1424,22 +1416,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1641268382}
-  - component: {fileID: 1641268381}
+  - component: {fileID: 1460471774}
+  - component: {fileID: 1460471773}
   m_Layer: 0
-  m_Name: AudioObject
+  m_Name: BackgroundSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1641268381
+--- !u!114 &1460471773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641268380}
+  m_GameObject: {fileID: 1460471772}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
@@ -1456,13 +1448,13 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 0
   OverrideMaxDistance: 0
---- !u!4 &1641268382
+--- !u!4 &1460471774
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641268380}
+  m_GameObject: {fileID: 1460471772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 531.25946, y: 296.5597, z: -37.605957}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1480,7 +1472,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2088540939}
   - component: {fileID: 2088540938}
-  - component: {fileID: 2088540937}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1488,20 +1479,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2088540937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2088540936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attenuationObject: {fileID: 0}
-  ListenerNumber: -1
 --- !u!20 &2088540938
 Camera:
   m_ObjectHideFlags: 0

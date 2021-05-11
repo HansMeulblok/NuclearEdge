@@ -47,12 +47,14 @@ public class PlayerMovement2D : MonoBehaviourPun
     [Header("Collision")]
     public float colisionDistance;
     public LayerMask sludgeMask;
-    bool grounded;
+    [HideInInspector]
+    public bool grounded;
     bool leftCol;
     bool rightCol;
 
     //Input
-    bool upPressed;
+    [HideInInspector]
+    public bool upPressed;
     bool upHold;
     bool leftPressed;
     bool leftHold;

@@ -5,20 +5,21 @@ using FMODUnity;
 
 public class PlayerAudio : MonoBehaviour
 {
-    public float minRPM = 0;
-    public float maxRPM = 5000;
-
-    private Rigidbody2D rb;
     private StudioEventEmitter emitter;
+    private PlayerMovement2D pm;
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         emitter = GetComponent<StudioEventEmitter>();
+        pm = GetComponent<PlayerMovement2D>();
     }
     private void FixedUpdate()
     {
-        float effectiveRPM = Mathf.Lerp(minRPM, maxRPM, rb.velocity.magnitude);
-        emitter.SetParameter("RPM", effectiveRPM);
-
+        if (pm.upPressed)
+        {
+            if (pm.grounded)
+            {
+                emitter.Play();
+            }
+        }
     }
 }
