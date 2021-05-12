@@ -558,9 +558,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e903ff4c808de9c4e87d0370a142e04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
-  offset: {x: 0, y: 0, z: -1}
+  targets:
+  - {fileID: 974117341}
+  - {fileID: 1783722509}
+  offset: {x: 10, y: 0, z: -1}
   smoothTime: 0.5
+  minZoom: 10
+  maxZoom: 5
+  zoomLimit: 10
 --- !u!1001 &1681818668821531401
 PrefabInstance:
   m_ObjectHideFlags: 0
