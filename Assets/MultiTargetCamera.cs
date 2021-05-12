@@ -28,11 +28,7 @@ public class MultiTargetCamera : MonoBehaviour
         foreach (Transform target in targets)
         {
             SpriteRenderer renderer = target.GetComponent<SpriteRenderer>();
-            if(renderer.isVisible)
-            {
-                Debug.Log("yo");
-            }
-            else
+            if (!renderer.isVisible)
             {
                 //kill player
             }
