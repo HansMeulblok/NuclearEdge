@@ -1438,7 +1438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionTag: 
-  Event: event:/Music/TechnoTest
+  Event: event:/Music/MainTheme
   PlayEvent: 1
   StopEvent: 0
   AllowFadeout: 1

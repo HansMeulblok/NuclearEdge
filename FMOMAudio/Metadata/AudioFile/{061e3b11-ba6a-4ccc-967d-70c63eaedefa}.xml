@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{061e3b11-ba6a-4ccc-967d-70c63eaedefa}">
+		<property name="assetPath">
+			<value>little_robot_sound_factory_Hit_00.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.28799999999999998</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{9676f27f-b7ef-45ff-bfd8-afebecaa7607}</destination>
+		</relationship>
+	</object>
+</objects>

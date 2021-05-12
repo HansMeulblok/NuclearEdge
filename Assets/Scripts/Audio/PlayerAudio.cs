@@ -14,12 +14,12 @@ public class PlayerAudio : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (pm.upPressed)
-        {
-            if (pm.grounded)
-            {
-                emitter.Play();
-            }
-        }
+        //if (pm.upPressed)
+        //{
+        //    if (pm.grounded)
+        //    {
+        //        emitter.Play();
+        //    }
+        //}
     }
 }
