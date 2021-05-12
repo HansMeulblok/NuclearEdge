@@ -19,10 +19,26 @@ public class MultiTargetCamera : MonoBehaviour
     private void Start()
     {
         camera = GetComponent<Camera>();
+        
     }
 
     private void LateUpdate()
     {
+
+        foreach (Transform target in targets)
+        {
+            SpriteRenderer renderer = target.GetComponent<SpriteRenderer>();
+            if(renderer.isVisible)
+            {
+                Debug.Log("yo");
+            }
+            else
+            {
+                //kill player
+            }
+        }
+
+
         if (targets.Count == 0)
             return;
 
