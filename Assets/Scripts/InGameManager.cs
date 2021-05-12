@@ -10,20 +10,23 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
-        if (propertiesThatChanged["playerWon"].Equals("Host") && PhotonNetwork.IsMasterClient)
+        if(propertiesThatChanged["playerWon"] != null)
         {
-            resultText.text = "You Win!";
-            resultText.color = Color.green;
-        }
-        else if (propertiesThatChanged["playerWon"].Equals("Client") && !PhotonNetwork.IsMasterClient)
-        {
-            resultText.text = "You Win!";
-            resultText.color = Color.green;
-        }
-        else 
-        {
-            resultText.text = "You Lose!";
-            resultText.color = Color.red;
+            if (propertiesThatChanged["playerWon"].Equals("Host") && PhotonNetwork.IsMasterClient)
+            {
+                resultText.text = "You Win!";
+                resultText.color = Color.green;
+            }
+            else if (propertiesThatChanged["playerWon"].Equals("Client") && !PhotonNetwork.IsMasterClient)
+            {
+                resultText.text = "You Win!";
+                resultText.color = Color.green;
+            }
+            else
+            {
+                resultText.text = "You Lose!";
+                resultText.color = Color.red;
+            }
         }
     }
 }
