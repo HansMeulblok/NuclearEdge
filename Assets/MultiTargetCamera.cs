@@ -31,6 +31,7 @@ public class MultiTargetCamera : MonoBehaviour
             if (!renderer.isVisible)
             {
                 //kill player
+                renderer.gameObject.GetComponent<PlayerStatusEffects>().isDead = true;
             }
         }
 
