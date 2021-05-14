@@ -5,7 +5,7 @@ public class ButtonTriggers : MonoBehaviour
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
