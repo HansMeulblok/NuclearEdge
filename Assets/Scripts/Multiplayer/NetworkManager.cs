@@ -43,7 +43,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions
         {
-            MaxPlayers = 2
+            MaxPlayers = 4
         };
 
         if (menuManager.IsInputCorrect(menuManager.l_createRoomNameInput))
@@ -58,7 +58,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions
         {
-            MaxPlayers = 2
+            MaxPlayers = 4
         };
 
         if (menuManager.IsInputCorrect(menuManager.mp_createRoomNameInput))
@@ -115,7 +115,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", true } });
         PhotonNetwork.LoadLevel(1); // TODO: Change this to the scene which we will be using for the level
         SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for host
-
     }
 
     public void LeaveRoom()
