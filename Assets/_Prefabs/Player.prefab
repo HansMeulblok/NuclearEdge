@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -173,6 +173,9 @@ MonoBehaviour:
   sludgeMask:
     serializedVersion: 2
     m_Bits: 1791
+  sideMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &4078651198949443754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +195,13 @@ MonoBehaviour:
   inSludge: 0
   movementChanged: 0
   isDead: 0
+  isStunned: 0
+  leveltesting: 1
   respawnPosition: {x: 0, y: 0}
+  stunMovementModifier: 0
+  stunJumpModifier: 0
+  blinkInterval: 0
+  stunDuration: 0
 --- !u!114 &501673029901795301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +291,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 701153948976307700}
   - component: {fileID: 701153948976307701}
   - component: {fileID: 701153948976307702}
-  - component: {fileID: 7361446935587046889}
+  - component: {fileID: 346510096753414549}
   m_Layer: 0
   m_Name: Spikes
   m_TagString: Untagged
@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 7126230126234233847, guid: 7f3e7e966dd8a428894bc7fc03da24ec, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -110,7 +110,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7361446935587046889
+--- !u!114 &346510096753414549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,10 +119,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 701153948976307696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93cd45f7ed597a64c8fab5c4e325741e, type: 3}
+  m_Script: {fileID: 11500000, guid: 656a9219cca4a684db13c740c7f84eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   editing: 1
-  platformLength: 1
-  platformHeight: 1
+  platformLength: 0
+  platformHeight: 0
   collider: {fileID: 701153948976307702}
