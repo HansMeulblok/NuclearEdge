@@ -97,7 +97,7 @@ public class Laser : BaseActivator
                     //Get the PlayerStatusEffects script from the player
                     pse = hit.collider.GetComponent<PlayerStatusEffects>();
                     //The player is dead
-                    pse.isDead = true;
+                    pse.isStunned = true;
                 }
                     
                 //if the ray hit something else than the tilemap break
