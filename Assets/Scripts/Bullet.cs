@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerStatusEffects>().isDead = true;
+            collision.gameObject.GetComponent<PlayerStatusEffects>().isStunned = true;
         }
 
         Destroy();
