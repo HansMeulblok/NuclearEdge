@@ -21,6 +21,8 @@ public class Laser : BaseActivator
     private float timer;
     private float durationTimer;
 
+    int playerHits;
+
     public override void Activate()
     {
         //toggle laser on of on activate
@@ -77,6 +79,7 @@ public class Laser : BaseActivator
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
         float remainingLength = maxLength;
+        playerHits = 0;
 
         for (int i = 0; i < reflections; i++)
         {
@@ -88,26 +91,37 @@ public class Laser : BaseActivator
 
                 //check how much remaining length the laser has
                 remainingLength -= Vector3.Distance(ray.origin, hit.point);
-                //reflect the laser of the surface
-                ray = new Ray2D(hit.point, Vector3.Reflect(ray.direction, hit.normal));
 
-                //if it hits the player kill the player
-                if(hit.collider.tag == "Player" && durationTimer != 0)
+                //if it hits the player stun the player and continue the laser
+                if(hit.collider.tag == "Player" && durationTimer != 0 && playerHits < 10)
                 {
                     //Get the PlayerStatusEffects script from the player
                     pse = hit.collider.GetComponent<PlayerStatusEffects>();
                     //The player is dead
                     pse.isStunned = true;
+                    //Hitting the player doesn't reflect
+                    i--;
+                    //Failsave for hitting the player multiple times
+                    playerHits++;
+                    //Ray will continue from the player location
+                    ray = new Ray2D(hit.point, ray.direction);
+                }
+                //Reflect when not hitting the player
+                else
+                {
+                    //reflect the laser of the surface
+                    ray = new Ray2D(hit.point, Vector3.Reflect(ray.direction, hit.normal));
                 }
                     
                 //if the ray hit something else than the tilemap break
-                if (hit.collider.tag != "TileMap")
+                if (hit.collider.tag != "TileMap" && hit.collider.tag != "Player")
                 break;
 
                     
             }
             else
             {
+                //When the ray doesn't hit anything before reaching the distance limit add that as end point
                 lineRenderer.positionCount += 1;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, ray.origin + ray.direction * remainingLength);
             }
