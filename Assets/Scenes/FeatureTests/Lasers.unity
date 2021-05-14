@@ -339,6 +339,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
+      propertyPath: airDecel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
+      propertyPath: knockBackVerticalStrenght
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883214, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
+      propertyPath: knockBackHorizontalStrenght
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3081606822016883215, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -346,6 +358,18 @@ PrefabInstance:
     - target: {fileID: 3081606822016883215, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078651198949443754, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
+      propertyPath: stunDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078651198949443754, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
+      propertyPath: blinkInterval
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078651198949443754, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
+      propertyPath: stunMovementModifier
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4592117072935599856, guid: 532a1b8d38b2ca84a98d051f820fff9c, type: 3}
       propertyPath: sceneViewId
