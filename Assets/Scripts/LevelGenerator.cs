@@ -38,14 +38,13 @@ public class LevelGenerator : MonoBehaviour
             if (chunks.Count == 0)
             {
                 //instantiate the finish if no more chunks left
-                GameObject finish = Instantiate(finishChunk, position + new Vector2(chunkWidth + checkpointWidth, 0), Quaternion.identity, chunkHolder);
-                finish.GetComponentInChildren<Checkpoint>().shouldGenerate = false;
+                GameObject finish = Instantiate(finishChunk, position + new Vector2(chunkWidth + checkpointWidth * 2, 0), Quaternion.identity, chunkHolder);
 
             }
             else
             {
                 GameObject newCheckPoint = Instantiate(checkPointChunk, position + new Vector2(chunkWidth + checkpointWidth, 0), Quaternion.identity, checkpoints.transform);
-                newCheckPoint.GetComponentInChildren<Checkpoint>().shouldGenerate = true;
+                newCheckPoint.GetComponentInChildren<LevelGenerationTrigger>().shouldGenerate = true;
             }
             
         }

@@ -28,7 +28,6 @@ public class StunOnContact : MonoBehaviour
     //When something enters the trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("yo");
         //If it is the player
         if (other.CompareTag("Player"))
         {
