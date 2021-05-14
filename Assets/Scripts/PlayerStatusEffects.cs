@@ -114,6 +114,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
             {
                 InvokeRepeating("Blinking", 0, blinkInterval);
                 isInvincible = true;
+                playerMovement.KnockBack();
             }
 
             //slow player
