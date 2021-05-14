@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 1934995511}
     - target: {fileID: 996680300330996743, guid: 811f63e13169d024da7e554d8316e296, type: 3}
       propertyPath: m_Name
-      value: UI
+      value: Menu UI
       objectReference: {fileID: 0}
     - target: {fileID: 996680300330996748, guid: 811f63e13169d024da7e554d8316e296, type: 3}
       propertyPath: m_Pivot.x
@@ -234,10 +234,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 996680300346127506, guid: 811f63e13169d024da7e554d8316e296, type: 3}
-      propertyPath: menuManager
-      value: 
-      objectReference: {fileID: 288778942}
     - target: {fileID: 996680300579876994, guid: 811f63e13169d024da7e554d8316e296, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
