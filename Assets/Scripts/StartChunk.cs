@@ -28,7 +28,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
         if (!startTimer)
         {
             // Clien needs to wait to receive start timer property
-            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("StartTime"))
+            if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom.CustomProperties["StartTime"] != null)
             {
                 startTime = (float)PhotonNetwork.CurrentRoom.CustomProperties["StartTime"];
                 startTimer = true;
