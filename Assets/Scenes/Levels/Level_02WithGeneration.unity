@@ -204,8 +204,8 @@ MonoBehaviour:
   targets: []
   offset: {x: 0, y: 0, z: -1}
   smoothTime: 0.5
-  minZoom: 10
-  maxZoom: 5
+  minZoom: 15
+  maxZoom: 10
   zoomLimit: 10
 --- !u!20 &366979589
 Camera:

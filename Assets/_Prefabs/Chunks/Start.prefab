@@ -9765,7 +9765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeActivatedOriginal: 5
   isStatic: 1
-  activatedScale: {x: 24, y: 40}
+  activatedScale: {x: 4, y: 40}
 --- !u!212 &1346288552165282379
 SpriteRenderer:
   m_ObjectHideFlags: 0
