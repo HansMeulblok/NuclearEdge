@@ -13,6 +13,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     public float minZoom = 40f;
     public float maxZoom = 10f;
     public float zoomLimit = 50;
+    public float getPlayerBuffer;
 
     private Vector3 velocity;
     private new Camera camera;
@@ -22,7 +23,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         camera = GetComponent<Camera>();
         camera.orthographic = true;
 
-        Invoke("GetPlayers", 0.2f);
+        Invoke("GetPlayers", getPlayerBuffer);
     }
 
     private void LateUpdate()

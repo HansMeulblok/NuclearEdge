@@ -275,11 +275,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targets: []
-  offset: {x: 0, y: 0, z: -1}
+  offset: {x: 10, y: 0, z: -1}
   smoothTime: 0.5
   minZoom: 15
   maxZoom: 10
   zoomLimit: 10
+  getPlayerBuffer: 1
 --- !u!20 &366979589
 Camera:
   m_ObjectHideFlags: 0
