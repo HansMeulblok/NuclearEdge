@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private bool isRendered = false;
     List<string> deadPlayers = new List<string>();
+    List<PhotonView> players = new List<PhotonView>();
 
     // [SerializeField] private Transform playerParent;
     private Vector2 networkPosition;
@@ -37,6 +38,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         playerSprite = GetComponent<SpriteRenderer>();
         multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
+
+
+        for (int i = 0; i < multiTargetCamera.targets.Count; i++)
+        {
+            players.Add(multiTargetCamera.targets[i].gameObject.GetComponent<PhotonView>());
+        }
     }
 
 
@@ -80,10 +87,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (isRendered && !playerSprite.isVisible && photonView.IsMine)
         {
             multiTargetCamera.targets.Remove(transform);
+
             string playerId = PhotonNetwork.LocalPlayer.UserId;
             deadPlayers.Add(playerId);
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers} });
-            //gameObject.SetActive(false);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers } });
         }
     }
 
@@ -92,9 +99,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (propertiesThatChanged["DeadPlayers"] != null)
         {
             deadPlayers = (List<string>)propertiesThatChanged["DeadPlayers"];
-            foreach (string id in deadPlayers)
+            foreach (PhotonView player in players)
             {
-                //if(deadPlayers.Contains == Photo)
+                if (deadPlayers.Contains(player.ViewID.ToString())){
+                    player.gameObject.SetActive(false);
+                }
             }
         };
     }
