@@ -24,19 +24,20 @@ public class TrapHighlighter : MonoBehaviour
             playerColor = player.GetComponent<SpriteRenderer>().color;
             for (int i = 0; i < bt.activators.Length; i++)
             {
-                bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().color = playerColor;
-                bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().enabled = true;
+                /* Temp fix for broken canons */
+                //bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().color = playerColor;
+                //bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().enabled = true;
                 lines.Add(DrawLine(transform.position, bt.activators[i].transform.position, playerColor));
             }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        for (int i = 0; i < bt.activators.Length; i++)
-        {
-            bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().color = Color.white;
-            bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().enabled = false;
-        }
+        /* Temp fix for broken canons */
+        //for (int i = 0; i < bt.activators.Length; i++)
+        //{
+        //    bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().enabled = false;
+        //}
 
         for (int i = 0; i < lines.Count; i++)
         {
