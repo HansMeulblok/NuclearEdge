@@ -11,6 +11,7 @@ public class TriggerPlatform : BaseActivator
     [Header("platform editting variables")]
     [Range(1f, 50f)] public int platformLength;
     [Range(1f, 50f)] public int platformHeight;
+    public SpriteRenderer spriteHolder;
     public new BoxCollider2D collider;
 
     private void Start()
@@ -24,7 +25,21 @@ public class TriggerPlatform : BaseActivator
         //if you want to edit the platform enable editing.
         if (editing)
         {
+
+            //prevent NaN errors
+            if (platformHeight == 0 || platformLength == 0)
+            {
+                return;
+            }
+
+            //update sprite and scale
             transform.localScale = new Vector3(platformLength, platformHeight, transform.localScale.z);
+            spriteHolder.drawMode = SpriteDrawMode.Tiled;
+            spriteHolder.transform.localScale = new Vector3(1, 1, 1);
+            float newLength = spriteHolder.transform.localScale.y / platformLength;
+            float newHeight = spriteHolder.transform.localScale.y / platformHeight;
+            spriteHolder.transform.localScale = new Vector3(newLength, newHeight, 1);
+            spriteHolder.size = new Vector2(platformLength, platformHeight);
 
             //update the collider
             collider.enabled = false;

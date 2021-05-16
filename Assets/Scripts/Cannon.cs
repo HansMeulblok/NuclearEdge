@@ -7,7 +7,7 @@ public class Cannon : BaseActivator
     public GameObject firePoint;
 
     [Header("Shooting variables")]
-    [Range(0.2f,1f)]public float shootingInterval;
+    [Range(0.2f,5f)]public float shootingInterval;
     [SerializeField] private float bulletMoveSpeed;
     [SerializeField] private float bulletLifeSpan;
 

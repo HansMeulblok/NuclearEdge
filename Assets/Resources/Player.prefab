@@ -175,11 +175,13 @@ MonoBehaviour:
   decel: 30
   airDecel: 15
   maxSpeed: 10
-  jumpStrenght: 12
+  knockBackHorizontalStrenght: 0
+  jumpStrenght: 14
   jumpBufferLenght: 0.2
   maxFallSpeed: 15
-  wallJumpHorizontal: 10
+  wallJumpHorizontal: 12
   wallJumpVertical: 10
+  knockBackVerticalStrenght: 15
   gravity: 24
   gravZoneMult: 1
   upGravMult: 1
@@ -189,7 +191,7 @@ MonoBehaviour:
   downWallGravMult: 0.25
   clingDuration: 0.3
   maxDownSlideSpeed: 3
-  wallJumpBuffer: 0.3
+  wallJumpBuffer: 0.4
   canWallCling: 1
   canWallJump: 1
   colisionDistance: 0.02
@@ -198,7 +200,7 @@ MonoBehaviour:
     m_Bits: 1791
   sideMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 3839
 --- !u!114 &4078651198949443754
 MonoBehaviour:
   m_ObjectHideFlags: 0
