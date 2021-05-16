@@ -51513,6 +51513,14 @@ PrefabInstance:
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[42].Array.data[1009].Y
       value: -23450000
       objectReference: {fileID: 0}
+    - target: {fileID: 8228898773932666873, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
+      propertyPath: bulletLifeSpan
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228898774287805780, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
+      propertyPath: bulletLifeSpan
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8228898774470541838, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
       propertyPath: bulletLifeSpan
       value: 10

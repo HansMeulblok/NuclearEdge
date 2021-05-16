@@ -1,14 +1,17 @@
 using UnityEngine;
 using Photon.Pun;
+using System.Collections.Generic;
+using ExitGames.Client.Photon;
 
-public class PlayerManager : MonoBehaviourPun, IPunObservable
+public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     private Rigidbody2D playerRB;
     private SpriteRenderer playerSprite;
     private MultiTargetCamera multiTargetCamera;
 
     private bool isRendered = false;
-   
+    List<string> deadPlayers = new List<string>();
+
     // [SerializeField] private Transform playerParent;
     private Vector2 networkPosition;
     private float networkRotation;
@@ -74,11 +77,26 @@ public class PlayerManager : MonoBehaviourPun, IPunObservable
     private void Update()
     {
         // Remove player from target list and disable player when out of camera FoV
-        if (isRendered && !playerSprite.isVisible)
+        if (isRendered && !playerSprite.isVisible && photonView.IsMine)
         {
             multiTargetCamera.targets.Remove(transform);
-            gameObject.SetActive(false);
+            string playerId = PhotonNetwork.LocalPlayer.UserId;
+            deadPlayers.Add(playerId);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers} });
+            //gameObject.SetActive(false);
         }
+    }
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged["DeadPlayers"] != null)
+        {
+            deadPlayers = (List<string>)propertiesThatChanged["DeadPlayers"];
+            foreach (string id in deadPlayers)
+            {
+                //if(deadPlayers.Contains == Photo)
+            }
+        };
     }
 
 
