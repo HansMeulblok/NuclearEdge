@@ -69,6 +69,11 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         // gets the middle point between all targets in bounds
         if (targets.Count == 1)
         {
+            if(targets[0] == null)
+            {
+                return targets[1].position;
+            }
+
             return targets[0].position;
         }
 
