@@ -12,6 +12,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     public float airDecel;
     float tempDecel;
     public float maxSpeed;
+    public float knockBackHorizontalStrenght;
 
     //Vertical movement variables
     [Header("Vertical variables")]
@@ -20,6 +21,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     public float maxFallSpeed;
     public float wallJumpHorizontal;
     public float wallJumpVertical;
+    public float knockBackVerticalStrenght;
 
     [Header("Gravity variables")]
     public float gravity;
@@ -516,5 +518,25 @@ public class PlayerMovement2D : MonoBehaviourPun
     {
         //unparent the object
         transform.parent = null;
+    }
+
+    public void KnockBack()
+    {
+        moveSpeed = rb.velocity;
+        moveSpeed.y = knockBackVerticalStrenght;
+
+        if (knockBackHorizontalStrenght != 0)
+        {
+            if (moveSpeed.x > 0)
+            {
+                moveSpeed.x = -knockBackHorizontalStrenght;
+            }
+            else if (moveSpeed.x < 0)
+            {
+                moveSpeed.x = knockBackHorizontalStrenght;
+            }
+        }
+
+        rb.velocity = moveSpeed;
     }
 }
