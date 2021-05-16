@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[ExecuteInEditMode]
 public class TriggerPlatform : BaseActivator
 {
     [Header("enable/disable editting mode")]
@@ -19,7 +19,6 @@ public class TriggerPlatform : BaseActivator
         Swap();
     }
 
-    [ExecuteInEditMode]
     private void Update()
     {
         //if you want to edit the platform enable editing.
@@ -61,19 +60,19 @@ public class TriggerPlatform : BaseActivator
 
     public void Swap()
     {
-        platformColor = GetComponent<SpriteRenderer>().color;
+        platformColor = spriteHolder.GetComponent<SpriteRenderer>().color;
 
         if (startSolid)
         {
             //turn on collider and set the alpha to 100%
             GetComponent<BoxCollider2D>().enabled = true;
-            GetComponent<SpriteRenderer>().color = new Color(platformColor.r, platformColor.g, platformColor.b, 1f);
+            spriteHolder.GetComponent<SpriteRenderer>().color = new Color(platformColor.r, platformColor.g, platformColor.b, 1f);
         }
         else
         {
             //turn off collider and set the alpha to 50%
             GetComponent<BoxCollider2D>().enabled = false;
-            GetComponent<SpriteRenderer>().color = new Color(platformColor.r, platformColor.g, platformColor.b, 0.1f);
+            spriteHolder.GetComponent<SpriteRenderer>().color = new Color(platformColor.r, platformColor.g, platformColor.b, 0.1f);
         }
     }
 }

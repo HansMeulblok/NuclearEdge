@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6404367fb92172479f34ad8bf5f8ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shouldGenerate: 0
+  shouldGenerate: 1
 --- !u!1 &4837842814919037531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2271,6 +2271,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4837842814919037530}
     m_Modifications:
+    - target: {fileID: 447244603, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_Size.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 447244603, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_DrawMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 447244604, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.071428575
+      objectReference: {fileID: 0}
     - target: {fileID: 9192255237671601045, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
       propertyPath: m_Name
       value: OnewayPlatform (3)
@@ -2345,6 +2357,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4837842814919037530}
     m_Modifications:
+    - target: {fileID: 447244603, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_Size.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 447244603, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_DrawMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 447244604, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.071428575
+      objectReference: {fileID: 0}
     - target: {fileID: 9192255237671601045, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
       propertyPath: m_Name
       value: OnewayPlatform
@@ -2415,6 +2439,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4837842814919037530}
     m_Modifications:
+    - target: {fileID: 447244603, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_Size.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 447244603, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_DrawMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 447244604, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.071428575
+      objectReference: {fileID: 0}
     - target: {fileID: 9192255237671601045, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
       propertyPath: m_Name
       value: OnewayPlatform (1)
@@ -2563,6 +2599,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4837842814919037530}
     m_Modifications:
+    - target: {fileID: 447244603, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_Size.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 447244603, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_DrawMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 447244604, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.071428575
+      objectReference: {fileID: 0}
     - target: {fileID: 9192255237671601045, guid: 46ee18e061b7a074e83a6cf69ef9deef, type: 3}
       propertyPath: m_Name
       value: OnewayPlatform (2)
