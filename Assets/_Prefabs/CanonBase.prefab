@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 7306508742661440885}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1465117850
 MonoBehaviour:
@@ -185,7 +185,7 @@ Transform:
   - {fileID: 7306508742109419386}
   - {fileID: 7306508742359606003}
   m_Father: {fileID: 7306508742661440885}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &7306508741832806384
 SpriteRenderer:
@@ -432,8 +432,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7306508741832806399}
   - {fileID: 1465117849}
+  - {fileID: 7306508741832806399}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
