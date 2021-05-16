@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     [Header("Menu")]
     public GameObject menuPanel;

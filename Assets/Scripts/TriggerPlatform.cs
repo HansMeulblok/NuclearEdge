@@ -1,33 +1,27 @@
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class TriggerPlatform : BaseActivator
 {
     [Header("enable/disable editting mode")]
     public bool editing = true;
 
-    public bool platformBool;
+    public bool startSolid;
     private Color platformColor;
 
     [Header("platform editting variables")]
-    [Range (1f, 50f)]public int platformLength;
+    [Range(1f, 50f)] public int platformLength;
     [Range(1f, 50f)] public int platformHeight;
     public new BoxCollider2D collider;
 
     private void Start()
     {
-        if (!editing)
-        {
-            Trigger();
-        }
-        editing = false;
-
+        Swap();
     }
 
-
+    [ExecuteInEditMode]
     private void Update()
     {
-      //if you want to edit the platform enable editing.
+        //if you want to edit the platform enable editing.
         if (editing)
         {
             transform.localScale = new Vector3(platformLength, platformHeight, transform.localScale.z);
@@ -46,10 +40,15 @@ public class TriggerPlatform : BaseActivator
     public void Trigger()
     {
         //swtich bool and get the color
-        platformBool = !platformBool;
+        startSolid = !startSolid;
+        Swap();
+    }
+
+    public void Swap()
+    {
         platformColor = GetComponent<SpriteRenderer>().color;
 
-        if (platformBool)
+        if (startSolid)
         {
             //turn on collider and set the alpha to 100%
             GetComponent<BoxCollider2D>().enabled = true;
