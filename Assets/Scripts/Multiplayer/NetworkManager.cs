@@ -1,11 +1,17 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    public UIManager uIManager;
+    public MenuManager menuManager;
+
     void Start()
     {
+        DontDestroyOnLoad(this);
+
         // TODO: Add local play option
         if (!PhotonNetwork.IsConnected)
         {
@@ -37,12 +43,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions
         {
-            MaxPlayers = 2
+            MaxPlayers = 4
         };
 
-        if (uIManager.IsInputCorrect(uIManager.l_createRoomNameInput))
+        if (menuManager.IsInputCorrect(menuManager.l_createRoomNameInput))
         {
-            PhotonNetwork.CreateRoom(uIManager.l_createRoomNameInput.text, options, TypedLobby.Default);
+            PhotonNetwork.CreateRoom(menuManager.l_createRoomNameInput.text, options, TypedLobby.Default);
         }
     }
 
@@ -52,12 +58,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions
         {
-            MaxPlayers = 2
+            MaxPlayers = 4
         };
 
-        if (uIManager.IsInputCorrect(uIManager.mp_createRoomNameInput))
+        if (menuManager.IsInputCorrect(menuManager.mp_createRoomNameInput))
         {
-            PhotonNetwork.CreateRoom(uIManager.mp_createRoomNameInput.text, options, TypedLobby.Default);
+            PhotonNetwork.CreateRoom(menuManager.mp_createRoomNameInput.text, options, TypedLobby.Default);
         }
     }
 
@@ -75,26 +81,26 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Join Room
     public void JoinRoomLocal()
     {
-        if (uIManager.IsInputCorrect(uIManager.l_joinNameInput))
+        if (menuManager.IsInputCorrect(menuManager.l_joinNameInput))
         {
-            PhotonNetwork.JoinRoom(uIManager.l_joinNameInput.text);
+            PhotonNetwork.JoinRoom(menuManager.l_joinNameInput.text);
         }
     }
 
     public void JoinRoomMultiplayer()
     {
-        if (uIManager.IsInputCorrect(uIManager.mp_joinNameInput))
+        if (menuManager.IsInputCorrect(menuManager.mp_joinNameInput))
         {
-            PhotonNetwork.JoinRoom(uIManager.mp_joinNameInput.text);
+            PhotonNetwork.JoinRoom(menuManager.mp_joinNameInput.text);
         }
     }
 
     public override void OnJoinedRoom()
     {
-        print("Joined room successfull.");
-        uIManager.CreateLobby(PhotonNetwork.CurrentRoom.Name);
+        print("Joined room successfully.");
+        menuManager.CreateLobby(PhotonNetwork.CurrentRoom.Name);
 
-        uIManager.startButton.SetActive(PhotonNetwork.IsMasterClient);
+        menuManager.startButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -103,10 +109,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region Lobby
+    #region Game Logic
     public void StartGame()
     {
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", true } });
         PhotonNetwork.LoadLevel(1); // TODO: Change this to the scene which we will be using for the level
+        SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for host
     }
 
     public void LeaveRoom()
@@ -114,9 +122,32 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom) { PhotonNetwork.LeaveRoom(true); print("Player left room."); }
     }
 
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged["StartGame"] != null)
+        {
+            if ((bool)propertiesThatChanged["StartGame"])
+            {
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", false } });
+
+                SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for client
+            }
+        };
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Create player on level load
+        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+    }
+
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        uIManager.startButton.SetActive(PhotonNetwork.IsMasterClient);
+        if(menuManager != null)
+        {
+            menuManager.startButton.SetActive(PhotonNetwork.IsMasterClient);
+        }
     }
     #endregion
+
 }

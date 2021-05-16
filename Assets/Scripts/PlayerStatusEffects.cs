@@ -32,12 +32,11 @@ public class PlayerStatusEffects : MonoBehaviourPun
     public float stunDuration;
 
     float stunTimer;
-   
+
     Rigidbody2D rb;
 
     PlayerMovement2D playerMovement;
-    SpriteRenderer statusVisual;
-    SpriteRenderer playerSprite;
+    SpriteRenderer statusVisual, playerSprite;
     float originalMaxSpeed;
     float originalJumpStrength;
     bool originalcanWallJump;
@@ -48,10 +47,12 @@ public class PlayerStatusEffects : MonoBehaviourPun
     {
         // Disable script if player is not the local player.
         if (photonView != null && !photonView.IsMine) { enabled = false; }
-        playerSprite = GetComponent<SpriteRenderer>();
+
+
         rb = gameObject.GetComponent<Rigidbody2D>();
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
-        statusVisual = GameObject.FindGameObjectWithTag("Status").GetComponent<SpriteRenderer>();
+        statusVisual = GetComponentsInChildren<SpriteRenderer>()[1];
+        playerSprite = GetComponent<SpriteRenderer>();
 
         originalMaxSpeed = playerMovement.maxSpeed;
         originalJumpStrength = playerMovement.jumpStrenght;
@@ -60,6 +61,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
         // For testing purposes only, this should be changed to the starting location of the level
         respawnPosition = transform.position;
 
+       
     }
 
     private void Update()
@@ -88,8 +90,6 @@ public class PlayerStatusEffects : MonoBehaviourPun
         {
             statusVisual.enabled = true;
 
-                
-
             if (!movementChanged)
             {
                 playerMovement.maxSpeed *= slowMovementModifier;
@@ -106,11 +106,10 @@ public class PlayerStatusEffects : MonoBehaviourPun
             }
         }
 
-
-        if(isStunned)
+        if (isStunned)
         {
             //blink sprite
-            if(!isInvincible)
+            if (!isInvincible)
             {
                 InvokeRepeating("Blinking", 0, blinkInterval);
                 isInvincible = true;
@@ -130,7 +129,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
 
             stunTimer += Time.deltaTime;
 
-            if(stunTimer >= stunDuration)
+            if (stunTimer >= stunDuration)
             {
                 CancelInvoke("Blinking");
                 stunTimer = 0;
@@ -139,7 +138,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
                 isInvincible = false;
                 ResetStats();
             }
-        }    
+        }
     }
 
     private void ResetPlayer()
@@ -172,7 +171,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
     private void Blinking()
     {
         canBlink = !canBlink;
-        if(canBlink)
+        if (canBlink)
         {
             playerSprite.color = Color.green;
         }
@@ -181,6 +180,4 @@ public class PlayerStatusEffects : MonoBehaviourPun
             playerSprite.color = Color.clear;
         }
     }
-
-
 }

@@ -54,7 +54,7 @@ public class Laser : BaseActivator
                 //visual feedback
                 buildUpFX.SetActive(true);
                 //lineRenderer.enabled = false;
-                lineRenderer.material.color = new Color(1, 0, 0, 0);
+                lineRenderer.material.color = new Color(227, 255, 255, 0.1f);
             }
             else
             {
@@ -62,7 +62,7 @@ public class Laser : BaseActivator
 
                 buildUpFX.SetActive(false);
                 //lineRenderer.enabled = true;
-                lineRenderer.material.color = new Color(234, 0, 255, 1);
+                lineRenderer.material.color = new Color(0, 255, 255, 1);
                 durationTimer += Time.deltaTime;
 
                 if(durationTimer >= duration)

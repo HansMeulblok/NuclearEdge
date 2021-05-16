@@ -5665,7 +5665,7 @@ GameObject:
   - component: {fileID: 996680300330996737}
   - component: {fileID: 996680300330996736}
   m_Layer: 5
-  m_Name: UI
+  m_Name: Menu UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6042,7 +6042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 996680299157440229}
   playerProperty: {fileID: 920146021086967772, guid: 7c15a85da2ac8aa499bf6f95eeafac6c, type: 3}
-  uIManager: {fileID: 996680300330996736}
+  menuManager: {fileID: 996680300330996736}
 --- !u!1 &996680300357774099
 GameObject:
   m_ObjectHideFlags: 0

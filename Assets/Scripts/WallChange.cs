@@ -11,6 +11,7 @@ public class WallChange : BaseActivator
     [Header("wall size variables")]
     [Range(1, 10)] public int platformLength;
     [Range(1, 10)] public int platformHeight;
+    public SpriteRenderer spriteHolder;
     public new BoxCollider2D collider;
 
     private Vector2 startPosition;
@@ -19,6 +20,7 @@ public class WallChange : BaseActivator
     private float lerpTime = 1f;
     private bool isLerping = false;
     float lerpValue = 0;
+    bool isSet = false;
 
     [Header("platform movement variables")]
     [Range(-10, 10)] public int moveX;
@@ -26,7 +28,11 @@ public class WallChange : BaseActivator
 
     private void Start()
     {
-        startPosition = transform.position;
+        if(!isSet)
+        {
+            startPosition = transform.position;
+        }
+        isSet = true;     
     }
 
     private void Update()
@@ -34,7 +40,21 @@ public class WallChange : BaseActivator
         //if you want to edit the wall: enable editing.
         if (editing)
         {
+
+            //prevent NaN errors
+            if (platformHeight == 0 || platformLength == 0)
+            {
+                return;
+            }
+
+            //update sprite and scale
             transform.localScale = new Vector3(platformLength, platformHeight, transform.localScale.z);
+            spriteHolder.drawMode = SpriteDrawMode.Tiled;
+            spriteHolder.transform.localScale = new Vector3(1, 1, 1);
+            float newLength = spriteHolder.transform.localScale.y / platformLength;
+            float newHeight = spriteHolder.transform.localScale.y / platformHeight;
+            spriteHolder.transform.localScale = new Vector3(newLength, newHeight, 1);
+            spriteHolder.size = new Vector2(platformLength, platformHeight);
 
             //update the collider
             collider.enabled = false;
