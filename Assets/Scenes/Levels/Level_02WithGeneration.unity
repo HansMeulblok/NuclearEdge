@@ -569,6 +569,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chunk_4
       objectReference: {fileID: 0}
+    - target: {fileID: 8229451585932572270, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
+      propertyPath: activators.Array.data[0]
+      value: 
+      objectReference: {fileID: 495923544}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
 --- !u!4 &495923543 stripped
@@ -576,6 +580,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1681818669720764584, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
   m_PrefabInstance: {fileID: 495923542}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &495923544 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 482875202328363520, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
+  m_PrefabInstance: {fileID: 495923542}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8873ff00366a23242ae97c47b66e7379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &539948149
 PrefabInstance:
   m_ObjectHideFlags: 0
