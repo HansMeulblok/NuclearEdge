@@ -8,6 +8,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 {
     public List<Transform> targets = new List<Transform>();
     public Transform firstPlayer;
+    public float firstPlayerPriority;
     public Vector3 offset;
     public float smoothTime = 0.5f;
 
@@ -44,7 +45,11 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         {
             middlePoint = GetMiddlePoint();
         }
+
+        //determine new pos
         Vector3 newPos = middlePoint + offset + (firstPlayer.position / 10);
+
+        //smooth movement
         transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
     }
 
