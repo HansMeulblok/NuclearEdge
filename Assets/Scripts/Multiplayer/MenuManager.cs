@@ -1,10 +1,15 @@
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class MenuManager : MonoBehaviour
+public class MenuManager : MonoBehaviourPunCallbacks
 {
     [Header("Menu")]
     public GameObject menuPanel;
+    public int characterLimit;
+    public TMP_Text playerName;
+    public TMP_Text errorMessage;
 
     [Header("Local")]
     public GameObject localPanel;
@@ -84,14 +89,39 @@ public class MenuManager : MonoBehaviour
 
     public bool IsInputCorrect(TMP_InputField input)
     {
-        // TODO: Add possible extra checks for numbers, special characters or length.
         if (string.IsNullOrEmpty(input.text))
         {
-            input.placeholder.color = new Color32(255, 0, 0, 128); // Red color
+            errorMessage.text = "Can not be empty!";
             return false;
         }
+        else if (input.text.Length > characterLimit)
+        {
+            errorMessage.text = "Name too long! (" + input.text.Length + "/" + characterLimit + ")";
+            return false;
+        }
+        else
+        {
+            foreach (char letter in input.text)
+            {
+                if (!char.IsLetterOrDigit(letter))
+                {
+                    errorMessage.text = "No special characters!";
+                    return false;
+                }
+            }
+        }
 
-        input.placeholder.color = new Color32(50, 50, 50, 128); // Default placeholder color
+        errorMessage.text = "";
         return true;
+    }
+
+    public bool PlayerNameCorrect()
+    {      
+        return true;
+    }
+
+    public void ResetError()
+    {
+        errorMessage.text = "";
     }
 }
