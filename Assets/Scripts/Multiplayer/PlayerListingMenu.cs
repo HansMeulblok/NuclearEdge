@@ -10,14 +10,14 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
     [SerializeField]
     private PlayerListing playerProperty;
     [SerializeField]
-    private UIManager uIManager;
+    private MenuManager menuManager;
 
     private List<PlayerListing> listOfPlayers = new List<PlayerListing>();
 
     // When the local player leaves room.
     public override void OnLeftRoom()
     {
-        uIManager.Back();
+        menuManager.Back();
     }
 
     // Gets current players when lobby gets joined
