@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
     public GameObject menuPanel;
     public int characterLimit;
     public TMP_InputField playerNameInput;
-    
+
     private TMP_Text inputError;
 
     [Header("Local")]
