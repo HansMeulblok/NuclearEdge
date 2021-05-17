@@ -2,14 +2,16 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
 
 public class MenuManager : MonoBehaviourPunCallbacks
 {
     [Header("Menu")]
     public GameObject menuPanel;
     public int characterLimit;
-    public TMP_Text playerName;
-    public TMP_Text errorMessage;
+    public TMP_InputField playerNameInput;
+    
+    private TMP_Text inputError;
 
     [Header("Local")]
     public GameObject localPanel;
@@ -20,6 +22,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
     public GameObject multiplayerPanel;
     public TMP_InputField mp_createRoomNameInput;
     public TMP_InputField mp_joinNameInput;
+    public TMP_Text mp_playerCount;
 
     [Header("Lobby")]
     public GameObject lobbyPanel;
@@ -67,8 +70,21 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public void Multiplayer()
     {
-        menuPanel.SetActive(false);
-        multiplayerPanel.SetActive(true);
+        if (!PlayerNameCorrect(playerNameInput))
+        {
+            return;
+        }
+        else if (!PhotonNetwork.IsConnected)
+        {
+            inputError.text = "Not connected to server. Try again.";
+            return;
+        }
+        else
+        {
+            menuPanel.SetActive(false);
+            multiplayerPanel.SetActive(true);
+            inputError.text = "";
+        }
     }
 
     public void Back()
@@ -89,39 +105,61 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public bool IsInputCorrect(TMP_InputField input)
     {
+        inputError = input.GetComponentInChildren<TMP_Text>();
+
+        // Check if it is not empty
         if (string.IsNullOrEmpty(input.text))
         {
-            errorMessage.text = "Can not be empty!";
+            inputError.text = "Can not be empty!";
             return false;
         }
+        // Check for name length
         else if (input.text.Length > characterLimit)
         {
-            errorMessage.text = "Name too long! (" + input.text.Length + "/" + characterLimit + ")";
+            inputError.text = "Name too long! (" + input.text.Length + "/" + characterLimit + ")";
             return false;
         }
+        // Check for special characters
         else
         {
             foreach (char letter in input.text)
             {
                 if (!char.IsLetterOrDigit(letter))
                 {
-                    errorMessage.text = "No special characters!";
+                    inputError.text = "No special characters!";
                     return false;
                 }
             }
         }
 
-        errorMessage.text = "";
+        // Reset error message to empty
+        inputError.text = "";
         return true;
     }
 
-    public bool PlayerNameCorrect()
-    {      
-        return true;
-    }
-
-    public void ResetError()
+    public bool PlayerNameCorrect(TMP_InputField input)
     {
-        errorMessage.text = "";
+        if (IsInputCorrect(input))
+        {
+            // Check if player name already exists
+            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+            {
+                if (PhotonNetwork.PlayerList[i].NickName == input.text)
+                {
+                    inputError.text = "Name already in use!";
+                    return false;
+                }
+            }
+            PhotonNetwork.NickName = input.text; // Set nickname of player
+            return true;
+        }
+        return IsInputCorrect(input);
+    }
+
+    public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
+    {
+        mp_playerCount.text = "Players online: " + PhotonNetwork.CountOfPlayers.ToString();
+
+        print(PhotonNetwork.CountOfPlayers.ToString());
     }
 }
