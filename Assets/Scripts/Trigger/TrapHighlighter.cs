@@ -1,9 +1,9 @@
-using System.Collections;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
-public class TrapHighlighter : MonoBehaviour
+public class TrapHighlighter : MonoBehaviourPunCallbacks
 {
     private Color playerColor;
     private ButtonTriggers bt;
@@ -16,28 +16,43 @@ public class TrapHighlighter : MonoBehaviour
         bt = GetComponentInParent<ButtonTriggers>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void FixedUpdate()
     {
-        if(collision.CompareTag("Player"))
+        if (lines.Count > 0)
         {
-            player = collision.gameObject;
-            playerColor = player.GetComponent<SpriteRenderer>().color;
-            for (int i = 0; i < bt.activators.Length; i++)
+            for (int i = 0; i < lines.Count; i++)
             {
-                /* Temp fix for broken canons */
-                //bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().color = playerColor;
-                //bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().enabled = true;
-                lines.Add(DrawLine(transform.position, bt.activators[i].transform.position, playerColor));
+                LineRenderer lineRenderer = lines[i].GetComponent<LineRenderer>();
+                lineRenderer.SetPosition(1, bt.activators[i].transform.position);
             }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            player = collision.gameObject;
+            if (player.GetComponent<PhotonView>().IsMine)
+            {
+                playerColor = player.GetComponent<SpriteRenderer>().color;
+                for (int i = 0; i < bt.activators.Length; i++)
+                {
+                    bt.activators[i].GetComponent<Light2D>().color = playerColor;
+                    bt.activators[i].GetComponent<Light2D>().enabled = true;
+                    lines.Add(DrawLine(transform.position, bt.activators[i].transform.position, playerColor));
+                }
+            }
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        /* Temp fix for broken canons */
-        //for (int i = 0; i < bt.activators.Length; i++)
-        //{
-        //    bt.activators[i].transform.GetChild(0).GetComponent<Light2D>().enabled = false;
-        //}
+
+        for (int i = 0; i < bt.activators.Length; i++)
+        {
+            bt.activators[i].GetComponent<Light2D>().enabled = false;
+        }
 
         for (int i = 0; i < lines.Count; i++)
         {
