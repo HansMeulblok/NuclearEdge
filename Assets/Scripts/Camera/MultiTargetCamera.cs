@@ -7,6 +7,7 @@ using UnityEngine;
 public class MultiTargetCamera : MonoBehaviourPunCallbacks
 {
     public List<Transform> targets = new List<Transform>();
+    public Transform firstPlayer;
     public Vector3 offset;
     public float smoothTime = 0.5f;
 
@@ -16,6 +17,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     public float getPlayerBuffer;
 
     private Vector3 velocity;
+    private Vector3 middlePoint;
     private new Camera camera;
 
     private void Start()
@@ -23,6 +25,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         camera = GetComponent<Camera>();
         camera.orthographic = true;
 
+        //TODO: wait for players in loading screen instead and get them after they are loaded in instead of invoking this there
         Invoke("GetPlayers", getPlayerBuffer);
     }
 
@@ -37,8 +40,11 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     private void CameraMove()
     {
         // move camera according to transforms in list
-        Vector3 middlePoint = GetMiddlePoint();
-        Vector3 newPos = middlePoint + offset;
+        if(targets != null)
+        {
+            middlePoint = GetMiddlePoint();
+        }
+        Vector3 newPos = middlePoint + offset + (firstPlayer.position / 10);
         transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
     }
 
@@ -78,6 +84,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             return targets[0].position;
         }
 
+        // Encapsulate all positions in bounds
         var bounds = new Bounds(targets[0].position, Vector3.zero);
         for (int i = 0; i < targets.Count; i++)
         {
@@ -92,6 +99,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     void GetPlayers()
     {
+        //finds all players in scene and adds them to the target list
         targets.Clear();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
