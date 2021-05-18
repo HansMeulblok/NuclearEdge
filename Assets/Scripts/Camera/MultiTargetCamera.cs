@@ -11,7 +11,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     public Transform firstPlayer;
 
     [Header("Camera movement settings")]
-    [Range(1f, 30f)] public int platformLength;
+    [Range(1f, 30f)]
     public float firstPlayerPriority= 10;
     public Vector3 offset;
     public float smoothTime = 0.5f;
