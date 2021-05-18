@@ -16,8 +16,6 @@ public class ButtonTriggers : MonoBehaviourPun
 
     [PunRPC]private void ActivateTraps(PhotonMessageInfo info)
     {
-        Debug.LogFormat("Info: {0} {1} {2}", info.Sender, info.photonView, info.SentServerTime);
-
         for (int i = 0; i < activators.Length; i++)
         {
             activators[i].Activate();

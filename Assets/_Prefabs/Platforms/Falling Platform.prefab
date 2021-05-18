@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e37072cfbd7254aa44a89480804846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editing: 1
+  editing: 0
   platformLength: 0
   platformHeight: 0
   spriteHolder: {fileID: 982780130518860135}
