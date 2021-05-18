@@ -48,7 +48,6 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-
         for (int i = 0; i < bt.activators.Length; i++)
         {
             bt.activators[i].GetComponent<Light2D>().enabled = false;
