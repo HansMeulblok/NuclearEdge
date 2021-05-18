@@ -11,7 +11,7 @@ public class LevelGenerator : MonoBehaviour
 
     private bool init = true;
 
-    private float checkpointWidth = 24;
+    private float InBetweenChunkWidth = 24;
     private float chunkWidth = 110;
 
     public void SpawnNewChunks(Vector2 position)
@@ -32,19 +32,19 @@ public class LevelGenerator : MonoBehaviour
         if(chunks != null)
         {
             GameObject chunk = chunks[Random.Range(0, chunks.Count)];
-            Instantiate(chunk, position + new Vector2(checkpointWidth, 0), Quaternion.identity, chunkHolder);
+            Instantiate(chunk, position + new Vector2(InBetweenChunkWidth, 0), Quaternion.identity, chunkHolder);
             chunks.Remove(chunk);
 
             if (chunks.Count == 0)
             {
                 //instantiate the finish if no more chunks left
-                GameObject finish = Instantiate(finishChunk, position + new Vector2(chunkWidth + checkpointWidth * 2, 0), Quaternion.identity, chunkHolder);
+                GameObject finish = Instantiate(finishChunk, position + new Vector2(chunkWidth + InBetweenChunkWidth * 2, 0), Quaternion.identity, chunkHolder);
 
             }
             else
             {
-                GameObject newCheckPoint = Instantiate(checkPointChunk, position + new Vector2(chunkWidth + checkpointWidth, 0), Quaternion.identity, checkpoints.transform);
-                newCheckPoint.GetComponentInChildren<LevelGenerationTrigger>().shouldGenerate = true;
+                GameObject inbetweenChunk = Instantiate(checkPointChunk, position + new Vector2(chunkWidth + InBetweenChunkWidth, 0), Quaternion.identity, checkpoints.transform);
+                inbetweenChunk.GetComponentInChildren<LevelGenerationTrigger>().shouldGenerate = true;
             }
             
         }
