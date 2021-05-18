@@ -74,9 +74,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             multiTargetCamera.targets.Remove(transform);
             gameObject.SetActive(false);
 
-            print(PhotonNetwork.NickName.ToString());
-            deadPlayers.Add(PhotonNetwork.NickName.ToString());            
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers } });
+            print(PhotonNetwork.NickName);
+            // deadPlayers.Add(PhotonNetwork.NickName);            
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", PhotonNetwork.NickName } });
         }
     }
 
@@ -84,14 +84,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (propertiesThatChanged["DeadPlayers"] != null)
         {
-            deadPlayers = (List<string>)propertiesThatChanged["DeadPlayers"];
+            deadPlayers = propertiesThatChanged["DeadPlayers"] as List<string>;
+
             foreach (PhotonView player in players)
             {
                 if (deadPlayers.Contains(player.ViewID.ToString()))
                 {
                     player.gameObject.SetActive(false);
+                    }
                 }
-            }
         };
     }
 
