@@ -1,7 +1,8 @@
 using UnityEngine;
 using Photon.Pun;
-using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -10,10 +11,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     private MultiTargetCamera multiTargetCamera;
 
     private bool isRendered = false;
-    List<string> deadPlayers = new List<string>();
-    List<PhotonView> players = new List<PhotonView>();
+    private List<string> deadPlayers;
 
-    // [SerializeField] private Transform playerParent;
     private Vector2 networkPosition;
     private float networkRotation;
 
@@ -24,12 +23,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         playerSprite = GetComponent<SpriteRenderer>();
         multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
 
-        Invoke("ChangePlayersColor", 0.6f);
+        deadPlayers = new List<string>();
 
-        //for (int i = 0; i < multiTargetCamera.targets.Count; i++)
-        //{
-        //    players.Add(multiTargetCamera.targets[i].gameObject.GetComponent<PhotonView>());
-        //}
+        Invoke("ChangePlayersColor", 0.6f);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -40,11 +36,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(playerRB.position);
             // stream.SendNext(playerRB.rotation);
             stream.SendNext(playerRB.velocity);
-
         }
         else
         {
-            // Receives information of player to others
+            // Receives information of other players
             networkPosition = (Vector2)stream.ReceiveNext();
             // networkRotation = (float)stream.ReceiveNext();
             playerRB.velocity = (Vector2)stream.ReceiveNext();
@@ -68,34 +63,28 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
-        // Remove player from target list and disable player when out of camera FoV
-        if (isRendered && !playerSprite.isVisible && photonView.IsMine) 
+        // Add player name to list of dead player for server
+        if (isRendered && !playerSprite.isVisible && photonView.IsMine)
         {
-            multiTargetCamera.targets.Remove(transform);
-            gameObject.SetActive(false);
-
-            print(PhotonNetwork.NickName);
-            // deadPlayers.Add(PhotonNetwork.NickName);            
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", PhotonNetwork.NickName } });
+            if (!deadPlayers.Contains(PhotonNetwork.NickName)) { deadPlayers.Add(PhotonNetwork.NickName); }
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
         }
     }
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
+        // Disable player if found in list of players
         if (propertiesThatChanged["DeadPlayers"] != null)
         {
-            deadPlayers = propertiesThatChanged["DeadPlayers"] as List<string>;
+            deadPlayers = (propertiesThatChanged["DeadPlayers"] as string[]).ToList();
 
-            foreach (PhotonView player in players)
+            if (deadPlayers.Contains(photonView.Owner.NickName))
             {
-                if (deadPlayers.Contains(player.ViewID.ToString()))
-                {
-                    player.gameObject.SetActive(false);
-                    }
-                }
+                multiTargetCamera.targets.Remove(transform);
+                gameObject.SetActive(false);
+            }
         };
     }
-
 
     public void ChangePlayersColor()
     {
