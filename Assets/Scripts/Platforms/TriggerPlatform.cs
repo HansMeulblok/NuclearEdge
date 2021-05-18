@@ -32,7 +32,6 @@ public class TriggerPlatform : BaseActivator
     public void Swap()
     {
         platformColor = spriteHolder.GetComponent<SpriteRenderer>().color;
-        Debug.Log("yo");
         if (isSolid)
         {
             //turn on collider and set the alpha to 100%
