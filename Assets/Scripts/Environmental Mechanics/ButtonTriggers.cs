@@ -5,6 +5,12 @@ public class ButtonTriggers : MonoBehaviourPun
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
 
+    private void OnEnable()
+    {
+        Destroy(GetComponent<PhotonView>());
+        gameObject.AddComponent<PhotonView>();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
