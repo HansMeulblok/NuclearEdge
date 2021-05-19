@@ -13,11 +13,14 @@ public class PlayerFinish : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
+        if (collision.CompareTag("Player"))
         {
-           GameObject player = collision.gameObject;
-           PhotonView photonView = player.GetComponent<PhotonView>();
-           PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", photonView.Owner.NickName } });
+            PhotonView photonView = collision.gameObject.GetComponent<PhotonView>();
+
+            if (photonView.IsMine && !PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
+            {
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", photonView.Owner.NickName } });
+            }    
         }
     }
 }

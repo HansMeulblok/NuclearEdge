@@ -159,7 +159,5 @@ public class MenuManager : MonoBehaviourPunCallbacks
     public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
     {
         mp_playerCount.text = "Players online: " + PhotonNetwork.CountOfPlayers.ToString();
-
-        print(PhotonNetwork.CountOfPlayers.ToString());
     }
 }
