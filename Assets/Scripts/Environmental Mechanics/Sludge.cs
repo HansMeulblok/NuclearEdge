@@ -8,8 +8,6 @@ public class Sludge : MonoBehaviour
     public new BoxCollider2D collider;
 
     [SerializeField]
-    bool editing = false;
-    [SerializeField]
     float slowMovementModifier = 0.5f;
     [SerializeField]
     float slowJumpModifier = 0.75f;
