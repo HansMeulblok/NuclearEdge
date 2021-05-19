@@ -43,7 +43,7 @@ public class FallingPlatform : MonoBehaviour
         //translate platform downwards
         if(canFall)
         {
-            transform.Translate(Vector2.down * (fallingSpeed * Time.deltaTime), Space.World);
+            transform.Translate(Vector2.down * (fallingSpeed * Time.deltaTime), Space.World); // transform.gameObject.SetActive(false);
         }
 
         //check if the player is on top of the platform
@@ -61,6 +61,7 @@ public class FallingPlatform : MonoBehaviour
     //reset the platform after a while
     private void ResetPlatform()
     {
+        // transform.gameObject.SetActive(true);
         FindObjectOfType<PlayerMovement2D>().UnParent();
         canFall = false;
         transform.position = initialPosition;
