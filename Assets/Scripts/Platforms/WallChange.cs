@@ -5,6 +5,12 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class WallChange : BaseActivator
 {
+    [Header("enable/disable editting mode")]
+    public bool editing = true;
+
+    [Header("wall size variables")]
+    [Range(1, 10)] public int platformLength;
+    [Range(1, 10)] public int platformHeight;
     public SpriteRenderer spriteHolder;
     public new BoxCollider2D collider;
 
@@ -14,7 +20,7 @@ public class WallChange : BaseActivator
     private float lerpTime = 1f;
     private bool isLerping = false;
     float lerpValue = 0;
-    bool hasMoved;
+    public bool hasMoved;
 
     [Header("platform movement variables")]
     [Range(-10, 10)] public int moveX;
@@ -24,13 +30,14 @@ public class WallChange : BaseActivator
     {
         startPosition = transform.position;
 
-        if(hasMoved)
+        // Reverse movement if the platform has moved, only called when instantiated in the next set of chunks
+        if (hasMoved)
         {
             moveX *= -1;
             moveY *= -1;
         }
-    }
 
+    }
     private void FixedUpdate()
     {
         lerpValue += lerpTime * Time.fixedDeltaTime;
@@ -39,9 +46,11 @@ public class WallChange : BaseActivator
             destinationPosition = new Vector2(startPosition.x + moveX, startPosition.y + moveY);
             if (!wallInStartPosition)
             {
-                hasMoved = false;
+                //lerp towards new destination pos
+
+                hasMoved = true;
                 transform.position = Vector2.Lerp(transform.position, destinationPosition, lerpValue);
-                if(Vector2.Distance(transform.position, destinationPosition) < 0.01f)
+                if (Vector2.Distance(transform.position, destinationPosition) < 0.01f)
                 {
                     transform.position = destinationPosition;
                     isLerping = false;
@@ -49,7 +58,9 @@ public class WallChange : BaseActivator
             }
             else
             {
-                hasMoved = true;
+                //lerp back to startPos
+
+                hasMoved = false;
                 transform.position = Vector2.Lerp(transform.position, startPosition, lerpValue);
                 if (Vector2.Distance(transform.position, startPosition) < 0.01f)
                 {
