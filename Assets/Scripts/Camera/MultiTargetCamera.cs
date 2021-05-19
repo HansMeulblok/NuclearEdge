@@ -47,7 +47,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         }
 
         //determine new pos
-        Vector3 newPos = middlePoint + offset + (firstPlayer.position / 10);
+        Vector3 newPos = middlePoint + offset;// + (firstPlayer.position / 10);
 
         //smooth movement
         transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
