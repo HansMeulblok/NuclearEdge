@@ -7,8 +7,11 @@ public class ButtonTriggers : MonoBehaviourPun
 
     private void OnEnable()
     {
-        Destroy(GetComponent<PhotonView>());
-        gameObject.AddComponent<PhotonView>();
+        //if(GetComponent<PhotonView>() != null)
+        //{
+        //    Destroy(GetComponent<PhotonView>());
+        //}  
+        //gameObject.AddComponent<PhotonView>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

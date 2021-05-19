@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 1949891982451545889}
   - component: {fileID: 1949891982451545890}
   - component: {fileID: 7305937792729874989}
-  - component: {fileID: -958631495663971209}
+  - component: {fileID: 3215266468177757559}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activators:
   - {fileID: 0}
---- !u!114 &-958631495663971209
+--- !u!114 &3215266468177757559
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
