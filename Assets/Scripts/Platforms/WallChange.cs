@@ -39,33 +39,14 @@ public class WallChange : BaseActivator
 
     }
 
-    private void Update()
-    {
-        //if you want to edit the wall: enable editing.
-        if (editing)
+        // Reverse movement if the platform has moved, only called when instantiated in the next set of chunks
+        if (hasMoved)
         {
-
-            //prevent NaN errors
-            if (platformHeight == 0 || platformLength == 0)
-            {
-                return;
-            }
-
-            //update sprite and scale
-            transform.localScale = new Vector3(platformLength, platformHeight, transform.localScale.z);
-            spriteHolder.drawMode = SpriteDrawMode.Tiled;
-            spriteHolder.transform.localScale = new Vector3(1, 1, 1);
-            float newLength = spriteHolder.transform.localScale.y / platformLength;
-            float newHeight = spriteHolder.transform.localScale.y / platformHeight;
-            spriteHolder.transform.localScale = new Vector3(newLength, newHeight, 1);
-            spriteHolder.size = new Vector2(platformLength, platformHeight);
-
-            //update the collider
-            collider.enabled = false;
-            collider.enabled = true;
+            moveX *= -1;
+            moveY *= -1;
         }
-    }
 
+    }
     private void FixedUpdate()
     {
         lerpValue += lerpTime * Time.fixedDeltaTime;
@@ -78,7 +59,7 @@ public class WallChange : BaseActivator
 
                 hasMoved = true;
                 transform.position = Vector2.Lerp(transform.position, destinationPosition, lerpValue);
-                if(Vector2.Distance(transform.position, destinationPosition) < 0.01f)
+                if (Vector2.Distance(transform.position, destinationPosition) < 0.01f)
                 {
                     transform.position = destinationPosition;
                     isLerping = false;

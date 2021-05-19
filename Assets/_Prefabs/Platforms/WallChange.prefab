@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.33333334, z: 1}
   m_Children: []
   m_Father: {fileID: 1289297621454970859}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1182384586
 SpriteRenderer:
@@ -93,6 +93,8 @@ GameObject:
   - component: {fileID: 1289297621454970859}
   - component: {fileID: 1289297621454970645}
   - component: {fileID: 1289297621454970644}
+  - component: {fileID: 7904073063281183157}
+  - component: {fileID: 3898707194316694104}
   m_Layer: 0
   m_Name: WallChange
   m_TagString: Untagged
@@ -111,7 +113,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children:
-  - {fileID: 8288912514988333160}
   - {fileID: 1182384587}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -128,9 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8873ff00366a23242ae97c47b66e7379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editing: 1
-  platformLength: 1
-  platformHeight: 3
   spriteHolder: {fileID: 1182384586}
   collider: {fileID: 1289297621454970644}
   moveX: 0
@@ -161,44 +159,13 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &4020416156579224169
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8288912514988333160}
-  - component: {fileID: 7103690052373809246}
-  m_Layer: 0
-  m_Name: Point Light 2D
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8288912514988333160
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020416156579224169}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1289297621454970859}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7103690052373809246
+--- !u!114 &7904073063281183157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020416156579224169}
+  m_GameObject: {fileID: 1289297621454970647}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
@@ -233,3 +200,20 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &3898707194316694104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289297621454970647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e37072cfbd7254aa44a89480804846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editing: 1
+  platformLength: 0
+  platformHeight: 0
+  spriteHolder: {fileID: 1182384586}
+  collider: {fileID: 1289297621454970644}

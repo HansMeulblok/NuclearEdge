@@ -18,7 +18,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             print("Connecting to server....");
 
             PhotonNetwork.GameVersion = "0.0.1";
-            PhotonNetwork.NickName = "Tester"; // TODO: Add ability to set name.
             PhotonNetwork.ConnectUsingSettings();
         }
     }
