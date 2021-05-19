@@ -4,64 +4,66 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviourPunCallbacks
 {
-	[System.Serializable]
-	public class Pool
-	{
-		public string tag;
-		public GameObject prefab;
-		public int size;
-	}
+    [System.Serializable]
+    public class Pool
+    {
+        public string tag;
+        public GameObject prefab;
+        public int size;
+    }
 
-	#region Singleton
+    #region Singleton
 
-	public static ObjectPooler Instance;
+    public static ObjectPooler Instance;
 
-	private void Awake()
-	{
-		Instance = this;
-	}
+    private void Awake()
+    {
+        Instance = this;
+    }
 
-	#endregion
+    #endregion
 
-	public List<Pool> pools;
-	public Dictionary<string, Queue<GameObject>> poolDictioray;
+    public List<Pool> pools;
+    public Dictionary<string, Queue<GameObject>> poolDictioray;
 
-	// Use this for initialization
-	void Start()
-	{
-		poolDictioray = new Dictionary<string, Queue<GameObject>>();
+    // Use this for initialization
+    void Start()
+    {
+        if (!PhotonNetwork.IsMasterClient) { return; }
 
-		foreach (Pool pool in pools)
-		{
-			Queue<GameObject> objectPool = new Queue<GameObject>();
+        poolDictioray = new Dictionary<string, Queue<GameObject>>();
 
-			for (int i = 0; i < pool.size; i++)
-			{
-				GameObject obj = PhotonNetwork.InstantiateRoomObject(pool.prefab.name, Vector3.zero, Quaternion.identity);
-				obj.SetActive(false);
-				objectPool.Enqueue(obj);
-			}
+        foreach (Pool pool in pools)
+        {
+            Queue<GameObject> objectPool = new Queue<GameObject>();
 
-			poolDictioray.Add(pool.tag, objectPool);
-		}
-	}
+            for (int i = 0; i < pool.size; i++)
+            {
+                GameObject obj = PhotonNetwork.InstantiateRoomObject(pool.prefab.name, Vector3.zero, Quaternion.identity);
+                obj.SetActive(false);
+                objectPool.Enqueue(obj);
+            }
 
-	public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
-	{
-		if (!poolDictioray.ContainsKey(tag))
-		{
-			Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
-			return null;
-		}
+            poolDictioray.Add(pool.tag, objectPool);
+        }
+    }
 
-		GameObject objectToSpawn = poolDictioray[tag].Dequeue();
+    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+    {
+        if (!poolDictioray.ContainsKey(tag))
+        {
+            Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
+            return null;
+        }
 
-		objectToSpawn.SetActive(true);
-		objectToSpawn.transform.position = position;
-		objectToSpawn.transform.rotation = rotation;
+        GameObject objectToSpawn = poolDictioray[tag].Dequeue();
 
-		poolDictioray[tag].Enqueue(objectToSpawn);
+        objectToSpawn.SetActive(true);
+        objectToSpawn.transform.position = position;
+        objectToSpawn.transform.rotation = rotation;
 
-		return objectToSpawn;
-	}
+        poolDictioray[tag].Enqueue(objectToSpawn);
+
+        return objectToSpawn;
+    }
 }
