@@ -66,8 +66,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // Add player name to list of dead player for server
         if (isRendered && !playerSprite.isVisible && photonView.IsMine)
         {
-            if (!deadPlayers.Contains(PhotonNetwork.NickName)) { deadPlayers.Add(PhotonNetwork.NickName); }
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
+            //if (!deadPlayers.Contains(PhotonNetwork.NickName)) { deadPlayers.Add(PhotonNetwork.NickName); }
+            //PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
         }
     }
 

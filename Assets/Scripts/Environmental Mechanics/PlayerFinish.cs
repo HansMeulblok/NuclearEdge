@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class PlayerFinish : MonoBehaviourPunCallbacks
 {
-    GameObject player;
-    [SerializeField] InGameManager inGameManager;
+    private InGameManager inGameManager;
+
+    private void Start()
+    {
+        inGameManager = GameObject.FindGameObjectWithTag("GameUI").GetComponent<InGameManager>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerOne"))
+        if (collision.CompareTag("Player") && !PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
         {
-            if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
-            {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", "Host" } });
-                }
-                else
-                {
-                    PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", "Client" } });
-                }
-            }
-
+           GameObject player = collision.gameObject;
+           PhotonView photonView = player.GetComponent<PhotonView>();
+           PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", photonView.Owner.NickName } });
         }
     }
 }
