@@ -6,16 +6,21 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class MultiTargetCamera : MonoBehaviourPunCallbacks
 {
+    [Header("Targets")]
     public List<Transform> targets = new List<Transform>();
     public Transform firstPlayer;
-    public float firstPlayerPriority;
+
+    [Header("Camera movement settings")]
+    [Range(1f, 30f)]
+    public float firstPlayerPriority= 10;
     public Vector3 offset;
     public float smoothTime = 0.5f;
 
-    public float minZoom = 40f;
+    [Header("Camera zoom settings")]
+    public float minZoom = 15f;
     public float maxZoom = 10f;
-    public float zoomLimit = 50;
-    public float getPlayerBuffer;
+    public float zoomLimit = 10;
+    public float getPlayerBuffer = 0.5f;
 
     private Vector3 velocity;
     private Vector3 middlePoint;
@@ -47,7 +52,12 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         }
 
         //determine new pos
-        Vector3 newPos = middlePoint + offset;// + (firstPlayer.position / 10);
+        Vector3 newPos = middlePoint + offset;
+
+        if(firstPlayer != null)
+        {
+            offset = (firstPlayer.position / firstPlayerPriority);
+        }
 
         //smooth movement
         transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
