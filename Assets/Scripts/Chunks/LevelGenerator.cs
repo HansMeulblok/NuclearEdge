@@ -16,7 +16,7 @@ public class LevelGenerator : MonoBehaviour
     private CheckpointController tempCPController2;
     private GameObject tempChunk;
 
-    private float checkpointWidth = 24;
+    private float inbetweenChunkWidth = 24;
     private float chunkWidth = 110;
 
     private void Start()
@@ -91,7 +91,7 @@ public class LevelGenerator : MonoBehaviour
             //Get a random chunk gameobject from the list
             GameObject chunk = chunks[Random.Range(0, chunks.Count)];
             //Spawn that chunk after the inbetween chunk
-            tempChunk = Instantiate(chunk, position + new Vector2(checkpointWidth, 0), Quaternion.identity, chunkHolder);
+            tempChunk = Instantiate(chunk, position + new Vector2(inbetweenChunkWidth, 0), Quaternion.identity, chunkHolder);
 
             //Get the checkpoint manager of the new chunk
             tempCPController = tempChunk.transform.GetComponentInChildren<CheckpointController>();
@@ -111,18 +111,18 @@ public class LevelGenerator : MonoBehaviour
             if (chunks.Count == 0)
             {
                 //instantiate the finish if no more chunks left
-                GameObject finish = Instantiate(finishChunk, position + new Vector2(chunkWidth + checkpointWidth * 2, 0), Quaternion.identity, chunkHolder);
+                GameObject finish = Instantiate(finishChunk, position + new Vector2(chunkWidth + inbetweenChunkWidth * 2, 0), Quaternion.identity, chunkHolder);
                 tempCPController.UpdateNextCheckpoint(finish.GetComponentInChildren<PlayerFinish>().gameObject);
             }
             else
             {
                 //Spawn in a checkpoint
-                GameObject newCheckPoint = Instantiate(checkPointChunk, position + new Vector2(chunkWidth + checkpointWidth, 0), Quaternion.identity, checkpoints.transform);
+                GameObject newInbetweenChunk = Instantiate(checkPointChunk, position + new Vector2(chunkWidth + inbetweenChunkWidth, 0), Quaternion.identity, checkpoints.transform);
                 //This new in between chunk should spawn the next chunk with trigger
-                newCheckPoint.GetComponentInChildren<LevelGenerationTrigger>().shouldGenerate = true;
+                newInbetweenChunk.GetComponentInChildren<LevelGenerationTrigger>().shouldGenerate = true;
 
                 //Get the checkpoint manager of the newly spawned inbetween chunk
-                tempCPController2 = newCheckPoint.GetComponentInChildren<CheckpointController>();
+                tempCPController2 = newInbetweenChunk.GetComponentInChildren<CheckpointController>();
 
                 //Update the next checkpoint for the chunk to be the inbetween chunk
                 tempCPController.UpdateNextCheckpoint(tempCPController2.GetFirstCP());
