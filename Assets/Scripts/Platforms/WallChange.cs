@@ -14,7 +14,7 @@ public class WallChange : BaseActivator
     private float lerpTime = 1f;
     private bool isLerping = false;
     float lerpValue = 0;
-    bool isSet = false;
+    bool hasMoved;
 
     [Header("platform movement variables")]
     [Range(-10, 10)] public int moveX;
@@ -22,11 +22,13 @@ public class WallChange : BaseActivator
 
     private void Start()
     {
-        if(!isSet)
+        startPosition = transform.position;
+
+        if(hasMoved)
         {
-            startPosition = transform.position;
+            moveX *= -1;
+            moveY *= -1;
         }
-        isSet = true;     
     }
 
     private void FixedUpdate()
@@ -37,6 +39,7 @@ public class WallChange : BaseActivator
             destinationPosition = new Vector2(startPosition.x + moveX, startPosition.y + moveY);
             if (!wallInStartPosition)
             {
+                hasMoved = false;
                 transform.position = Vector2.Lerp(transform.position, destinationPosition, lerpValue);
                 if(Vector2.Distance(transform.position, destinationPosition) < 0.01f)
                 {
@@ -46,6 +49,7 @@ public class WallChange : BaseActivator
             }
             else
             {
+                hasMoved = true;
                 transform.position = Vector2.Lerp(transform.position, startPosition, lerpValue);
                 if (Vector2.Distance(transform.position, startPosition) < 0.01f)
                 {
