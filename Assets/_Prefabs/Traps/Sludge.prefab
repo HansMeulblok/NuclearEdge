@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 8735285717185618573}
   - component: {fileID: 8735285717185618575}
   - component: {fileID: 8735285717185618560}
+  - component: {fileID: 8491245970865039632}
   m_Layer: 8
   m_Name: Sludge
   m_TagString: Untagged
@@ -154,10 +155,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteHolder: {fileID: 2278374189921796746}
-  platformLength: 4
-  platformHeight: 1
   collider: {fileID: 8735285717185618575}
   editing: 1
   slowMovementModifier: 0.75
   slowJumpModifier: 0.75
   duration: 0.5
+--- !u!114 &8491245970865039632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8735285717185618561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e37072cfbd7254aa44a89480804846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editing: 1
+  platformLength: 0
+  platformHeight: 0
+  spriteHolder: {fileID: 2278374189921796746}
+  collider: {fileID: 8735285717185618575}
