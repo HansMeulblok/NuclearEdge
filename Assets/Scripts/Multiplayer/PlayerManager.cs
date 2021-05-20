@@ -80,8 +80,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
             if (deadPlayers.Contains(photonView.Owner.NickName))
             {
-                multiTargetCamera.targets.Remove(transform);
-                gameObject.SetActive(false);
+                if (multiTargetCamera.targets.Count != 0)
+                {
+                    multiTargetCamera.targets.Remove(transform);
+                    gameObject.SetActive(false);
+                }
             }
         };
     }

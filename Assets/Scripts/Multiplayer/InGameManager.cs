@@ -21,7 +21,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         //if player reaches finish line or there is only one player remaining
-        if(propertiesThatChanged["playerWon"] != null || multiTargetCamera.targets.Count == 1)
+        if (propertiesThatChanged["playerWon"] != null || multiTargetCamera.targets.Count == 1)
         {
             finishedMenu.SetActive(true);
 
@@ -35,13 +35,12 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 resultText.text = "You Lose!";
                 resultText.color = Color.red;
             }
-
         }
     }
 
     public void GoToMenu()
     {
-        
-        SceneManager.LoadScene("Menu");
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LoadLevel(0);
     }
 }
