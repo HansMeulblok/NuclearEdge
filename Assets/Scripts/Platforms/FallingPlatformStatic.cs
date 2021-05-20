@@ -23,6 +23,17 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     private void Update()
     {
+        //check if the player is on top of the platform
+        if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f))
+        {
+            RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f);
+            PhotonView pv = hit.transform.GetComponent<PhotonView>();
+
+            if (hit.transform.tag == "Player" && !canFall && pv.IsMine)
+            {
+                activateFallingPlatform();
+            }
+        }
 
         //start timer if the platform is stepped on
         if (steppedOn)
@@ -32,31 +43,15 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
         //if timer is maxed out start falling
         if(timer >= maxTime)
-        {
+        {        
+            //GameObject newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatform", transform.position, Quaternion.identity);
+            //newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, fallingSpeed, maxTime);
+            SwitchStaticPlatform();
+            //Invoke("ResetPlatform", maxTime);
             canFall = true;
             steppedOn = false;
             timer = 0;
-            GameObject newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatform", transform.position, Quaternion.identity);
-            newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, fallingSpeed, maxTime);
-            SwitchStaticPlatform();
-            Invoke("ResetPlatform", maxTime);
         }
-
-
-
-        //check if the player is on top of the platform
-        if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f))
-        {
-            RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f);
-            PhotonView pv = hit.transform.GetComponent<PhotonView>();
-
-            if (hit.transform.tag == "Player" && !canFall && pv.IsMine)
-            {
-                steppedOn = true;
-                activateFallingPlatform();
-            }
-        }
-
     }
 
     //reset the platform after a while
@@ -73,7 +68,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     private void activateFallingPlatform()
     {
         object[] content = new object[] { gameObject.name };
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
         PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
@@ -97,7 +92,8 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
             if (receivedObj == gameObject.name)
             {
-                steppedOn = true;
+                //steppedOn = true;
+                SwitchStaticPlatform();
             }
         }
     }
