@@ -36,15 +36,9 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             canFall = true;
             steppedOn = false;
             timer = 0;
-            // rpc set this platform invis
-            activateFallingPlatform();
-            // get platform from pool 
             GameObject newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatform", transform.position, Quaternion.identity);
-
-            // start translating pooled object down
             newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, fallingSpeed, maxTime);
-            // after x amount of time or distance pooledobject setactive(false)
-            // rpc set this platform active
+            SwitchStaticPlatform();
             Invoke("ResetPlatform", maxTime);
         }
 
@@ -54,9 +48,12 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f))
         {
             RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f);
-            if (hit.transform.tag == "Player" && !canFall)
+            PhotonView pv = hit.transform.GetComponent<PhotonView>();
+
+            if (hit.transform.tag == "Player" && !canFall && pv.IsMine)
             {
                 steppedOn = true;
+                activateFallingPlatform();
             }
         }
 
@@ -100,7 +97,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
             if (receivedObj == gameObject.name)
             {
-                SwitchStaticPlatform();
+                steppedOn = true;
             }
         }
     }
