@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
@@ -7,13 +8,13 @@ public class Cannon : BaseActivator
     public GameObject firePoint;
 
     [Header("Shooting variables")]
-    [Range(0.2f,5f)]public float shootingInterval;
+    [Range(0.2f, 5f)] public float shootingInterval;
     [SerializeField] private float bulletMoveSpeed;
     [SerializeField] private float bulletLifeSpan;
 
     [Header("Rotation variables")]
     [Range(0, 20f)] public float lerpSpeed;
-    [Range(0f,1f)]public float waitForLerpTime;
+    [Range(0f, 1f)] public float waitForLerpTime;
     private int degreeChange;
     private int currentAngle = 0;
     private int minRotation = 0, maxRotation = 180;
@@ -21,7 +22,7 @@ public class Cannon : BaseActivator
     private bool lerping = false;
 
 
-    private int[] angles = new int[] {12, 6, 3};
+    private int[] angles = new int[] { 12, 6, 3 };
     private int angleDivision;
     public bool activated = true;
 
@@ -29,41 +30,40 @@ public class Cannon : BaseActivator
     public MyEnum amountOfAngles = new MyEnum();
     public enum MyEnum
     {
-       High,
-       Medium,
-       Low
+        High,
+        Medium,
+        Low
     };
 
     private void Start()
     {
         AmountOfAngles();
 
-        if(activated)
-        StartCoroutine(ChangeAngles());
+        if (activated) { StartCoroutine(ChangeAngles()); }
     }
 
+    [PunRPC]
     public override void Activate()
     {
         activated = !activated;
-        if(activated)
+        if (activated)
         {
-          StartCoroutine(ChangeAngles());
-        } else
+            StartCoroutine(ChangeAngles());
+        }
+        else
         {
-          StopCoroutine(ChangeAngles());
+            StopCoroutine(ChangeAngles());
         }
     }
 
     private IEnumerator ChangeAngles()
     {
-        if(!activated)
-        {
-          yield break;
-        }
+        if (!activated) { yield break; }
+
         // check at which angle the canon should stop and should fire
         AngleOptions();
 
-        //give lerping time to lerp
+        // give lerping time to lerp
         lerping = true;
         yield return new WaitForSeconds(waitForLerpTime);
         lerping = false;
@@ -76,16 +76,18 @@ public class Cannon : BaseActivator
 
     private void Update()
     {
-      //lerp to the next angle in the angles section
-        if(lerping)
-        pivot.transform.localRotation = Quaternion.Lerp(pivot.transform.localRotation, Quaternion.Euler(0, 0, currentAngle), Time.deltaTime * lerpSpeed);
+        // lerp to the next angle in the angles section
+        if (lerping)
+        {
+            pivot.transform.localRotation = Quaternion.Lerp(pivot.transform.localRotation, Quaternion.Euler(0, 0, currentAngle), Time.deltaTime * lerpSpeed);
+        }
     }
 
     #region amount of angles
 
     private void AmountOfAngles()
     {
-        //check what the degree change should be
+        // check what the degree change should be
         if (amountOfAngles == MyEnum.High)
         {
             angleDivision = angles[0];
@@ -131,14 +133,14 @@ public class Cannon : BaseActivator
     {
         // get bullet from the bulletPool, set the position to the fire point. set the firing direction, bulletLifespan and the bullet movepseed.
         Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
-        GameObject bullet = BulletPool.bulletPoolInstance.GetBullet();
-        bullet.transform.position = firePoint.transform.position;
-        bullet.SetActive(true);
-        bullet.GetComponent<Bullet>().SetMoveDirection(bulDir);
-        bullet.GetComponent<Bullet>().SetBulletLifeSpan(bulletLifeSpan);
-        bullet.GetComponent<Bullet>().SetMoveSpeed(bulletMoveSpeed);
-
+        
+        GameObject bullet = ObjectPooler.Instance.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        
+        bulletScript.SetMoveDirection(bulDir);
+        bulletScript.SetBulletLifeSpan(bulletLifeSpan);
+        bulletScript.SetMoveSpeed(bulletMoveSpeed);
     }
-#endregion
+    #endregion
 
 }
