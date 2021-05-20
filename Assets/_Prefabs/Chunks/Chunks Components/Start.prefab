@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 7662620119026732975}
   - component: {fileID: 5900512434416727940}
   - component: {fileID: 954453098948513716}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chunk_outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3149,6 +3149,9 @@ MonoBehaviour:
   timeActivatedOriginal: 5
   isStatic: 1
   activatedScale: {x: 4, y: 40}
+  gravInGM: 0.05
+  gravOutGM: 1
+  gravMultDown: 5
 --- !u!212 &1346288552165282379
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3439,7 +3442,7 @@ GameObject:
   - component: {fileID: 8346632628531846259}
   - component: {fileID: 8346632628531846258}
   - component: {fileID: 8970708645646071909}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TriggerPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3521,10 +3524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db92a80a241b2441b25bb8e245a9b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editing: 1
   startSolid: 1
-  platformLength: 1
-  platformHeight: 40
   spriteHolder: {fileID: 5975832916971038864}
   collider: {fileID: 8346632628531846259}
 --- !u!1 &8732624639735262866

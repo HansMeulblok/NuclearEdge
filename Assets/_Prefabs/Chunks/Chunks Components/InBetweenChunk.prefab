@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 4087425707752897360}
   - component: {fileID: 219753530458604411}
   - component: {fileID: 6904170413721942859}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Chunk_outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

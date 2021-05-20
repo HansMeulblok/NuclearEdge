@@ -331,8 +331,8 @@ public class PlayerMovement2D : MonoBehaviourPun
             if (onRightWallCling > 0 && canWallJump)
             {
                 jumpBuffer = 0;
-                moveSpeed.y = wallJumpHorizontal;
-                moveSpeed.x = -wallJumpVertical;
+                moveSpeed.x = -wallJumpHorizontal;
+                moveSpeed.y = wallJumpVertical;
                 wallJumpBufferR = wallJumpBuffer;
                 onRightWallCling = 0;
                 onLeftWallCling = 0;
