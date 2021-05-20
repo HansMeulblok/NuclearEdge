@@ -15,7 +15,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     private float timer;
     private bool steppedOn = false;
     private bool canFall = false;
-    private bool isPlatformActive = false;
+    private bool isPlatformActive;
     public float resetTime;
 
     private const int fallingPlatformCode = 2;
