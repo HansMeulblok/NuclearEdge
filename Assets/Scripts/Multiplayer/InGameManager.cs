@@ -12,12 +12,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     {
         if(propertiesThatChanged["playerWon"] != null)
         {
-            if (propertiesThatChanged["playerWon"].Equals("Host") && PhotonNetwork.IsMasterClient)
-            {
-                resultText.text = "You Win!";
-                resultText.color = Color.green;
-            }
-            else if (propertiesThatChanged["playerWon"].Equals("Client") && !PhotonNetwork.IsMasterClient)
+            if (propertiesThatChanged["playerWon"].Equals(PhotonNetwork.NickName))
             {
                 resultText.text = "You Win!";
                 resultText.color = Color.green;
