@@ -15,7 +15,7 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
         if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
         {
             //photonView.RPC("ActivateTraps", RpcTarget.All);
-            SendMoveUnitsToTargetPositionEvent();
+            TriggerTrapsEvent();
         }
     }
 
@@ -28,7 +28,7 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
         }
     }
 
-    private void SendMoveUnitsToTargetPositionEvent()
+    private void TriggerTrapsEvent()
     {
         object[] content = new object[] { gameObject.name };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };

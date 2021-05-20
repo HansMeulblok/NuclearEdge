@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class FallingPlatformStatic : MonoBehaviourPunCallbacks
+public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 {
     public SpriteRenderer spriteHolder;
     public new BoxCollider2D collider;
@@ -15,7 +15,11 @@ public class FallingPlatformStatic : MonoBehaviourPunCallbacks
     private float timer;
     private bool steppedOn = false;
     private bool canFall = false;
+    private bool isPlatformActive = false;
     public float resetTime;
+
+    private const int fallingPlatformCode = 2;
+
 
     private void Update()
     {
@@ -33,8 +37,7 @@ public class FallingPlatformStatic : MonoBehaviourPunCallbacks
             steppedOn = false;
             timer = 0;
             // rpc set this platform invis
-
-            photonView.RPC("SetInActive", RpcTarget.All);
+            activateFallingPlatform();
             // get platform from pool 
             GameObject newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatform", transform.position, Quaternion.identity);
 
@@ -63,23 +66,59 @@ public class FallingPlatformStatic : MonoBehaviourPunCallbacks
     private void ResetPlatform()
     {
         // transform.gameObject.SetActive(true);
+        SwitchStaticPlatform();
         FindObjectOfType<PlayerMovement2D>().UnParent();
         canFall = false;
-        photonView.RPC("SetInActive", RpcTarget.All);
 
     }
 
-    [PunRPC] 
-    public void SetInActive()
+
+    private void activateFallingPlatform()
     {
-        GetComponentInChildren<SpriteRenderer>().enabled = false;
-        GetComponent<BoxCollider2D>().enabled = false;
+        object[] content = new object[] { gameObject.name };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
-    [PunRPC]
-    public void SetActive()
+    private void OnEnable()
     {
-        GetComponentInChildren<SpriteRenderer>().enabled = false;
-        GetComponent<BoxCollider2D>().enabled = false;
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
     }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == fallingPlatformCode)
+        {
+            object[] tempObject = (object[])photonEvent.CustomData;
+            string receivedObj = (string)tempObject[0];
+
+            if (receivedObj == gameObject.name)
+            {
+                SwitchStaticPlatform();
+            }
+        }
+    }
+
+
+    public void SwitchStaticPlatform()
+    {
+        isPlatformActive = !isPlatformActive;
+        if(isPlatformActive)
+        {
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
+        else
+        {
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
+            GetComponent<BoxCollider2D>().enabled = true;
+        }       
+    }
+
 }
