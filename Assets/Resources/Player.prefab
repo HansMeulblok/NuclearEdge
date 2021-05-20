@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 3081606822016883215}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 9200030612070940327}
   m_Father: {fileID: 0}
@@ -172,15 +172,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accel: 30
-  decel: 30
+  decel: 90
   airDecel: 0
   maxSpeed: 10
   knockBackHorizontalStrenght: 10
   jumpStrenght: 14
-  jumpBufferLenght: 0.2
+  jumpBufferLenght: 0.1
   maxFallSpeed: 15
-  wallJumpHorizontal: 12
-  wallJumpVertical: 10
+  wallJumpHorizontal: 10
+  wallJumpVertical: 12
   knockBackVerticalStrenght: 15
   gravity: 24
   gravZoneMult: 1
@@ -191,7 +191,7 @@ MonoBehaviour:
   downWallGravMult: 0.25
   clingDuration: 0.3
   maxDownSlideSpeed: 3
-  wallJumpBuffer: 0.4
+  wallJumpBuffer: 0.31
   canWallCling: 1
   canWallJump: 1
   colisionDistance: 0.02
