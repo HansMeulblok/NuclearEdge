@@ -47,3 +47,6 @@ MonoBehaviour:
   - tag: Bullet
     prefab: {fileID: 910021367111986399, guid: ef9838641c53688469a2e5eeceaf5136, type: 3}
     size: 10
+  - tag: FallingPlatform
+    prefab: {fileID: 3860048427860164810, guid: afde2062720c3e146bf2f5ed98d45246, type: 3}
+    size: 10

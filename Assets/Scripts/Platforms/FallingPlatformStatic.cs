@@ -36,7 +36,7 @@ public class FallingPlatformStatic : MonoBehaviourPunCallbacks
 
             photonView.RPC("SetInActive", RpcTarget.All);
             // get platform from pool 
-            GameObject newPlatform = ObjectPooler.Instance.SpawnFromPool("Falling Platform", transform.position, Quaternion.identity);
+            GameObject newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatform", transform.position, Quaternion.identity);
 
             // start translating pooled object down
             newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, fallingSpeed, maxTime);
