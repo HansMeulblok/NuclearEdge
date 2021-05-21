@@ -13,8 +13,8 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     public Transform firstPlayer;
 
     [Header("Camera movement settings")]
-    [Range(1f, 100f)]
-    public float firstPlayerPriority = 10;
+    [Range(0f, 1f)]
+    public float firstPlayerPriority =1;
     public Vector3 offset;
     public float smoothTime = 0.5f;
 
@@ -79,13 +79,12 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         if(firstPlayer != null)
         {
 
-            //Vector3 firstPlayerOffset = middlePoint + firstPlayer.position;
-            //offset = new Vector3(firstPlayerOffset.x / firstPlayerPriority, firstPlayerOffset.y / firstPlayerPriority, offset.z);
+            Vector3 firstPlayerOffset = firstPlayer.position - middlePoint;
+            offset = new Vector3(firstPlayerOffset.x * firstPlayerPriority, firstPlayerOffset.y * firstPlayerPriority, offset.z);
 
-            firstPlayerOffset = firstPlayer.position - middlePoint;
+
         }
-        //Vector3 newPos = middlePoint + offset;
-        Vector3 newPos = middlePoint + firstPlayerOffset * firstPlayerPriority / 100;
+        Vector3 newPos = middlePoint + offset;
 
         //smooth movement
         transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
