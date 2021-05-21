@@ -1,5 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 using UnityEngine;
 
 public class PlayerCPTracker : MonoBehaviour
@@ -8,6 +9,15 @@ public class PlayerCPTracker : MonoBehaviour
     public int currentCP = 0;
     public GameObject nextCheckpoint;
     public float distanceToNextCP;
+
+    private const int cpCode = 3;
+    private const float checkPointUpdate = 0.2f;
+
+
+    private void Start()
+    {
+        InvokeRepeating("UpdateCheckpointsToCamera", 3, checkPointUpdate);
+    }
 
     //The main update loop
     private void Update()
@@ -43,4 +53,15 @@ public class PlayerCPTracker : MonoBehaviour
     {
         nextCheckpoint = next;
     }
+    public void UpdateCheckpointsToCamera()
+    {
+        int currentCheckpoint = CurrentCheckpoint();
+        float currentDistance = DistanceToNextCP();
+
+        object[] content = new object[] { gameObject.name, currentCheckpoint, currentDistance};
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+        PhotonNetwork.RaiseEvent(cpCode, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
+
 }

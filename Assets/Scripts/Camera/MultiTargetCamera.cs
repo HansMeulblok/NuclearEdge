@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +26,16 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     private Vector3 velocity;
     private Vector3 middlePoint;
     private new Camera camera;
+
+    object[] player1 = new object[2];
+    object[] player2 = new object[2];
+    object[] player3 = new object[2];
+    object[] player4 = new object[2];
+
+    List<object[]> players;
+
+    private const int cpCode = 3;
+
 
     private void Start()
     {
@@ -128,5 +139,27 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         GetPlayers();
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+    public void OnEvent(EventData photonEvent)
+    {
+       
+        byte eventCode = photonEvent.Code;
+        if (eventCode == cpCode)
+        {
+            object[] tempObjects = (object[])photonEvent.CustomData;
+            
+        }
     }
 }
