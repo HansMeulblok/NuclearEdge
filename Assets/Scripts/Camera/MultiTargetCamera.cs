@@ -174,13 +174,14 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             {
                 for (int i = 0; i < playerNames.Length; i++)
                 {
-                    if(playerNames[i] == null)
+                    if(playerNames[i] != null)
                     {
                         continue;
                     }
                     else
                     {
                         playerNames[i] = name;
+                        break;
                     }
                     
                 }
@@ -200,24 +201,37 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             {
                 //Keep track if there was a swap in this loop
                 bool swapped = false;
-                //Check if the first entry in the array has a bigger distance to the next checkpoint than the second entry in the array
-                if ((float)playerProgressList[0][1] > (float)playerProgressList[1][1])
+
+                if (playerNames[0] != null && playerNames[1] != null)
                 {
-                    //Swap the two entries
-                    SwapOrder(0, 1);
-                    //There was a swap
-                    swapped = true;
+                    //Check if the first entry in the array has a bigger distance to the next checkpoint than the second entry in the array
+                    if ((float)playerProgressList[0][1] > (float)playerProgressList[1][1])
+                    {
+                        //Swap the two entries
+                        SwapOrder(0, 1);
+                        //There was a swap
+                        swapped = true;
+                    }
                 }
-                if ((float)playerProgressList[1][1] > (float)playerProgressList[2][1])
+
+                if (playerNames[1] != null && playerNames[2] != null)
                 {
-                    SwapOrder(1, 2);
-                    swapped = true;
+                    if ((float)playerProgressList[1][1] > (float)playerProgressList[2][1])
+                    {
+                        SwapOrder(1, 2);
+                        swapped = true;
+                    }
                 }
-                if ((float)playerProgressList[2][1] > (float)playerProgressList[3][1])
+
+                if (playerNames[2] != null && playerNames[3] != null)
                 {
-                    SwapOrder(2, 3);
-                    swapped = true;
+                    if ((float)playerProgressList[2][1] > (float)playerProgressList[3][1])
+                    {
+                        SwapOrder(2, 3);
+                        swapped = true;
+                    }
                 }
+
                 //If no swaps took place this loop end the for loop
                 if (swapped == false)
                 {
@@ -230,23 +244,34 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             {
                 //Keep track if there was a swap in this loop
                 bool swapped = false;
-                //Check if the first entry in the array has a smaller checkpoint number than the second entry in the array
-                if ((float)playerProgressList[0][0] < (float)playerProgressList[1][0])
+                if (playerNames[0] != null && playerNames[1] != null)
                 {
-                    //Swap the two entries
-                    SwapOrder(0, 1);
-                    //There was a swap
-                    swapped = true;
+                    //Check if the first entry in the array has a smaller checkpoint number than the second entry in the array
+                    if ((int)playerProgressList[0][0] < (int)playerProgressList[1][0])
+                    {
+                        //Swap the two entries
+                        SwapOrder(0, 1);
+                        //There was a swap
+                        swapped = true;
+                    }
                 }
-                if ((float)playerProgressList[1][0] < (float)playerProgressList[2][0])
+
+                if (playerNames[1] != null && playerNames[2] != null)
                 {
-                    SwapOrder(1, 2);
-                    swapped = true;
+                    if ((int)playerProgressList[1][0] < (int)playerProgressList[2][0])
+                    {
+                        SwapOrder(1, 2);
+                        swapped = true;
+                    }
                 }
-                if ((float)playerProgressList[2][0] < (float)playerProgressList[3][0])
+
+                if (playerNames[2] != null && playerNames[3] != null)
                 {
-                    SwapOrder(2, 3);
-                    swapped = true;
+                    if ((int)playerProgressList[2][0] < (int)playerProgressList[3][0])
+                    {
+                        SwapOrder(2, 3);
+                        swapped = true;
+                    }
                 }
                 //If no swaps took place this loop end the for loop
                 if (swapped == false)

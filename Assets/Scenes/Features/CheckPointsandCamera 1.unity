@@ -27585,7 +27585,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 501673029901795301, guid: 144cba1f835a0fa49b6fe09a80e5db02, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3081606822016883210, guid: 144cba1f835a0fa49b6fe09a80e5db02, type: 3}
       propertyPath: m_RootOrder
@@ -27638,6 +27638,10 @@ PrefabInstance:
     - target: {fileID: 3081606822016883215, guid: 144cba1f835a0fa49b6fe09a80e5db02, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081606822016883215, guid: 144cba1f835a0fa49b6fe09a80e5db02, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4592117072935599856, guid: 144cba1f835a0fa49b6fe09a80e5db02, type: 3}
       propertyPath: sceneViewId

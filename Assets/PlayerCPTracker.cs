@@ -53,6 +53,7 @@ public class PlayerCPTracker : MonoBehaviourPunCallbacks
     {
         nextCheckpoint = next;
     }
+
     public void UpdateCheckpointsToCamera()
     {
         int currentCheckpoint = CurrentCheckpoint();
