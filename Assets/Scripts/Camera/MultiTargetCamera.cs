@@ -299,8 +299,6 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             }
         }
 
-        Debug.Log(playerNames[0]);
-
         object[] content = new object[] { playerNames[0] };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(firstPlaceCode, content, raiseEventOptions, SendOptions.SendReliable);
