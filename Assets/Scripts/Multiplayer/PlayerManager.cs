@@ -123,6 +123,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             if (otherPlayer.NickName == playerName)
             {
                 multiTargetCamera.targets.Remove(player);
+                break;
             }
         }
     }

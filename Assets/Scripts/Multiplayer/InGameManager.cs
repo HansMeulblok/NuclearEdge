@@ -2,16 +2,26 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] TMP_Text resultText;
-
-    public GameObject finishedMenu;
+    [SerializeField] private TMP_Text resultText;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject finishedMenu;
+    private bool pauseMenuEnabled;
 
     private void Start()
     {
-        finishedMenu.SetActive(false);
+        pauseMenuEnabled = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseMenu();
+        }
     }
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
@@ -37,7 +47,25 @@ public class InGameManager : MonoBehaviourPunCallbacks
     public void GoToMenu()
     {
         PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LeaveLobby();
-        PhotonNetwork.LoadLevel(0);
+    }
+
+    public override void OnLeftRoom()
+    {
+        Destroy(GameObject.Find("NetworkManager"));
+        SceneManager.LoadScene("Menu");
+        base.OnLeftRoom();
+    }
+
+    public void TogglePauseMenu()
+    {
+        pauseMenuEnabled = !pauseMenuEnabled;
+        if (pauseMenuEnabled)
+        {
+            pauseMenu.SetActive(true);
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
+        }
     }
 }

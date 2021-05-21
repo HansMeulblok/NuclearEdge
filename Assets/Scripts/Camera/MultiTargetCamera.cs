@@ -1,11 +1,8 @@
-using ExitGames.Client.Photon;
-using Photon.Pun;
-using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
-public class MultiTargetCamera : MonoBehaviourPunCallbacks
+public class MultiTargetCamera : MonoBehaviour
 {
     public List<Transform> targets = new List<Transform>();
     public Vector3 offset;
@@ -100,11 +97,5 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         {
             targets.Add(player.transform);
         }
-    }
-
-    // Updates players and camera when a player leaves
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        GetPlayers();
     }
 }
