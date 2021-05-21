@@ -36,16 +36,6 @@ public class WallChange : BaseActivator
             moveX *= -1;
             moveY *= -1;
         }
-
-    }
-
-        // Reverse movement if the platform has moved, only called when instantiated in the next set of chunks
-        if (hasMoved)
-        {
-            moveX *= -1;
-            moveY *= -1;
-        }
-
     }
     private void FixedUpdate()
     {

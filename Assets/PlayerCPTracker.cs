@@ -26,6 +26,12 @@ public class PlayerCPTracker : MonoBehaviour
         return currentCP;
     }
 
+    //Read the distance to the next checkpoint
+    public float DistanceToNextCP()
+    {
+        return distanceToNextCP;
+    }
+
     //Set the current checkpoint number
     public void SetCurrentCheckpoint(int checkpoint)
     {
