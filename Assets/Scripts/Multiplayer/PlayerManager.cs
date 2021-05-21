@@ -26,7 +26,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         deadPlayers = new List<string>();
 
-        Invoke("ChangePlayersColor", 0.6f);
+        Invoke("ChangePlayersColor", 1f);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -85,17 +85,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 {
                     multiTargetCamera.targets.Remove(transform);
                     gameObject.SetActive(false);
-
-                    if (multiTargetCamera.targets.Count == 1)
-                    {
-                        if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
-                        {
-                            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", multiTargetCamera.targets[0].gameObject.GetComponent<PhotonView>().Owner.NickName } });
-                        }
-                    }
                 }
             }
-            else if (multiTargetCamera.targets.Count == 1)
+
+            if (multiTargetCamera.targets.Count == 1)
             {
                 if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
                 {
