@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -32,13 +33,20 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     object[] player3 = new object[2];
     object[] player4 = new object[2];
 
-    List<object[]> players;
+    string[] playerNames = new string[4];
+    object[][] playerProgressList = new object[4][];
 
     private const int cpCode = 3;
 
 
     private void Start()
     {
+        playerProgressList[0] = player1;
+        playerProgressList[1] = player2;
+        playerProgressList[2] = player3;
+        playerProgressList[3] = player4;
+
+
         camera = GetComponent<Camera>();
         camera.orthographic = true;
 
@@ -154,12 +162,44 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     }
     public void OnEvent(EventData photonEvent)
     {
-       
         byte eventCode = photonEvent.Code;
         if (eventCode == cpCode)
         {
             object[] tempObjects = (object[])photonEvent.CustomData;
-            
+            string name = (string)tempObjects[0];
+            int cp = (int)tempObjects[1];
+            float distance = (float)tempObjects[2];
+
+            if(!playerNames.Contains(name))
+            {
+                for (int i = 0; i < playerNames.Length; i++)
+                {
+                    if(playerNames[i] == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        playerNames[i] = name;
+                    }
+                    
+                }
+            }
+
+            for (int i = 0; i < playerNames.Length; i++)
+            {
+                if(playerNames[i] == name)
+                {
+                    playerProgressList[i][0] = cp;
+                    playerProgressList[i][1] = distance;
+                }
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+
+            }
+
         }
     }
 }

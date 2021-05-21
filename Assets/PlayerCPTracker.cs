@@ -3,7 +3,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class PlayerCPTracker : MonoBehaviour
+public class PlayerCPTracker : MonoBehaviourPunCallbacks
 {
     //Keep track of the current checkpoint
     public int currentCP = 0;
@@ -58,7 +58,7 @@ public class PlayerCPTracker : MonoBehaviour
         int currentCheckpoint = CurrentCheckpoint();
         float currentDistance = DistanceToNextCP();
 
-        object[] content = new object[] { gameObject.name, currentCheckpoint, currentDistance};
+        object[] content = new object[] { photonView.Owner.NickName, currentCheckpoint, currentDistance};
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
         PhotonNetwork.RaiseEvent(cpCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
