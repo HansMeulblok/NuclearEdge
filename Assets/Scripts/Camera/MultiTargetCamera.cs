@@ -37,6 +37,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     object[][] playerProgressList = new object[4][];
 
     private const int cpCode = 3;
+    private const int firstPlaceCode = 4;
 
 
     private void Start()
@@ -165,122 +166,150 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         byte eventCode = photonEvent.Code;
         if (eventCode == cpCode)
         {
-            object[] tempObjects = (object[])photonEvent.CustomData;
-            string name = (string)tempObjects[0];
-            int cp = (int)tempObjects[1];
-            float distance = (float)tempObjects[2];
+            CalculatePlacements(photonEvent);
+        }
 
-            if(!playerNames.Contains(name))
-            {
-                for (int i = 0; i < playerNames.Length; i++)
-                {
-                    if(playerNames[i] != null)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        playerNames[i] = name;
-                        break;
-                    }
-                    
-                }
-            }
+        if(eventCode == firstPlaceCode)
+        {
+            SetFirstPlace(photonEvent);
+        }
+    }
 
+    private void CalculatePlacements(EventData photonEvent)
+    {
+        object[] tempObjects = (object[])photonEvent.CustomData;
+        string name = (string)tempObjects[0];
+        int cp = (int)tempObjects[1];
+        float distance = (float)tempObjects[2];
+
+        if (!playerNames.Contains(name))
+        {
             for (int i = 0; i < playerNames.Length; i++)
             {
-                if(playerNames[i] == name)
+                if (playerNames[i] != null)
                 {
-                    playerProgressList[i][0] = cp;
-                    playerProgressList[i][1] = distance;
+                    continue;
                 }
-            }
-
-            //Sort on distance from checkpoint
-            for (int i = 0; i < 4; i++)
-            {
-                //Keep track if there was a swap in this loop
-                bool swapped = false;
-
-                if (playerNames[0] != null && playerNames[1] != null)
+                else
                 {
-                    //Check if the first entry in the array has a bigger distance to the next checkpoint than the second entry in the array
-                    if ((float)playerProgressList[0][1] > (float)playerProgressList[1][1])
-                    {
-                        //Swap the two entries
-                        SwapOrder(0, 1);
-                        //There was a swap
-                        swapped = true;
-                    }
-                }
-
-                if (playerNames[1] != null && playerNames[2] != null)
-                {
-                    if ((float)playerProgressList[1][1] > (float)playerProgressList[2][1])
-                    {
-                        SwapOrder(1, 2);
-                        swapped = true;
-                    }
-                }
-
-                if (playerNames[2] != null && playerNames[3] != null)
-                {
-                    if ((float)playerProgressList[2][1] > (float)playerProgressList[3][1])
-                    {
-                        SwapOrder(2, 3);
-                        swapped = true;
-                    }
-                }
-
-                //If no swaps took place this loop end the for loop
-                if (swapped == false)
-                {
+                    playerNames[i] = name;
                     break;
                 }
-            }
 
-            //Sort on current checkpoint
-            for (int i = 0; i < 4; i++)
+            }
+        }
+
+        for (int i = 0; i < playerNames.Length; i++)
+        {
+            if (playerNames[i] == name)
             {
-                //Keep track if there was a swap in this loop
-                bool swapped = false;
-                if (playerNames[0] != null && playerNames[1] != null)
-                {
-                    //Check if the first entry in the array has a smaller checkpoint number than the second entry in the array
-                    if ((int)playerProgressList[0][0] < (int)playerProgressList[1][0])
-                    {
-                        //Swap the two entries
-                        SwapOrder(0, 1);
-                        //There was a swap
-                        swapped = true;
-                    }
-                }
+                playerProgressList[i][0] = cp;
+                playerProgressList[i][1] = distance;
+            }
+        }
 
-                if (playerNames[1] != null && playerNames[2] != null)
-                {
-                    if ((int)playerProgressList[1][0] < (int)playerProgressList[2][0])
-                    {
-                        SwapOrder(1, 2);
-                        swapped = true;
-                    }
-                }
+        //Sort on distance from checkpoint
+        for (int i = 0; i < 4; i++)
+        {
+            //Keep track if there was a swap in this loop
+            bool swapped = false;
 
-                if (playerNames[2] != null && playerNames[3] != null)
+            if (playerNames[0] != null && playerNames[1] != null)
+            {
+                //Check if the first entry in the array has a bigger distance to the next checkpoint than the second entry in the array
+                if ((float)playerProgressList[0][1] > (float)playerProgressList[1][1])
                 {
-                    if ((int)playerProgressList[2][0] < (int)playerProgressList[3][0])
-                    {
-                        SwapOrder(2, 3);
-                        swapped = true;
-                    }
-                }
-                //If no swaps took place this loop end the for loop
-                if (swapped == false)
-                {
-                    break;
+                    //Swap the two entries
+                    SwapOrder(0, 1);
+                    //There was a swap
+                    swapped = true;
                 }
             }
 
-            Debug.Log(playerNames[0]);
+            if (playerNames[1] != null && playerNames[2] != null)
+            {
+                if ((float)playerProgressList[1][1] > (float)playerProgressList[2][1])
+                {
+                    SwapOrder(1, 2);
+                    swapped = true;
+                }
+            }
+
+            if (playerNames[2] != null && playerNames[3] != null)
+            {
+                if ((float)playerProgressList[2][1] > (float)playerProgressList[3][1])
+                {
+                    SwapOrder(2, 3);
+                    swapped = true;
+                }
+            }
+
+            //If no swaps took place this loop end the for loop
+            if (swapped == false)
+            {
+                break;
+            }
+        }
+
+        //Sort on current checkpoint
+        for (int i = 0; i < 4; i++)
+        {
+            //Keep track if there was a swap in this loop
+            bool swapped = false;
+            if (playerNames[0] != null && playerNames[1] != null)
+            {
+                //Check if the first entry in the array has a smaller checkpoint number than the second entry in the array
+                if ((int)playerProgressList[0][0] < (int)playerProgressList[1][0])
+                {
+                    //Swap the two entries
+                    SwapOrder(0, 1);
+                    //There was a swap
+                    swapped = true;
+                }
+            }
+
+            if (playerNames[1] != null && playerNames[2] != null)
+            {
+                if ((int)playerProgressList[1][0] < (int)playerProgressList[2][0])
+                {
+                    SwapOrder(1, 2);
+                    swapped = true;
+                }
+            }
+
+            if (playerNames[2] != null && playerNames[3] != null)
+            {
+                if ((int)playerProgressList[2][0] < (int)playerProgressList[3][0])
+                {
+                    SwapOrder(2, 3);
+                    swapped = true;
+                }
+            }
+            //If no swaps took place this loop end the for loop
+            if (swapped == false)
+            {
+                break;
+            }
+        }
+
+        Debug.Log(playerNames[0]);
+
+        object[] content = new object[] { playerNames[0] };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(firstPlaceCode, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
+
+    private void SetFirstPlace(EventData photonEvent)
+    {
+        object[] tempObjects = (object[])photonEvent.CustomData;
+
+        for (int i = 0; i < targets.Count; i++)
+        {
+            if(targets[i].GetComponent<PhotonView>().Owner.NickName == (string)tempObjects[0])
+            {
+                firstPlayer = targets[i];
+            }
         }
     }
 

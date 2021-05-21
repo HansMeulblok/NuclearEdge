@@ -54,6 +54,13 @@ public class PlayerCPTracker : MonoBehaviourPunCallbacks
         nextCheckpoint = next;
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        currentCP = 0;
+        UpdateCheckpointsToCamera();
+        CancelInvoke("UpdateCheckpointsToCamera");
+    }
+
     public void UpdateCheckpointsToCamera()
     {
         int currentCheckpoint = CurrentCheckpoint();
