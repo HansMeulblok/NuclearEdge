@@ -28,15 +28,14 @@ public class WallChange : BaseActivator
 
     private void Start()
     {
-        startPosition = transform.position;
+        startPosition = transform.position;   
 
         // Reverse movement if the platform has moved, only called when instantiated in the next set of chunks
-        if (hasMoved)
+        if(hasMoved)
         {
             moveX *= -1;
             moveY *= -1;
         }
-
     }
     private void FixedUpdate()
     {
