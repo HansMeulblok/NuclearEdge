@@ -123,6 +123,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for host
     }
 
+    public override void OnLeftRoom()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        PhotonNetwork.LoadLevel(0);
+        Destroy(gameObject);
+    }
+
     public void LeaveRoom()
     {
         if (PhotonNetwork.InRoom) { PhotonNetwork.LeaveRoom(true); print("Player left room."); }
@@ -143,17 +150,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        GameObject existingPlayer = GameObject.FindGameObjectWithTag("Player");
-        if (existingPlayer)
+        bool playerFound = false;
+
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            playerName = existingPlayer.GetComponent<PhotonView>().Owner.NickName;
+            if (player.GetComponent<PhotonView>().Owner.NickName == PhotonNetwork.NickName)
+            {
+                playerFound = true;
+            }
         }
-        // Create player on level load
-        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Menu") && PhotonNetwork.NickName != playerName)
+
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1) && !playerFound)
         {
             PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
         }
-        
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)

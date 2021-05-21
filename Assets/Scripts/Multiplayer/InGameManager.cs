@@ -49,13 +49,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
-    public override void OnLeftRoom()
-    {
-        Destroy(GameObject.Find("NetworkManager"));
-        SceneManager.LoadScene("Menu");
-        base.OnLeftRoom();
-    }
-
     public void TogglePauseMenu()
     {
         pauseMenuEnabled = !pauseMenuEnabled;
