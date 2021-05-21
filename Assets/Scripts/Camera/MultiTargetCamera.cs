@@ -39,6 +39,8 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     private const int cpCode = 3;
     private const int firstPlaceCode = 4;
 
+    Vector3 firstPlayerOffset;
+
 
     private void Start()
     {
@@ -77,10 +79,13 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         if(firstPlayer != null)
         {
 
-            Vector3 firstPlayerOffset = middlePoint - firstPlayer.position;
-            offset = new Vector3(firstPlayerOffset.x / firstPlayerPriority, firstPlayerOffset.y / firstPlayerPriority, offset.z);
+            //Vector3 firstPlayerOffset = middlePoint + firstPlayer.position;
+            //offset = new Vector3(firstPlayerOffset.x / firstPlayerPriority, firstPlayerOffset.y / firstPlayerPriority, offset.z);
+
+            firstPlayerOffset = firstPlayer.position - middlePoint;
         }
-        Vector3 newPos = middlePoint + offset;
+        //Vector3 newPos = middlePoint + offset;
+        Vector3 newPos = middlePoint + firstPlayerOffset * firstPlayerPriority / 100;
 
         //smooth movement
         transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
