@@ -76,7 +76,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
         if(firstPlayer != null)
         {
-            offset = (new Vector2(firstPlayer.position.x, firstPlayer.position.y) / firstPlayerPriority);
+            offset = new Vector3(firstPlayer.position.x / firstPlayerPriority, firstPlayer.position.y / firstPlayerPriority, offset.z) ;
         }
 
         //smooth movement
