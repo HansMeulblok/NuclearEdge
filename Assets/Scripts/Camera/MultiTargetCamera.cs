@@ -76,7 +76,8 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
         if(firstPlayer != null)
         {
-            offset = new Vector3(firstPlayer.position.x / firstPlayerPriority, firstPlayer.position.y / firstPlayerPriority, offset.z) ;
+            Vector3 firstPlayerOffset = camera.WorldToScreenPoint(firstPlayer.position);
+            offset = new Vector3(firstPlayerOffset.x / firstPlayerPriority, firstPlayerOffset.y / firstPlayerPriority, offset.z) ;
         }
 
         //smooth movement
