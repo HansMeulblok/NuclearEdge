@@ -95,6 +95,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                     }
                 }
             }
+            else if (multiTargetCamera.targets.Count == 1)
+            {
+                if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
+                {
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", multiTargetCamera.targets[0].gameObject.GetComponent<PhotonView>().Owner.NickName } });
+                }
+            }
         };
     }
 
@@ -122,6 +129,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             string playerName = player.gameObject.GetComponent<PhotonView>().Owner.NickName;
             if (otherPlayer.NickName == playerName)
             {
+                if (!deadPlayers.Contains(playerName)) { deadPlayers.Add(playerName); }
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
                 multiTargetCamera.targets.Remove(player);
                 break;
             }
