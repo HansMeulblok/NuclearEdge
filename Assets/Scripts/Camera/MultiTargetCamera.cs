@@ -72,23 +72,15 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         }
 
         //determine new pos
-        Vector3 newPos = middlePoint + offset;
+        
 
         if(firstPlayer != null)
         {
 
-            Vector3 firstPlayerOffset = camera.WorldToScreenPoint(firstPlayer.position);
-            Debug.Log(firstPlayerOffset);
-
-            float screenMiddlePointY = camera.pixelHeight / 2;
+            Vector3 firstPlayerOffset = middlePoint - firstPlayer.position;
             offset = new Vector3(firstPlayerOffset.x / firstPlayerPriority, firstPlayerOffset.y / firstPlayerPriority, offset.z);
-
-            if (firstPlayerOffset.y <= screenMiddlePointY)
-            {
-                offset.y -= 20;
-            }
-
         }
+        Vector3 newPos = middlePoint + offset;
 
         //smooth movement
         transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);

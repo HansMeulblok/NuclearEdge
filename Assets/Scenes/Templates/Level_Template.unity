@@ -278,9 +278,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targets: []
   firstPlayer: {fileID: 0}
-  firstPlayerPriority: 100
+  firstPlayerPriority: 10
   offset: {x: 0, y: 0, z: -1}
-  smoothTime: 0.45
+  smoothTime: 0.5
   minZoom: 15
   maxZoom: 10
   zoomLimit: 15
