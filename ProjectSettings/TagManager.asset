@@ -9,6 +9,7 @@ TagManager:
   - Status
   - Falling Platform
   - TileMap
+  - GameUI
   layers:
   - Default
   - TransparentFX
