@@ -3,6 +3,7 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Realtime;
 
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -25,7 +26,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         deadPlayers = new List<string>();
 
-        Invoke("ChangePlayersColor", 0.6f);
+        Invoke("ChangePlayersColor", 1f);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -80,8 +81,19 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
             if (deadPlayers.Contains(photonView.Owner.NickName))
             {
-                multiTargetCamera.targets.Remove(transform);
-                gameObject.SetActive(false);
+                if (multiTargetCamera.targets.Count != 0)
+                {
+                    multiTargetCamera.targets.Remove(transform);
+                    gameObject.SetActive(false);
+                }
+            }
+
+            if (multiTargetCamera.targets.Count == 1)
+            {
+                if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
+                {
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", multiTargetCamera.targets[0].gameObject.GetComponent<PhotonView>().Owner.NickName } });
+                }
             }
         };
     }
@@ -101,5 +113,20 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     private void OnBecameVisible()
     {
         isRendered = true;
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        foreach (Transform player in multiTargetCamera.targets)
+        {
+            string playerName = player.gameObject.GetComponent<PhotonView>().Owner.NickName;
+            if (otherPlayer.NickName == playerName)
+            {
+                if (!deadPlayers.Contains(playerName)) { deadPlayers.Add(playerName); }
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
+                multiTargetCamera.targets.Remove(player);
+                break;
+            }
+        }
     }
 }

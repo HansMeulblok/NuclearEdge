@@ -63,10 +63,11 @@ public class PlayerCPTracker : MonoBehaviourPunCallbacks
 
     public void UpdateCheckpointsToCamera()
     {
+        if (!PhotonNetwork.InRoom) { return; }
         int currentCheckpoint = CurrentCheckpoint();
         float currentDistance = DistanceToNextCP();
 
-        object[] content = new object[] { photonView.Owner.NickName, currentCheckpoint, currentDistance};
+        object[] content = new object[] { photonView.Owner.NickName, currentCheckpoint, currentDistance };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
         PhotonNetwork.RaiseEvent(cpCode, content, raiseEventOptions, SendOptions.SendReliable);
     }

@@ -14,7 +14,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     [Header("Camera movement settings")]
     [Range(0f, 1f)]
-    public float firstPlayerPriority =1;
+    public float firstPlayerPriority = 1;
     public Vector3 offset;
     public float smoothTime = 0.5f;
 
@@ -49,57 +49,47 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         playerProgressList[2] = player3;
         playerProgressList[3] = player4;
 
-
         camera = GetComponent<Camera>();
         camera.orthographic = true;
 
-        //TODO: wait for players in loading screen instead and get them after they are loaded in instead of invoking this there
+        // TODO: wait for players in loading screen and get them after they are loaded in instead of invoking this there
         Invoke("GetPlayers", getPlayerBuffer);
     }
 
     private void LateUpdate()
     {
-        if (targets.Count == 0) { return; }
-
+        if (targets.Count <= 0 || targets[0] == null) { return; }
         CameraMove();
         CameraZoom();
     }
 
     private void CameraMove()
     {
-        // move camera according to transforms in list
-        if(targets != null)
+        // Move camera according to transforms in list
+        middlePoint = GetMiddlePoint();
+
+        // Determine new pos
+        if (firstPlayer != null)
         {
-            middlePoint = GetMiddlePoint();
-        }
-
-        //determine new pos
-        
-
-        if(firstPlayer != null)
-        {
-
             Vector3 firstPlayerOffset = firstPlayer.position - middlePoint;
             offset = new Vector3(firstPlayerOffset.x * firstPlayerPriority, firstPlayerOffset.y * firstPlayerPriority, offset.z);
-
-
         }
         Vector3 newPos = middlePoint + offset;
 
-        //smooth movement
+        // Smooth movement
         transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
     }
 
     private void CameraZoom()
     {
-        // zoom in based on distance greatest distance between targets
+        // Zoom in based on distance greatest distance between targets
         float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomLimit);
         camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, newZoom, Time.deltaTime);
     }
 
     float GetGreatestDistance()
     {
-        // calculate distance between targets, return biggest
+        // Calculate distance between targets, return biggest
         var bounds = new Bounds(targets[0].position, Vector3.zero);
 
         for (int i = 0; i < targets.Count; i++)
@@ -115,14 +105,9 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     Vector3 GetMiddlePoint()
     {
-        // gets the middle point between all targets in bounds
+        // Gets the middle point between all targets in bounds
         if (targets.Count == 1)
         {
-            if(targets[0] == null)
-            {
-                return targets[1].position;
-            }
-
             return targets[0].position;
         }
 
@@ -141,7 +126,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     void GetPlayers()
     {
-        //finds all players in scene and adds them to the target list
+        // Finds all players in scene and adds them to the target list
         targets.Clear();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
@@ -176,7 +161,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             CalculatePlacements(photonEvent);
         }
 
-        if(eventCode == firstPlaceCode)
+        if (eventCode == firstPlaceCode)
         {
             SetFirstPlace(photonEvent);
         }
@@ -215,20 +200,20 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             }
         }
 
-        //Sort on distance from checkpoint
+        // Sort on distance from checkpoint
         for (int i = 0; i < 4; i++)
         {
-            //Keep track if there was a swap in this loop
+            // Keep track if there was a swap in this loop
             bool swapped = false;
 
             if (playerNames[0] != null && playerNames[1] != null)
             {
-                //Check if the first entry in the array has a bigger distance to the next checkpoint than the second entry in the array
+                // Check if the first entry in the array has a bigger distance to the next checkpoint than the second entry in the array
                 if ((float)playerProgressList[0][1] > (float)playerProgressList[1][1])
                 {
-                    //Swap the two entries
+                    // Swap the two entries
                     SwapOrder(0, 1);
-                    //There was a swap
+                    // There was a swap
                     swapped = true;
                 }
             }
@@ -251,26 +236,26 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            //If no swaps took place this loop end the for loop
+            // If no swaps took place this loop end the for loop
             if (swapped == false)
             {
                 break;
             }
         }
 
-        //Sort on current checkpoint
+        // Sort on current checkpoint
         for (int i = 0; i < 4; i++)
         {
-            //Keep track if there was a swap in this loop
+            // Keep track if there was a swap in this loop
             bool swapped = false;
             if (playerNames[0] != null && playerNames[1] != null)
             {
-                //Check if the first entry in the array has a smaller checkpoint number than the second entry in the array
+                // Check if the first entry in the array has a smaller checkpoint number than the second entry in the array
                 if ((int)playerProgressList[0][0] < (int)playerProgressList[1][0])
                 {
-                    //Swap the two entries
+                    // Swap the two entries
                     SwapOrder(0, 1);
-                    //There was a swap
+                    // There was a swap
                     swapped = true;
                 }
             }
@@ -292,13 +277,14 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                     swapped = true;
                 }
             }
-            //If no swaps took place this loop end the for loop
+            // If no swaps took place this loop end the for loop
             if (swapped == false)
             {
                 break;
             }
         }
 
+        if (!PhotonNetwork.InRoom) { return; }
         object[] content = new object[] { playerNames[0] };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(firstPlaceCode, content, raiseEventOptions, SendOptions.SendReliable);
@@ -311,14 +297,14 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < targets.Count; i++)
         {
-            if(targets[i].GetComponent<PhotonView>().Owner.NickName == (string)tempObjects[0])
+            if (targets[i].GetComponent<PhotonView>().Owner.NickName == (string)tempObjects[0])
             {
                 firstPlayer = targets[i];
             }
         }
     }
 
-    //This function swaps the two given entries in teh player progress array and the player names array
+    // This function swaps the two given entries in teh player progress array and the player names array
     private void SwapOrder(int swapFirst, int swapSecond)
     {
         object[] tempObject = playerProgressList[swapFirst];
