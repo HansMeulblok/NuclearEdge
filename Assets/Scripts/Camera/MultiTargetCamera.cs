@@ -83,10 +83,11 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             float screenMiddlePointY = camera.pixelHeight / 2;
             offset = new Vector3(firstPlayerOffset.x / firstPlayerPriority, firstPlayerOffset.y / firstPlayerPriority, offset.z);
 
-            if (firstPlayerOffset.y < screenMiddlePointY)
+            if (firstPlayerOffset.y <= screenMiddlePointY)
             {
-                offset.y *= -1;
+                offset.y -= 20;
             }
+
         }
 
         //smooth movement
