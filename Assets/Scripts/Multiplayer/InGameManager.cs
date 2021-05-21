@@ -2,7 +2,6 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviourPunCallbacks
 {
@@ -10,18 +9,15 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     public GameObject finishedMenu;
 
-    private MultiTargetCamera multiTargetCamera;
-
     private void Start()
     {
-        multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
-
         finishedMenu.SetActive(false);
     }
+
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
-        //if player reaches finish line or there is only one player remaining
-        if (propertiesThatChanged["playerWon"] != null || multiTargetCamera.targets.Count == 1)
+        // If player reaches finish line or there is only one player remaining
+        if (propertiesThatChanged["playerWon"] != null)
         {
             finishedMenu.SetActive(true);
 
@@ -41,6 +37,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     public void GoToMenu()
     {
         PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveLobby();
         PhotonNetwork.LoadLevel(0);
     }
 }
