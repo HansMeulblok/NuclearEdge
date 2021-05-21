@@ -445,7 +445,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         //Wall cling duration decrease
         if (onLeftWallCling > 0)
         {
-            if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.left, colisionDistance) && canWallCling)
+            if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.left, colisionDistance, sideMask) && canWallCling)
             {
                 countWallClingCollision = 0;
             }
@@ -461,7 +461,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         }
         if (onRightWallCling > 0)
         {
-            if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.right, colisionDistance) && canWallCling)
+            if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.right, colisionDistance, sideMask) && canWallCling)
             {
                 countWallClingCollision = 0;
             }
@@ -504,7 +504,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, 0.05f, sludgeMask))
         {
             //check if falling platform is below the player and if it is parent it to it.s
-            RaycastHit2D downHit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, 0.05f);
+            RaycastHit2D downHit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, 0.05f, sludgeMask);
             if (downHit.transform.tag == "Falling Platform")
             {
                 transform.parent = downHit.transform;
