@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class FallingPlatformMoving : MonoBehaviour
+public class FallingPlatformMoving : MonoBehaviourPun
 {
     private bool isFalling = false;
     private float fallingSpeed;
@@ -19,16 +18,17 @@ public class FallingPlatformMoving : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient) { return; };
         if (isFalling)
         {
             timer += Time.deltaTime;
             transform.Translate(Vector2.down * (fallingSpeed * Time.deltaTime), Space.World);
         }
 
-        if(timer >= maxTime)
+        if (timer >= maxTime)
         {
             timer = 0;
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 

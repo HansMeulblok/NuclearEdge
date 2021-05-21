@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     private Vector2 moveDirection;
     private float moveSpeed;
     private float bulletLifeSpan;
+    
     private void OnEnable()
     {
         Invoke("Destroy", bulletLifeSpan);

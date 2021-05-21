@@ -12,22 +12,27 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     [Header("Falling variables")]
     public float maxTime;
     public float fallingSpeed;
+    public float resetTime;
+
     private float timer;
+
     private bool steppedOn = false;
     private bool canFall = false;
     private bool isPlatformActive;
-    public float resetTime;
 
+    private GameObject newPlatform;
     private const int fallingPlatformCode = 2;
 
 
     private void Update()
     {
+
+
         //check if the player is on top of the platform
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f))
         {
             RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f);
-            PhotonView pv = hit.transform.GetComponent<PhotonView>();
+            PhotonView pv = hit.transform.gameObject.GetComponent<PhotonView>();
 
             if (hit.transform.tag == "Player" && !canFall && pv.IsMine)
             {
@@ -35,19 +40,23 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             }
         }
 
+        if (!PhotonNetwork.IsMasterClient) { return; }
+
         //start timer if the platform is stepped on
         if (steppedOn)
         {
+            newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatformMoving", transform.position, Quaternion.identity);
+            int objectID = newPlatform.GetComponent<PhotonView>().GetInstanceID();
+
             timer += Time.deltaTime;
         }
 
         //if timer is maxed out start falling
-        if(timer >= maxTime)
-        {        
-            //GameObject newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatform", transform.position, Quaternion.identity);
-            //newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, fallingSpeed, maxTime);
-            SwitchStaticPlatform();
-            //Invoke("ResetPlatform", maxTime);
+        if (timer >= maxTime)
+        {
+            newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, fallingSpeed, maxTime);
+
+            Invoke("ResetPlatform", maxTime);
             canFall = true;
             steppedOn = false;
             timer = 0;
@@ -58,17 +67,16 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     private void ResetPlatform()
     {
         // transform.gameObject.SetActive(true);
-        SwitchStaticPlatform();
+        SwitchStaticPlatform(true);
         FindObjectOfType<PlayerMovement2D>().UnParent();
         canFall = false;
-
     }
 
 
     private void activateFallingPlatform()
     {
-        object[] content = new object[] { gameObject.name };
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+        object[] content = new object[] { gameObject.name, false }; ;
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
@@ -89,29 +97,37 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         {
             object[] tempObject = (object[])photonEvent.CustomData;
             string receivedObj = (string)tempObject[0];
+            bool isActive = (bool)tempObject[1];
+
+            print("Object: " + receivedObj + ", setting " + isActive);
 
             if (receivedObj == gameObject.name)
             {
-                //steppedOn = true;
-                SwitchStaticPlatform();
+                print("Switching platform...");
+                SwitchStaticPlatform(isActive);
+                
+                // Platform aanzetten
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    steppedOn = true;
+                }
             }
         }
     }
 
 
-    public void SwitchStaticPlatform()
+    public void SwitchStaticPlatform(bool isActive)
     {
-        isPlatformActive = !isPlatformActive;
-        if(isPlatformActive)
+        if (isActive)
+        {
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
+            GetComponent<BoxCollider2D>().enabled = true;
+        }
+        else
         {
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             GetComponent<BoxCollider2D>().enabled = false;
         }
-        else
-        {
-            GetComponentInChildren<SpriteRenderer>().enabled = true;
-            GetComponent<BoxCollider2D>().enabled = true;
-        }       
     }
 
 }

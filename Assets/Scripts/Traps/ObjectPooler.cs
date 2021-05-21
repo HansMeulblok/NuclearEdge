@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooler : MonoBehaviourPunCallbacks
+public class ObjectPooler : MonoBehaviourPun
 {
     [System.Serializable]
     public class Pool
@@ -39,7 +39,8 @@ public class ObjectPooler : MonoBehaviourPunCallbacks
 
             for (int i = 0; i < pool.size; i++)
             {
-                GameObject obj = PhotonNetwork.InstantiateRoomObject(pool.prefab.name, Vector3.zero, Quaternion.identity);
+                //object myCustomInitData = GetInitData();
+                GameObject obj = PhotonNetwork.InstantiateRoomObject(pool.tag, new Vector3(-1000, -1000), Quaternion.identity, 0);
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -50,9 +51,10 @@ public class ObjectPooler : MonoBehaviourPunCallbacks
 
     public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     {
+        print(tag);
         if (!poolDictioray.ContainsKey(tag))
         {
-            Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
+            Debug.LogWarning("Pool with " + tag + "tag doesn't exist.");
             return null;
         }
 

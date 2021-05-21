@@ -132,14 +132,13 @@ public class Cannon : BaseActivator
     private void Fire()
     {
         // get bullet from the bulletPool, set the position to the fire point. set the firing direction, bulletLifespan and the bullet movepseed.
-        Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
+        //Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
+        //GameObject bullet = ObjectPooler.Instance.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
+        //Bullet bulletScript = bullet.GetComponent<Bullet>();
         
-        GameObject bullet = ObjectPooler.Instance.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
-        Bullet bulletScript = bullet.GetComponent<Bullet>();
-        
-        bulletScript.SetMoveDirection(bulDir);
-        bulletScript.SetBulletLifeSpan(bulletLifeSpan);
-        bulletScript.SetMoveSpeed(bulletMoveSpeed);
+        //bulletScript.SetMoveDirection(bulDir);
+        //bulletScript.SetBulletLifeSpan(bulletLifeSpan);
+        //bulletScript.SetMoveSpeed(bulletMoveSpeed);
     }
     #endregion
 

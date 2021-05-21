@@ -826,6 +826,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 23
       objectReference: {fileID: 0}
+    - target: {fileID: 3656432958538465692, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
+      propertyPath: m_Name
+      value: ObjectPooler
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656432958538465692, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3921609895116658245, guid: 1d7a57bd2e00f6a4f9c8027838a11ae8, type: 3}
       propertyPath: m_Enabled
       value: 0
