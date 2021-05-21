@@ -14,7 +14,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     [Header("Camera movement settings")]
     [Range(1f, 30f)]
-    public float firstPlayerPriority= 10;
+    public float firstPlayerPriority = 10;
     public Vector3 offset;
     public float smoothTime = 0.5f;
 
@@ -76,7 +76,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
         if(firstPlayer != null)
         {
-            offset = (firstPlayer.position / firstPlayerPriority);
+            offset = (new Vector2(firstPlayer.position.x, firstPlayer.position.y) / firstPlayerPriority);
         }
 
         //smooth movement
