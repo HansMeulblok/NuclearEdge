@@ -195,11 +195,80 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
+            //Sort on distance from checkpoint
             for (int i = 0; i < 4; i++)
             {
-
+                //Keep track if there was a swap in this loop
+                bool swapped = false;
+                //Check if the first entry in the array has a bigger distance to the next checkpoint than the second entry in the array
+                if ((float)playerProgressList[0][1] > (float)playerProgressList[1][1])
+                {
+                    //Swap the two entries
+                    SwapOrder(0, 1);
+                    //There was a swap
+                    swapped = true;
+                }
+                if ((float)playerProgressList[1][1] > (float)playerProgressList[2][1])
+                {
+                    SwapOrder(1, 2);
+                    swapped = true;
+                }
+                if ((float)playerProgressList[2][1] > (float)playerProgressList[3][1])
+                {
+                    SwapOrder(2, 3);
+                    swapped = true;
+                }
+                //If no swaps took place this loop end the for loop
+                if (swapped == false)
+                {
+                    break;
+                }
             }
 
+            //Sort on current checkpoint
+            for (int i = 0; i < 4; i++)
+            {
+                //Keep track if there was a swap in this loop
+                bool swapped = false;
+                //Check if the first entry in the array has a smaller checkpoint number than the second entry in the array
+                if ((float)playerProgressList[0][0] < (float)playerProgressList[1][0])
+                {
+                    //Swap the two entries
+                    SwapOrder(0, 1);
+                    //There was a swap
+                    swapped = true;
+                }
+                if ((float)playerProgressList[1][0] < (float)playerProgressList[2][0])
+                {
+                    SwapOrder(1, 2);
+                    swapped = true;
+                }
+                if ((float)playerProgressList[2][0] < (float)playerProgressList[3][0])
+                {
+                    SwapOrder(2, 3);
+                    swapped = true;
+                }
+                //If no swaps took place this loop end the for loop
+                if (swapped == false)
+                {
+                    break;
+                }
+            }
+
+            Debug.Log(playerNames[0]);
         }
     }
+
+    //This function swaps the two given entries in teh player progress array and the player names array
+    private void SwapOrder(int swapFirst, int swapSecond)
+    {
+        object[] tempObject = playerProgressList[swapFirst];
+        playerProgressList[swapFirst] = playerProgressList[swapSecond];
+        playerProgressList[swapSecond] = tempObject;
+
+        string tempName = playerNames[swapFirst];
+        playerNames[swapFirst] = playerNames[swapSecond];
+        playerNames[swapSecond] = tempName;
+    }
+
 }
