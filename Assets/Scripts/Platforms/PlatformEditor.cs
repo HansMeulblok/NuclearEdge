@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlatformEditor : MonoBehaviour
 { 
     [Header("enable/disable editting mode")]
-    public bool editing = true;
+    public bool editing = false;
 
     [Header("Size variables")]
     [Range(1, 10)] public int platformLength;

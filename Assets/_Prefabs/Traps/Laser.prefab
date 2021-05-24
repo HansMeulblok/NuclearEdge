@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7270996207611523126}
   - component: {fileID: 7270996207611523113}
   - component: {fileID: 7270996207611523127}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,12 +143,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a722b7b1bedb57a4facde8389e17a294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildUpTime: 2
+  buildUpTime: 3
   duration: 1
-  buildUpFX: {fileID: 0}
+  buildUpFX: {fileID: 7270996208096424650}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4095
+  isActivated: 1
   reflections: 3
   maxLength: 50
-  isActivated: 1
 --- !u!1 &7270996208096424650
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7270996208096424653}
   - component: {fileID: 7270996208096424652}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BuildUpEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,8 +223,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0.8531437, a: 1}
+  m_Sprite: {fileID: 5032270846426482800, guid: 7f3e7e966dd8a428894bc7fc03da24ec, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
