@@ -111,7 +111,7 @@ public class LevelGenerator : MonoBehaviour
             if (chunks.Count == 0)
             {
                 //instantiate the finish if no more chunks left
-                GameObject finish = Instantiate(finishChunk, position + new Vector2(chunkWidth + inbetweenChunkWidth * 2, 0), Quaternion.identity, chunkHolder);
+                GameObject finish = Instantiate(finishChunk, position + new Vector2(chunkWidth + inbetweenChunkWidth, 0), Quaternion.identity, chunkHolder);
                 tempCPController.UpdateNextCheckpoint(finish.GetComponentInChildren<PlayerFinish>().gameObject);
             }
             else

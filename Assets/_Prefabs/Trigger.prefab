@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8216092512163825536}
   - component: {fileID: 1636158550379224947}
   - component: {fileID: 7182502656826048002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HighlightRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 1949891982451545889}
   - component: {fileID: 1949891982451545890}
   - component: {fileID: 7305937792729874989}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 073e55801df5cfe40b5a28d3d5dcd297, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

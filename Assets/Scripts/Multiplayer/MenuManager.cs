@@ -160,4 +160,9 @@ public class MenuManager : MonoBehaviourPunCallbacks
     {
         mp_playerCount.text = "Players online: " + PhotonNetwork.CountOfPlayers.ToString();
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

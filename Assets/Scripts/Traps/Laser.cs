@@ -3,25 +3,25 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class Laser : BaseActivator
 {
+    [Header("laser Config")]
     [SerializeField] private float buildUpTime;
     [SerializeField] private float duration;
     [SerializeField] private GameObject buildUpFX;
+    [SerializeField] private LayerMask layerMask;
+    public bool isActivated = true;
 
-    PlayerStatusEffects pse;
-
+    [Header("laser range")]
     public int reflections;
     public float maxLength;
 
+    PlayerStatusEffects pse;
+ 
     private LineRenderer lineRenderer;
     private Ray2D  ray;
     private RaycastHit2D hit;
-
-    public bool isActivated = true;
-
     private float timer;
     private float durationTimer;
-
-    int playerHits;
+    private int playerHits;
 
     public override void Activate()
     {
@@ -83,7 +83,7 @@ public class Laser : BaseActivator
 
         for (int i = 0; i < reflections; i++)
         {
-            if(hit = Physics2D.Raycast(ray.origin, ray.direction, remainingLength))
+            if(hit = Physics2D.Raycast(ray.origin, ray.direction, remainingLength, layerMask))
             {
                 //check if we hit something if we do add to position count and update linerenderer positions
                 lineRenderer.positionCount += 1;
@@ -114,7 +114,7 @@ public class Laser : BaseActivator
                 }
                     
                 //if the ray hit something else than the tilemap break
-                if (hit.collider.tag != "TileMap" && hit.collider.tag != "Player")
+                if (hit.collider.tag != "TileMap" || hit.collider.tag != "Player")
                 break;
 
                     
