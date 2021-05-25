@@ -97,8 +97,8 @@ GameObject:
   - component: {fileID: 1452580588310239367}
   - component: {fileID: 5296331813980562998}
   m_Layer: 9
-  m_Name: Falling Platform
-  m_TagString: Falling Platform
+  m_Name: FallingPlatformStatic
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   collider: {fileID: 3860048427860164823}
   maxTime: 2
   fallingSpeed: 4
-  resetTime: 3
+  maxDelayTime: 5
 --- !u!251 &1452580588310239367
 PlatformEffector2D:
   m_ObjectHideFlags: 0
