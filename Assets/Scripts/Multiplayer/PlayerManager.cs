@@ -107,7 +107,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 {
                     if (player.gameObject.GetComponent<PhotonView>().Owner.NickName == playerColor.Key)
                     {
-                        Color colorTemp = new Color();
+                        Color colorTemp = Color.red;
                         ColorUtility.TryParseHtmlString(playerColor.Value, out colorTemp);
                         player.gameObject.GetComponent<SpriteRenderer>().color = colorTemp;
                     }
@@ -125,7 +125,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             for (int i = 0; i < multiTargetCamera.targets.Count; i++)
             {
                 string playerName = multiTargetCamera.targets[i].gameObject.GetComponent<PhotonView>().Owner.NickName;
-                string color = ColorUtility.ToHtmlStringRGBA(playerColor[i]);
+                string color = $"#{ColorUtility.ToHtmlStringRGBA(playerColor[i])}";
                 playerColors.Add(playerName, color);
             }
             if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerColors"))
