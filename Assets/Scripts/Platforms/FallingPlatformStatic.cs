@@ -76,7 +76,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     private void activateFallingPlatform()
     {
-        object[] content = new object[] { GetInstanceID(), PhotonNetwork.Time, false }; ;
+        object[] content = new object[] { GetInstanceID(), (int)PhotonNetwork.Time, false }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -101,7 +101,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             int serverTime = (int)tempObject[1];
             bool isActive = (bool)tempObject[2];
 
-            print("Object: " + instanceID + ", setting " + isActive);
+            print("Object: " + instanceID + ", setting " + isActive + ". Trying to acces " + GetInstanceID());
 
             if (GetInstanceID() == instanceID)
             {
