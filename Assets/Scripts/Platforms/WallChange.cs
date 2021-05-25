@@ -5,12 +5,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class WallChange : BaseActivator
 {
-    [Header("enable/disable editting mode")]
-    public bool editing = true;
-
-    [Header("wall size variables")]
-    [Range(1, 10)] public int platformLength;
-    [Range(1, 10)] public int platformHeight;
     public SpriteRenderer spriteHolder;
     public new BoxCollider2D collider;
 

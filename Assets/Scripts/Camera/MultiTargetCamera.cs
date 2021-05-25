@@ -44,6 +44,8 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+
+        Screen.SetResolution(1920, 1080, true, 60);
         playerProgressList[0] = player1;
         playerProgressList[1] = player2;
         playerProgressList[2] = player3;
