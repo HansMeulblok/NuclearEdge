@@ -107,7 +107,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 {
                     if (player.gameObject.GetComponent<PhotonView>().Owner.NickName == playerColor.Key)
                     {
-                        Color colorTemp = Color.red;
+                        Color colorTemp = new Color();
                         ColorUtility.TryParseHtmlString(playerColor.Value, out colorTemp);
                         player.gameObject.GetComponent<SpriteRenderer>().color = colorTemp;
                     }
