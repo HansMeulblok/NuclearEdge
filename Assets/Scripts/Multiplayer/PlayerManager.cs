@@ -13,8 +13,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private bool isRendered = false;
     private List<string> deadPlayers;
-    private List<KeyValuePair<string, Color>> playerColors;
-
+    private Dictionary<string, Color> playerColors;
     private Vector2 networkPosition;
     private float networkRotation;
 
@@ -100,13 +99,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         if (propertiesThatChanged["playerColors"] != null)
         {
-            playerColors = (propertiesThatChanged["playerColors"] as KeyValuePair<string, Color>[]).ToList();
+            playerColors = propertiesThatChanged["playerColors"] as Dictionary<string, Color>;
 
             foreach (KeyValuePair<string, Color> playerColor in playerColors)
             {
                 foreach (Transform player in multiTargetCamera.targets)
                 {
-                    if(player.gameObject.GetComponent<PhotonView>().Owner.NickName == playerColor.Key)
+                    if (player.gameObject.GetComponent<PhotonView>().Owner.NickName == playerColor.Key)
                     {
                         player.gameObject.GetComponent<SpriteRenderer>().color = playerColor.Value;
                     }
@@ -119,15 +118,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            List<KeyValuePair<string, Color>> playerColors = new List<KeyValuePair<string, Color>>();
+            Dictionary<string, Color> playerColors = new Dictionary<string, Color>();
             Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };
             for (int i = 0; i < multiTargetCamera.targets.Count; i++)
             {
                 string playerName = multiTargetCamera.targets[i].gameObject.GetComponent<PhotonView>().Owner.NickName;
                 Color color = playerColor[i];
-                playerColors.Add(new KeyValuePair<string, Color>(playerName, color));
+                playerColors.Add(playerName, color);
             }
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerColors", playerColors.ToArray() } });
+            if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerColors"))
+            {
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerColors", playerColors } });
+            }
         }
     }
 
@@ -152,3 +154,4 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 }
+
