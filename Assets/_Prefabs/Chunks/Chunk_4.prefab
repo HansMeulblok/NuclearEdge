@@ -26832,7 +26832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_DrawMode
@@ -26920,7 +26920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2394611285974163024, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
@@ -27818,7 +27818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_DrawMode
@@ -27906,7 +27906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2394611285974163024, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
@@ -27975,7 +27975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_DrawMode
@@ -28063,7 +28063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2394611285974163024, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
@@ -30290,7 +30290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_DrawMode
@@ -30378,7 +30378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2394611285974163024, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
@@ -31612,7 +31612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_DrawMode
@@ -31700,7 +31700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2394611285974163024, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
@@ -31846,7 +31846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1356327603, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_DrawMode
@@ -31934,7 +31934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2394611285974163024, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
@@ -33096,7 +33096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 747686762429411014, guid: 5572dbdd732a3d841a7045bd3d1cf806, type: 3}
       propertyPath: m_Name
-      value: BulletPool
+      value: ObjectPooler
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5572dbdd732a3d841a7045bd3d1cf806, type: 3}

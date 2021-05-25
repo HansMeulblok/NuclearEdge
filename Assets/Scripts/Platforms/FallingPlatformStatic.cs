@@ -52,6 +52,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         {
             newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatformMoving", transform.position, Quaternion.identity);
             newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, fallingSpeed, maxTime);
+            SwitchStaticPlatform(false);
 
             // Reset trigger of moving platform
             steppedOn = false;
@@ -61,11 +62,11 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             Invoke("ResetStaticPlatform", maxTime);
         }
         // Delay too long, so skip
-        else
-        {
-            steppedOn = isActivated = false;
-            timer = 0;
-        }
+        //else
+        //{
+        //    steppedOn = isActivated = false;
+        //    timer = 0;
+        //}
     }
 
     //reset the platform after a while
@@ -74,11 +75,12 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         SwitchStaticPlatform(true);
         FindObjectOfType<PlayerMovement2D>().UnParent();
         canFall = false;
+        isActivated = false;
     }
 
     private void activateFallingPlatform()
     {
-        object[] content = new object[] { gameObject.name, (float)PhotonNetwork.Time, false }; ;
+        object[] content = new object[] { gameObject.name, (float)PhotonNetwork.Time }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -101,17 +103,14 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             object[] tempObject = (object[])photonEvent.CustomData;
             string objectName = (string)tempObject[0];
             float serverTime = (float)tempObject[1];
-            bool isActive = (bool)tempObject[2];
 
-            print("Object: " + objectName + ", setting " + isActive + ". Trying to acces " + gameObject.name);
+            print("Object: " + objectName + ", setting inactive." + " Trying to acces " + gameObject.name);
 
             if (objectName == gameObject.name)
             {
                 print("Switching platform...");
-                SwitchStaticPlatform(isActive);
                 startTime = serverTime;
                 steppedOn = true;
-                isActivated = isActive;
             }
         }
     }

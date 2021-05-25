@@ -28,7 +28,7 @@ public class FallingPlatformMoving : MonoBehaviourPun
         if (timer >= maxTime)
         {
             timer = 0;
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 
