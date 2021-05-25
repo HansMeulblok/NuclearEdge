@@ -34,12 +34,12 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
         {
             timer += Time.deltaTime;
             //transform.Translate(Vector2.down * (fallingSpeed * Time.deltaTime), Space.World);
-            rb.MovePosition(transform.position - new Vector3(0, 10, 0) * fallingSpeed * Time.deltaTime);
+            rb.MovePosition((Vector2)transform.position + (Vector2.down * fallingSpeed * Time.deltaTime));
         }
 
         if (timer >= maxTime)
         {
-            timer = 0;
+            timer = 0; 
             TurnOffPlatform();
         }
     }
