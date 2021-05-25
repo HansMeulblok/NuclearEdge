@@ -37,6 +37,8 @@ public class ObjectSyncing : MonoBehaviourPunCallbacks, IPunObservable
             {
                 stream.SendNext(objectRB.position);
                 stream.SendNext(objectRB.velocity);
+
+                print("Object position: " + objectRB.position + " with velocity: " + objectRB.velocity);
             }
 
             if (syncRotation) { stream.SendNext(objectRB.rotation); }
@@ -49,7 +51,11 @@ public class ObjectSyncing : MonoBehaviourPunCallbacks, IPunObservable
             if (syncPosition)
             {
                 networkPosition = (Vector2)stream.ReceiveNext();
-                objectRB.velocity = (Vector2)stream.ReceiveNext(); networkPosition += objectRB.velocity * lag;
+                Vector2 temp = networkPosition;
+                objectRB.velocity = (Vector2)stream.ReceiveNext();
+                networkPosition += objectRB.velocity * lag;
+
+                print("Network object position: " + temp + " with velocity and lag: " + objectRB.velocity + "|" + lag + " results in: " + networkPosition);
             }
 
             if (syncRotation) { networkRotation = (float)stream.ReceiveNext(); }
