@@ -101,17 +101,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             playerColors = propertiesThatChanged["playerColors"] as Dictionary<string, string>;
 
-            foreach (KeyValuePair<string, string> playerColor in playerColors)
+            foreach (Transform player in multiTargetCamera.targets)
             {
-                foreach (Transform player in multiTargetCamera.targets)
-                {
-                    if (player.gameObject.GetComponent<PhotonView>().Owner.NickName == playerColor.Key)
-                    {
-                        Color colorTemp = new Color();
-                        ColorUtility.TryParseHtmlString(playerColor.Value, out colorTemp);
-                        player.gameObject.GetComponent<SpriteRenderer>().color = colorTemp;
-                    }
-                }
+                string playerName = player.GetComponent<PhotonView>().Owner.NickName;
+                Color colorTemp = new Color();
+                ColorUtility.TryParseHtmlString(playerColors[playerName], out colorTemp);
+                player.gameObject.GetComponent<SpriteRenderer>().color = colorTemp;
             }
         }
     }
