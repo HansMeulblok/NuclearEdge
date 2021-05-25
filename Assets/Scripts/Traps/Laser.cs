@@ -7,7 +7,8 @@ public class Laser : BaseActivator
     [SerializeField] private float buildUpTime;
     [SerializeField] private float duration;
     [SerializeField] private GameObject buildUpFX;
-    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private LayerMask layerMaskBounce;
+    [SerializeField] private LayerMask layerMaskDamage;
     public bool isActivated = true;
 
     [Header("laser range")]
@@ -23,8 +24,10 @@ public class Laser : BaseActivator
     PlayerStatusEffects pse;
  
     private LineRenderer lineRenderer;
-    private Ray2D  ray;
+    private Ray2D ray;
+    private Ray2D ray2;
     private RaycastHit2D hit;
+    private RaycastHit2D hit2;
     private float timer;
     private float durationTimer;
     private int playerHits;
@@ -101,7 +104,27 @@ public class Laser : BaseActivator
 
         for (int i = 0; i < reflections; i++)
         {
-            if(hit = Physics2D.Raycast(ray.origin, ray.direction, remainingLength, layerMask))
+            //Damage ray is the same as the bounce ray (this can cause one player to go through the laser when another gets hit at the same time)
+            ray2 = ray;
+
+            if (hit2 = Physics2D.Raycast(ray.origin, ray.direction, remainingLength, layerMaskDamage))
+            {
+                //If it hits the player stun the player and continue the laser
+                if (hit2.collider.tag == "Player" && playerHits < 10)
+                {
+                    //While the laser is active stun the player otherwise ignore the player
+                    if (durationTimer != 0)
+                    {
+                        //Get the PlayerStatusEffects script from the player
+                        pse = hit2.collider.GetComponent<PlayerStatusEffects>();
+                        //The player is dead
+                        pse.isStunned = true;
+                    }
+                }
+            }
+
+
+            if (hit = Physics2D.Raycast(ray.origin, ray.direction, remainingLength, layerMaskBounce))
             {
                 //check if we hit something if we do add to position count and update linerenderer positions
                 lineRenderer.positionCount += 1;
@@ -110,40 +133,16 @@ public class Laser : BaseActivator
                 //check how much remaining length the laser has
                 remainingLength -= Vector3.Distance(ray.origin, hit.point);
 
-                //If it hits the player stun the player and continue the laser
-                if(hit.collider.tag == "Player" && playerHits < 10)
-                {
-                    //While the laser is active stun the player otherwise ignore the player
-                    if (durationTimer != 0)
-                    {
-                        //Get the PlayerStatusEffects script from the player
-                        pse = hit.collider.GetComponent<PlayerStatusEffects>();
-                        //The player is dead
-                        pse.isStunned = true;
-                    }
-
-                    //Make the laser pass through the player
-                    //Hitting the player doesn't reflect
-                    i--;
-                    //Failsave for hitting the player multiple times
-                    playerHits++;
-                    //Ray will continue from the player location
-                    ray = new Ray2D(hit.point, ray.direction);
-                }
-                //Reflect when not hitting the player
-                else
-                {
-                    //reflect the laser of the surface
-                    ray = new Ray2D(hit.point, Vector3.Reflect(ray.direction, hit.normal));
-                }
+                //reflect the laser of the surface
+                ray = new Ray2D(hit.point, Vector3.Reflect(ray.direction, hit.normal));
 
                 //if the ray hit something else than the tilemap or the player break
                 if (hit.collider.tag != "TileMap" && hit.collider.tag != "Player")
                 {
                     break;
                 }
-                    
             }
+
             else
             {
                 //When the ray doesn't hit anything before reaching the distance limit add that as end point

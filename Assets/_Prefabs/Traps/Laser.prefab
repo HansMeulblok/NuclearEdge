@@ -146,9 +146,12 @@ MonoBehaviour:
   buildUpTime: 3
   duration: 1
   buildUpFX: {fileID: 7270996208096424650}
-  layerMask:
+  layerMaskBounce:
     serializedVersion: 2
-    m_Bits: 4095
+    m_Bits: 1536
+  layerMaskDamage:
+    serializedVersion: 2
+    m_Bits: 3584
   isActivated: 1
   reflections: 3
   maxLength: 50
