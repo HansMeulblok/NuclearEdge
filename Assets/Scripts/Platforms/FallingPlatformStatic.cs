@@ -19,6 +19,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     private bool steppedOn = false;
     private bool canFall = false;
+    private bool isActivated = false;
 
     private GameObject newPlatform;
     private const int fallingPlatformCode = 2;
@@ -26,7 +27,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     private void Update()
     {
         // Check if the player is on top of the platform
-        if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f))
+        if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f) && !isActivated)
         {
             RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f);
             PhotonView pv = hit.transform.gameObject.GetComponent<PhotonView>();
@@ -34,6 +35,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             if (hit.transform.tag == "Player" && !canFall && pv.IsMine)
             {
                 activateFallingPlatform();
+                isActivated = true;
             }
         }
 
@@ -42,6 +44,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         {
             canFall = true;
             timer = (float)(PhotonNetwork.Time - startTime);
+            print(timer);
         }
 
         // If timer is maxed out start falling
@@ -57,9 +60,10 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             // Reset static platform when moving platform is done
             Invoke("ResetStaticPlatform", maxTime);
         }
+        // Delay too long, so skip
         else
         {
-            steppedOn = false;
+            steppedOn = isActivated = false;
             timer = 0;
         }
     }
@@ -74,7 +78,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     private void activateFallingPlatform()
     {
-        object[] content = new object[] {gameObject.name, (int)PhotonNetwork.Time, false }; ;
+        object[] content = new object[] { gameObject.name, (float)PhotonNetwork.Time, false }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -96,7 +100,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         {
             object[] tempObject = (object[])photonEvent.CustomData;
             string objectName = (string)tempObject[0];
-            int serverTime = (int)tempObject[1];
+            float serverTime = (float)tempObject[1];
             bool isActive = (bool)tempObject[2];
 
             print("Object: " + objectName + ", setting " + isActive + ". Trying to acces " + gameObject.name);
@@ -107,6 +111,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
                 SwitchStaticPlatform(isActive);
                 startTime = serverTime;
                 steppedOn = true;
+                isActivated = isActive;
             }
         }
     }
