@@ -74,6 +74,7 @@ public class ObjectSyncing : MonoBehaviourPunCallbacks, IPunObservable
                 if(Vector2.Distance(objectRB.position, networkPosition) >= 2f)
                 {
                     print("Distance greater then 2");
+                    objectRB.position = networkPosition;
                 }
             }
 
