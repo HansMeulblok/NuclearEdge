@@ -11,7 +11,7 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
     private float maxTime;
     private PlatformEditor platformEditor;
 
-    private const int fallingPlatformCode = 2;
+    private const int movingPlatformCode = 5;
 
     private void OnEnable()
     {
@@ -44,7 +44,7 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if (eventCode == fallingPlatformCode)
+        if (eventCode == movingPlatformCode)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
             string objectName = (string)tempObject[0];
@@ -75,6 +75,6 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
     {
         object[] content = new object[] { gameObject.name }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(movingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 }

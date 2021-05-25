@@ -8,7 +8,7 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
 
-    public const byte TriggerTraps = 1;
+    public const byte TriggerTraps = 3;
 
     private void OnTriggerEnter2D(Collider2D other)
     {

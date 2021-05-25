@@ -36,8 +36,8 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     string[] playerNames = new string[4];
     object[][] playerProgressList = new object[4][];
 
-    private const int cpCode = 3;
-    private const int firstPlaceCode = 4;
+    private const int cpCode = 1;
+    private const int firstPlaceCode = 2;
 
     Vector3 firstPlayerOffset;
 

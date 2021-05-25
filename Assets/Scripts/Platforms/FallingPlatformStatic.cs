@@ -22,7 +22,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     private bool isActivated = false;
 
     private GameObject newPlatform;
-    private const int fallingPlatformCode = 2;
+    private const int staticPlatformCode = 4;
 
     private void Update()
     {
@@ -82,7 +82,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     {
         object[] content = new object[] { gameObject.name, (float)PhotonNetwork.Time }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(staticPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     private void OnEnable()
@@ -98,7 +98,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if (eventCode == fallingPlatformCode)
+        if (eventCode == staticPlatformCode)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
             string objectName = (string)tempObject[0];
