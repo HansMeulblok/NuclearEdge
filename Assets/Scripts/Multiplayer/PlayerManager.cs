@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private bool isRendered = false;
     private List<string> deadPlayers;
-
+    private Dictionary<string, string> playerColors;
     private Vector2 networkPosition;
     private float networkRotation;
 
@@ -96,16 +96,37 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
         };
+
+        if (propertiesThatChanged["playerColors"] != null)
+        {
+            playerColors = propertiesThatChanged["playerColors"] as Dictionary<string, string>;
+
+            foreach (Transform player in multiTargetCamera.targets)
+            {
+                string playerName = player.GetComponent<PhotonView>().Owner.NickName;
+                Color colorTemp = new Color();
+                ColorUtility.TryParseHtmlString(playerColors[playerName], out colorTemp);
+                player.gameObject.GetComponent<SpriteRenderer>().color = colorTemp;
+            }
+        }
     }
 
     public void ChangePlayersColor()
     {
-        int i = 0;
-        Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };
-        foreach (Transform player in multiTargetCamera.targets)
+        if (PhotonNetwork.IsMasterClient)
         {
-            player.GetComponent<SpriteRenderer>().color = playerColor[i];
-            i++;
+            Dictionary<string, string> playerColors = new Dictionary<string, string>();
+            Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };
+            for (int i = 0; i < multiTargetCamera.targets.Count; i++)
+            {
+                string playerName = multiTargetCamera.targets[i].gameObject.GetComponent<PhotonView>().Owner.NickName;
+                string color = $"#{ColorUtility.ToHtmlStringRGBA(playerColor[i])}";
+                playerColors.Add(playerName, color);
+            }
+            if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerColors"))
+            {
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerColors", playerColors } });
+            }
         }
     }
 
@@ -130,3 +151,4 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 }
+
