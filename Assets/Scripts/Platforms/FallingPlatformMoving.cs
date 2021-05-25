@@ -1,7 +1,9 @@
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class FallingPlatformMoving : MonoBehaviourPun
+public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
 {
     private bool isFalling = false;
     private float fallingSpeed;
@@ -9,10 +11,17 @@ public class FallingPlatformMoving : MonoBehaviourPun
     private float maxTime;
     private PlatformEditor platformEditor;
 
+    private const int fallingPlatformCode = 2;
 
     private void OnEnable()
     {
         platformEditor = GetComponent<PlatformEditor>();
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
     }
 
     // Update is called once per frame
@@ -28,7 +37,22 @@ public class FallingPlatformMoving : MonoBehaviourPun
         if (timer >= maxTime)
         {
             timer = 0;
-            gameObject.SetActive(false);
+            TurnOffPlatform();
+        }
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == fallingPlatformCode)
+        {
+            object[] tempObject = (object[])photonEvent.CustomData;
+            string objectName = (string)tempObject[0];
+
+            if (objectName == gameObject.name)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 
@@ -45,5 +69,12 @@ public class FallingPlatformMoving : MonoBehaviourPun
         platformEditor.platformLength = newLength;
         platformEditor.platformHeight = newHeight;
         platformEditor.editing = false;
+    }
+
+    void TurnOffPlatform()
+    {
+        object[] content = new object[] { gameObject.name }; ;
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 }
