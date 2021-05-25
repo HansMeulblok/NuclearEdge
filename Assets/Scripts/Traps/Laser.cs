@@ -14,6 +14,12 @@ public class Laser : BaseActivator
     public int reflections;
     public float maxLength;
 
+    [Header("laser visuals")]
+    [Range(0.0f, 1.0f)]
+    public float maxChargeWidth;
+    public Color chargeColor;
+    public Color damageColor;
+
     PlayerStatusEffects pse;
  
     private LineRenderer lineRenderer;
@@ -22,6 +28,8 @@ public class Laser : BaseActivator
     private float timer;
     private float durationTimer;
     private int playerHits;
+
+    private float laserWidth;
 
     public override void Activate()
     {
@@ -51,23 +59,33 @@ public class Laser : BaseActivator
             timer += Time.deltaTime;
             if(timer < buildUpTime)
             {
-                //visual feedback
+                //Visual feedback
                 buildUpFX.SetActive(true);
                 //lineRenderer.enabled = false;
-                lineRenderer.material.color = new Color(227, 255, 255, 0.1f);
+
+                //The laser is the charge color during charge up
+                lineRenderer.material.color = chargeColor;
+                //Width of the laser increases over charge duration
+                laserWidth = timer / buildUpTime * maxChargeWidth;
+                lineRenderer.startWidth = laserWidth;
+                lineRenderer.endWidth = laserWidth;
             }
             else
             {
-                //if build up time is done fire laser for durationTimer
-
+                //If build up time is done fire laser for durationTimer
                 buildUpFX.SetActive(false);
-                //lineRenderer.enabled = true;
-                lineRenderer.material.color = new Color(0, 255, 255, 1);
+
+                //The laser has a different color while it can damage the player
+                lineRenderer.material.color = damageColor;
                 durationTimer += Time.deltaTime;
 
-                if(durationTimer >= duration)
+                //The laser is at its full width during the period it can damage the player
+                lineRenderer.startWidth = maxChargeWidth;
+                lineRenderer.endWidth = maxChargeWidth;
+
+                //If the duration timer is equal to duration turn off the laser
+                if (durationTimer >= duration)
                 {
-                    //if the duration timer is equel to duration turn off the laser
                     timer = 0;
                     durationTimer = 0;
                 }
@@ -92,13 +110,19 @@ public class Laser : BaseActivator
                 //check how much remaining length the laser has
                 remainingLength -= Vector3.Distance(ray.origin, hit.point);
 
-                //if it hits the player stun the player and continue the laser
-                if(hit.collider.tag == "Player" && durationTimer != 0 && playerHits < 10)
+                //If it hits the player stun the player and continue the laser
+                if(hit.collider.tag == "Player" && playerHits < 10)
                 {
-                    //Get the PlayerStatusEffects script from the player
-                    pse = hit.collider.GetComponent<PlayerStatusEffects>();
-                    //The player is dead
-                    pse.isStunned = true;
+                    //While the laser is active stun the player otherwise ignore the player
+                    if (durationTimer != 0)
+                    {
+                        //Get the PlayerStatusEffects script from the player
+                        pse = hit.collider.GetComponent<PlayerStatusEffects>();
+                        //The player is dead
+                        pse.isStunned = true;
+                    }
+
+                    //Make the laser pass through the player
                     //Hitting the player doesn't reflect
                     i--;
                     //Failsave for hitting the player multiple times
@@ -112,11 +136,12 @@ public class Laser : BaseActivator
                     //reflect the laser of the surface
                     ray = new Ray2D(hit.point, Vector3.Reflect(ray.direction, hit.normal));
                 }
-                    
-                //if the ray hit something else than the tilemap break
-                if (hit.collider.tag != "TileMap" || hit.collider.tag != "Player")
-                break;
 
+                //if the ray hit something else than the tilemap or the player break
+                if (hit.collider.tag != "TileMap" && hit.collider.tag != "Player")
+                {
+                    break;
+                }
                     
             }
             else
