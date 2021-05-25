@@ -10,15 +10,15 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     public new BoxCollider2D collider;
 
     [Header("Falling variables")]
-    public float maxTime;
-    public float fallingSpeed;
-    public float resetTime;
+    public float maxTime = 2;
+    public float fallingSpeed = 4;
+    public float maxDelayTime = 5;
 
+    private float startTime;
     private float timer;
 
     private bool steppedOn = false;
     private bool canFall = false;
-    private bool isPlatformActive;
 
     private GameObject newPlatform;
     private const int fallingPlatformCode = 2;
@@ -26,9 +26,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     private void Update()
     {
-
-
-        //check if the player is on top of the platform
+        // Check if the player is on top of the platform
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f))
         {
             RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.up, 0.02f);
@@ -40,33 +38,36 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             }
         }
 
-        if (!PhotonNetwork.IsMasterClient) { return; }
-
-        //start timer if the platform is stepped on
+        // Start timer if the platform is stepped on
         if (steppedOn)
         {
-            newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatformMoving", transform.position, Quaternion.identity);
-            int objectID = newPlatform.GetComponent<PhotonView>().GetInstanceID();
-
-            timer += Time.deltaTime;
+            canFall = true;
+            timer = (float)(PhotonNetwork.Time - startTime);
         }
 
-        //if timer is maxed out start falling
-        if (timer >= maxTime)
+        // If timer is maxed out start falling
+        if (timer >= maxTime && timer < maxDelayTime)
         {
+            newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatformMoving", transform.position, Quaternion.identity);
             newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, fallingSpeed, maxTime);
 
-            Invoke("ResetPlatform", maxTime);
-            canFall = true;
+            // Reset trigger of moving platform
+            steppedOn = false;
+            timer = 0;
+
+            // Reset static platform when moving platform is done
+            Invoke("ResetStaticPlatform", maxTime);
+        }
+        else
+        {
             steppedOn = false;
             timer = 0;
         }
     }
 
     //reset the platform after a while
-    private void ResetPlatform()
+    private void ResetStaticPlatform()
     {
-        // transform.gameObject.SetActive(true);
         SwitchStaticPlatform(true);
         FindObjectOfType<PlayerMovement2D>().UnParent();
         canFall = false;
@@ -75,7 +76,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     private void activateFallingPlatform()
     {
-        object[] content = new object[] { gameObject.name, false }; ;
+        object[] content = new object[] { GetInstanceID(), PhotonNetwork.Time, false }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -96,25 +97,21 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         if (eventCode == fallingPlatformCode)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
-            string receivedObj = (string)tempObject[0];
-            bool isActive = (bool)tempObject[1];
+            int instanceID = (int)tempObject[0];
+            int serverTime = (int)tempObject[1];
+            bool isActive = (bool)tempObject[2];
 
-            print("Object: " + receivedObj + ", setting " + isActive);
+            print("Object: " + instanceID + ", setting " + isActive);
 
-            if (receivedObj == gameObject.name)
+            if (GetInstanceID() == instanceID)
             {
                 print("Switching platform...");
                 SwitchStaticPlatform(isActive);
-                
-                // Platform aanzetten
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    steppedOn = true;
-                }
+                startTime = serverTime;
+                steppedOn = true;
             }
         }
     }
-
 
     public void SwitchStaticPlatform(bool isActive)
     {
@@ -129,5 +126,4 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             GetComponent<BoxCollider2D>().enabled = false;
         }
     }
-
 }

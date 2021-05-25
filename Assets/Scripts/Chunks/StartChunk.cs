@@ -38,7 +38,6 @@ public class StartChunk : MonoBehaviourPunCallbacks
 
         float countdownTimer = countdown - (float)(PhotonNetwork.Time - startTime);
 
-
         if (countdownTimer >= 0)
         {
             countdownText.text = Mathf.Ceil(countdownTimer).ToString();
