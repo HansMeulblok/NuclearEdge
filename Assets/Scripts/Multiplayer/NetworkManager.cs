@@ -8,9 +8,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public MenuManager menuManager;
 
+    private string playerName;
+
     void Start()
     {
         DontDestroyOnLoad(this);
+
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
 
         // TODO: Add local play option
         if (!PhotonNetwork.IsConnected)
@@ -116,6 +123,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for host
     }
 
+    public override void OnLeftRoom()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        PhotonNetwork.LoadLevel(0);
+        Destroy(gameObject);
+    }
+
     public void LeaveRoom()
     {
         if (PhotonNetwork.InRoom) { PhotonNetwork.LeaveRoom(true); print("Player left room."); }
@@ -136,8 +150,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Create player on level load
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        bool playerFound = false;
+
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (player.GetComponent<PhotonView>().Owner.NickName == PhotonNetwork.NickName)
+            {
+                playerFound = true;
+            }
+        }
+
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1) && !playerFound)
+        {
+            PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        }
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)

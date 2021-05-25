@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3355242864516840006}
   - component: {fileID: 7950499306656650216}
   - component: {fileID: 9091893804817371729}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TriggerPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}

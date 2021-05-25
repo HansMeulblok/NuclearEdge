@@ -62,7 +62,8 @@ public class PlayerMovement2D : MonoBehaviourPun
     bool rightPressed;
     bool rightHold;
 
-    int tempCount;
+    int countWallClingCollision;
+    int countWallClingGrounded;
     Vector3 lastSpeed;
 
     //Global variables
@@ -166,7 +167,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 //Prevent moving back to a wall too quickly
                 if (wallJumpBufferL > 0)
                 {
-                    moveSpeed.x -= accel * Time.fixedDeltaTime;
+                    moveSpeed.x -= accel * Time.fixedDeltaTime * 0.5f;
                 }
                 else
                 {
@@ -195,7 +196,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 //Prevent moving back to a wall too quickly
                 if (wallJumpBufferR > 0)
                 {
-                    moveSpeed.x += accel * Time.fixedDeltaTime;
+                    moveSpeed.x += accel * Time.fixedDeltaTime * 0.5f;
                 }
                 else
                 {
@@ -218,6 +219,15 @@ public class PlayerMovement2D : MonoBehaviourPun
         //No horizontal input or both decelerate
         else
         {
+            if (onLeftWallCling > 0)
+            {
+                onLeftWallCling = clingDuration;
+            }
+            if (onRightWallCling > 0)
+            {
+                onRightWallCling = clingDuration;
+            }
+
             //The temporary instance of deceleration
             tempDecel = decel;
 
@@ -310,18 +320,22 @@ public class PlayerMovement2D : MonoBehaviourPun
             //When you cling onto a wall do a walljump
             if (onLeftWallCling > 0 && canWallJump)
             {
-                moveSpeed.y = wallJumpHorizontal;
-                moveSpeed.x = wallJumpVertical;
+                jumpBuffer = 0;
+                moveSpeed.x = wallJumpHorizontal;
+                moveSpeed.y = wallJumpVertical;
                 wallJumpBufferL = wallJumpBuffer;
                 onLeftWallCling = 0;
+                onRightWallCling = 0;
             }
             //When you cling onto a wall do a walljump
             if (onRightWallCling > 0 && canWallJump)
             {
-                moveSpeed.y = wallJumpHorizontal;
-                moveSpeed.x = -wallJumpVertical;
+                jumpBuffer = 0;
+                moveSpeed.x = -wallJumpHorizontal;
+                moveSpeed.y = wallJumpVertical;
                 wallJumpBufferR = wallJumpBuffer;
                 onRightWallCling = 0;
+                onLeftWallCling = 0;
             }
         }
 
@@ -393,7 +407,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     void CheckColision()
     {
         //Check left for collision
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance, sideMask))
+        if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.left, colisionDistance, sideMask))
         {   
             leftCol = true;
         }
@@ -402,7 +416,7 @@ public class PlayerMovement2D : MonoBehaviourPun
             leftCol = false;
         }
         //Check right for collision
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance, sideMask))
+        if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.right, colisionDistance, sideMask))
         {
             rightCol = true;
         }
@@ -412,7 +426,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         }
 
         //Check down for collision
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance, sludgeMask))
+        if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, colisionDistance, sludgeMask))
         {
             grounded = true;
         }
@@ -420,10 +434,9 @@ public class PlayerMovement2D : MonoBehaviourPun
         {
             if (rb.velocity.y < 0)
             {
-                RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, colisionDistance);
+                RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, colisionDistance);
                 Vector3 test = transform.position;
                 test.y += hit.distance;
-
             }
 
             grounded = false;
@@ -432,14 +445,14 @@ public class PlayerMovement2D : MonoBehaviourPun
         //Wall cling duration decrease
         if (onLeftWallCling > 0)
         {
-            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.left, colisionDistance) && canWallCling)
+            if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.left, colisionDistance, sideMask) && canWallCling)
             {
-                tempCount = 0;
+                countWallClingCollision = 0;
             }
             else
             {
-                tempCount++;
-                if (tempCount <= 5)
+                countWallClingCollision++;
+                if (countWallClingCollision >= 5)
                 {
                     onLeftWallCling = 0;
                 }
@@ -448,14 +461,14 @@ public class PlayerMovement2D : MonoBehaviourPun
         }
         if (onRightWallCling > 0)
         {
-            if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.right, colisionDistance) && canWallCling)
+            if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.right, colisionDistance, sideMask) && canWallCling)
             {
-                tempCount = 0;
+                countWallClingCollision = 0;
             }
             else
             {
-                tempCount++;
-                if (tempCount <= 5)
+                countWallClingCollision++;
+                if (countWallClingCollision >= 5)
                 {
                     onRightWallCling = 0;
                 }
@@ -463,36 +476,35 @@ public class PlayerMovement2D : MonoBehaviourPun
         }
 
         //Wall cling detection if you are still on the wall
-        if (rightCol && lastSpeed.x > 0 && canWallCling)
+        if ((rightCol && lastSpeed.x > 0) || (rightCol && rightHold) && canWallCling)
         {
             onRightWallCling = clingDuration;
             lastSpeed.x = 0;
         }
-        if (leftCol && lastSpeed.x < 0 && canWallCling)
+        if ((leftCol && lastSpeed.x < 0) || (leftCol && leftHold) && canWallCling)
         {
             onLeftWallCling = clingDuration;
             lastSpeed.x = 0;
         }
         //Reset wall cling when on the ground
-        if (grounded)
+        if (grounded && (onLeftWallCling > 0 || onRightWallCling > 0))
         {
-            onLeftWallCling = 0;
-            onRightWallCling = 0;
+            countWallClingGrounded++;
+            if (countWallClingGrounded > 3)
+            {
+                onLeftWallCling = 0;
+                onRightWallCling = 0;
+            }
         }
-        //Failsafe when off wall
-        if (onRightWallCling > 0 && rb.velocity.x < -0.1f)
+        else
         {
-            onRightWallCling = 0;
-        }
-        if (onLeftWallCling > 0 && rb.velocity.x > 0.1f)
-        {
-            onLeftWallCling = 0;
+            countWallClingGrounded = 0;
         }
 
-        if (Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, 0.05f, sludgeMask))
+        if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, 0.05f, sludgeMask))
         {
             //check if falling platform is below the player and if it is parent it to it.s
-            RaycastHit2D downHit = Physics2D.BoxCast(transform.position, Vector2.one, 0, Vector2.down, 0.05f);
+            RaycastHit2D downHit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, 0.05f, sludgeMask);
             if (downHit.transform.tag == "Falling Platform")
             {
                 transform.parent = downHit.transform;
@@ -506,6 +518,15 @@ public class PlayerMovement2D : MonoBehaviourPun
         else
         {
             transform.parent = null;
+        }
+
+        if (onLeftWallCling > 0 || onRightWallCling > 0)
+        {
+            if (rb.velocity.x > 0.1 || rb.velocity.x < -0.1)
+            {
+                onLeftWallCling = 0;
+                onRightWallCling = 0;
+            }
         }
 
         if (rb.velocity.x > 0.1 || rb.velocity.x < -0.1 || grounded)

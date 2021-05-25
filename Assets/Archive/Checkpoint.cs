@@ -29,7 +29,7 @@ public class Checkpoint : MonoBehaviour
 
             if(shouldGenerate)
             {
-                FindObjectOfType<LevelGenerator>().SpawnNewChunks(transform.parent.position);
+                FindObjectOfType<LevelGenerator>().SpawnNewChunks(transform.parent.gameObject);
                 shouldGenerate = false;
             }
 
