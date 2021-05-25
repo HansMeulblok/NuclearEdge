@@ -67,7 +67,7 @@ public class ObjectSyncing : MonoBehaviourPunCallbacks, IPunObservable
         // Updates object with new information of others (clients)
         if (!photonView.IsMine)
         {
-            if (syncPosition) { objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime); }
+            if (syncPosition) { objectRB.MovePosition(networkPosition * Time.fixedDeltaTime); }
             if (syncRotation) { objectRB.MoveRotation(networkRotation + Time.fixedDeltaTime * rotationSmoothness); }
         }
     }
