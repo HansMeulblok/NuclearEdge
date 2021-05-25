@@ -9,12 +9,14 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
     private float fallingSpeed;
     private float timer;
     private float maxTime;
+    private Rigidbody2D rb;
     private PlatformEditor platformEditor;
 
     private const int movingPlatformCode = 5;
 
     private void OnEnable()
     {
+        rb = GetComponent<Rigidbody2D>();
         platformEditor = GetComponent<PlatformEditor>();
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
     }
@@ -31,7 +33,8 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
         if (isFalling)
         {
             timer += Time.deltaTime;
-            transform.Translate(Vector2.down * (fallingSpeed * Time.deltaTime), Space.World);
+            //transform.Translate(Vector2.down * (fallingSpeed * Time.deltaTime), Space.World);
+            rb.MovePosition(transform.position - new Vector3(0, 10, 0) * fallingSpeed * Time.deltaTime);
         }
 
         if (timer >= maxTime)
