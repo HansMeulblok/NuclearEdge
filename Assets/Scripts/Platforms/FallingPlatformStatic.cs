@@ -23,7 +23,6 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     private GameObject newPlatform;
     private const int fallingPlatformCode = 2;
 
-
     private void Update()
     {
         // Check if the player is on top of the platform
@@ -73,10 +72,9 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         canFall = false;
     }
 
-
     private void activateFallingPlatform()
     {
-        object[] content = new object[] { GetInstanceID(), (int)PhotonNetwork.Time, false }; ;
+        object[] content = new object[] {gameObject.name, (int)PhotonNetwork.Time, false }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(fallingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -97,13 +95,13 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         if (eventCode == fallingPlatformCode)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
-            int instanceID = (int)tempObject[0];
+            string objectName = (string)tempObject[0];
             int serverTime = (int)tempObject[1];
             bool isActive = (bool)tempObject[2];
 
-            print("Object: " + instanceID + ", setting " + isActive + ". Trying to acces " + GetInstanceID());
+            print("Object: " + objectName + ", setting " + isActive + ". Trying to acces " + gameObject.name);
 
-            if (GetInstanceID() == instanceID)
+            if (objectName == gameObject.name)
             {
                 print("Switching platform...");
                 SwitchStaticPlatform(isActive);
