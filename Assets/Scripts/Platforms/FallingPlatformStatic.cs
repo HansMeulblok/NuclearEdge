@@ -44,7 +44,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         {
             canFall = true;
             timer = (float)(PhotonNetwork.Time - startTime);
-            print(timer);
+            //print(timer);
         }
 
         // If timer is maxed out start falling

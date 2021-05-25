@@ -23,6 +23,7 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
 
     private void OnDisable()
     {
+        FindObjectOfType<PlayerMovement2D>().UnParent();
         PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
     }
 
