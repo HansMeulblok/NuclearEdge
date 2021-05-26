@@ -251,5 +251,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncPosition: 1
-  syncRotation: 1
+  syncRotation: 0
   rotationSmoothness: 100

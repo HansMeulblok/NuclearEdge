@@ -1,11 +1,9 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement2D : MonoBehaviourPun
 {
-    //Horizontal movement variables
+    // Horizontal movement variables
     [Header("Horizontal variables")]
     public float accel;
     public float decel;
@@ -14,7 +12,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     public float maxSpeed;
     public float knockBackHorizontalStrenght;
 
-    //Vertical movement variables
+    // Vertical movement variables
     [Header("Vertical variables")]
     public float jumpStrenght;
     public float jumpBufferLenght;
@@ -45,7 +43,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     float wallJumpBufferL;
     float wallJumpBufferR;
 
-    //Collisions
+    // Collisions
     [Header("Collision")]
     public float colisionDistance;
     public LayerMask sludgeMask;
@@ -54,7 +52,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     bool leftCol;
     bool rightCol;
 
-    //Input
+    // Input
     bool upPressed;
     bool upHold;
     bool leftPressed;
@@ -66,7 +64,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     int countWallClingGrounded;
     Vector3 lastSpeed;
 
-    //Global variables
+    // Global variables
     Vector3 moveSpeed;
     Rigidbody2D rb;
 
@@ -76,9 +74,9 @@ public class PlayerMovement2D : MonoBehaviourPun
         // Disable script if player is not the local player.
         if (photonView != null && !photonView.IsMine) { enabled = false; }
 
-        //Get the rigidbody
+        // Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
-        //Reset movespeed on start
+        // Reset movespeed on start
         moveSpeed = Vector3.zero;
     }
 
@@ -91,13 +89,13 @@ public class PlayerMovement2D : MonoBehaviourPun
     // FixedUpdate is called at a fixed interval
     void FixedUpdate()
     {
-        //Check for colisions
+        // Check for colisions
         CheckColision();
-        //Change horizontal movement
+        // Change horizontal movement
         HorizontalMove();
-        //Change vertical movement
+        // Change vertical movement
         VerticalMove();
-        //Pressed should always be in effect one fixedUpdate after keydown
+        // Pressed should always be in effect one fixedUpdate after keydown
         ResetPressed();
 
     }
@@ -144,7 +142,7 @@ public class PlayerMovement2D : MonoBehaviourPun
 
     }
 
-    //To use keyDown with FixedUpdate it should reset only after one FixedUpdate
+    // To use keyDown with FixedUpdate it should reset only after one FixedUpdate
     void ResetPressed()
     {
         upPressed = false;
@@ -152,19 +150,19 @@ public class PlayerMovement2D : MonoBehaviourPun
         rightPressed = false;
     }
 
-    //This function handles horizontal movement
+    // This function handles horizontal movement
     void HorizontalMove()
     {
-        //Horizontal movement
-        //Get the current velocity to prevent clipping
+        // Horizontal movement
+        // Get the current velocity to prevent clipping
         moveSpeed = rb.velocity;
-        //Left (and not right input) for moving left
+        // Left (and not right input) for moving left
         if (leftHold && !rightHold)
         {
-            //When currently moving the other way add the decel to decrease slip
+            // When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x > 0)
             {
-                //Prevent moving back to a wall too quickly
+                // Prevent moving back to a wall too quickly
                 if (wallJumpBufferL > 0)
                 {
                     moveSpeed.x -= accel * Time.fixedDeltaTime * 0.5f;
@@ -174,7 +172,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                     moveSpeed.x -= (accel + decel) * Time.fixedDeltaTime;
                 }
             }
-            //Accelerate left
+            // Accelerate left
             else
             {
                 if (!(onRightWallCling > 0))
@@ -187,13 +185,13 @@ public class PlayerMovement2D : MonoBehaviourPun
                 }
             }
         }
-        //Right (and not right input) for moving right
+        // Right (and not right input) for moving right
         else if (rightHold && !leftHold)
         {
-            //When currently moving the other way add the decel to decrease slip
+            // When currently moving the other way add the decel to decrease slip
             if (moveSpeed.x < 0)
             {
-                //Prevent moving back to a wall too quickly
+                // Prevent moving back to a wall too quickly
                 if (wallJumpBufferR > 0)
                 {
                     moveSpeed.x += accel * Time.fixedDeltaTime * 0.5f;
@@ -203,7 +201,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                     moveSpeed.x += (accel + decel) * Time.fixedDeltaTime;
                 }
             }
-            //Accelerate right
+            // Accelerate right
             else
             {
                 if (!(onLeftWallCling > 0))
@@ -216,7 +214,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 }
             }
         }
-        //No horizontal input or both decelerate
+        // No horizontal input or both decelerate
         else
         {
             if (onLeftWallCling > 0)
@@ -228,15 +226,15 @@ public class PlayerMovement2D : MonoBehaviourPun
                 onRightWallCling = clingDuration;
             }
 
-            //The temporary instance of deceleration
+            // The temporary instance of deceleration
             tempDecel = decel;
 
-            //Have a different decelaretion while in the air
+            // Have a different decelaretion while in the air
             if (!grounded)
             {
                 tempDecel = airDecel;
             }
-            //Decelerate
+            // Decelerate
             if (moveSpeed.x >= tempDecel * Time.fixedDeltaTime)
             {
                 moveSpeed.x -= tempDecel * Time.fixedDeltaTime;
@@ -245,14 +243,14 @@ public class PlayerMovement2D : MonoBehaviourPun
             {
                 moveSpeed.x += tempDecel * Time.fixedDeltaTime;
             }
-            //When current speed is lower then the decel amount set speed to 0
+            // When current speed is lower then the decel amount set speed to 0
             if (moveSpeed.x > -tempDecel * Time.fixedDeltaTime && moveSpeed.x < tempDecel * Time.fixedDeltaTime)
             {
                 moveSpeed.x = 0;
             }
         }
 
-        //Keep speed within max speed bounds
+        // Keep speed within max speed bounds
         if (moveSpeed.x > maxSpeed)
         {
             moveSpeed.x = maxSpeed;
@@ -262,26 +260,26 @@ public class PlayerMovement2D : MonoBehaviourPun
             moveSpeed.x = -maxSpeed;
         }
 
-        //Apply new speed
+        // Apply new speed
         rb.velocity = moveSpeed;
     }
 
-    //This funciton handles vertical movement
+    // This funciton handles vertical movement
     void VerticalMove()
     {
-        //Get the current velocity to edit
+        // Get the current velocity to edit
         moveSpeed = rb.velocity;
 
-        //When you try to jump create a buffer for better feel
+        // When you try to jump create a buffer for better feel
         if (upPressed)
         {
             jumpBuffer = jumpBufferLenght;
         }
 
-        //Decrease wallJump buffer
+        // Decrease wallJump buffer
         if (wallJumpBufferL > 0)
         {
-            //No buffer when on the ground
+            // No buffer when on the ground
             if (grounded)
             {
                 wallJumpBufferL = 0;
@@ -294,7 +292,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         }
         if (wallJumpBufferR > 0)
         {
-            //No buffer when on the ground
+            // No buffer when on the ground
             if (grounded)
             {
                 wallJumpBufferR = 0;
@@ -305,19 +303,19 @@ public class PlayerMovement2D : MonoBehaviourPun
             }
         }
 
-        //After inputing jump
+        // After inputing jump
         if (jumpBuffer > 0)
         {
-            //Lower jumpbuffer value overtime
+            // Lower jumpbuffer value overtime
             jumpBuffer -= Time.fixedDeltaTime;
 
-            //When you are on the ground and want to jump
+            // When you are on the ground and want to jump
             if (grounded)
             {
                 jumpBuffer = 0;
                 moveSpeed.y = jumpStrenght;
             }
-            //When you cling onto a wall do a walljump
+            // When you cling onto a wall do a walljump
             if (onLeftWallCling > 0 && canWallJump)
             {
                 jumpBuffer = 0;
@@ -327,7 +325,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 onLeftWallCling = 0;
                 onRightWallCling = 0;
             }
-            //When you cling onto a wall do a walljump
+            // When you cling onto a wall do a walljump
             if (onRightWallCling > 0 && canWallJump)
             {
                 jumpBuffer = 0;
@@ -339,15 +337,15 @@ public class PlayerMovement2D : MonoBehaviourPun
             }
         }
 
-        //When in the air apply gravity
+        // When in the air apply gravity
         if (!grounded)
         {
             tempGrav = gravity;
 
-            //Apply zone gravity multiplier
+            // Apply zone gravity multiplier
             tempGrav *= gravZoneMult;
 
-            //When clinging on wall lower gravity
+            // When clinging on wall lower gravity
             if (onLeftWallCling > 0 || onRightWallCling > 0)
             {
                 if (moveSpeed.y > 0)
@@ -360,62 +358,62 @@ public class PlayerMovement2D : MonoBehaviourPun
                 }
             }
 
-            //When moving up
+            // When moving up
             if (moveSpeed.y > 0)
             {
-                //Create jump variance based on holding jump
+                // Create jump variance based on holding jump
                 if (upHold)
                 {
-                    //Have a lower gravity when holding up to create short and long hops
+                    // Have a lower gravity when holding up to create short and long hops
                     moveSpeed.y -= tempGrav * upGravMult * Time.fixedDeltaTime;
                 }
                 else
                 {
-                    //Have a neutral gravity between falling and holding up
+                    // Have a neutral gravity between falling and holding up
                     moveSpeed.y -= tempGrav * neutralGravMult * Time.fixedDeltaTime;
                 }
             }
-            //When falling
+            // When falling
             if (moveSpeed.y <= 0)
             {
-                //Have a higher gravity
+                // Have a higher gravity
                 moveSpeed.y -= tempGrav * downGravMult * Time.fixedDeltaTime;
             }
         }
 
-        //Have a maximum speed to slide down walls
+        // Have a maximum speed to slide down walls
         if (onLeftWallCling > 0 || onRightWallCling > 0)
         {
-            //Have a maximum speed at which you can slide down a wall
+            // Have a maximum speed at which you can slide down a wall
             if (moveSpeed.y < -maxDownSlideSpeed)
             {
                 moveSpeed.y = -maxDownSlideSpeed;
             }
         }
 
-        //Have a maximum fallspeed
+        // Have a maximum fallspeed
         if (moveSpeed.y < -maxFallSpeed)
         {
             moveSpeed.y = -maxFallSpeed;
         }
 
-        //Apply movement
+        // Apply movement
         rb.velocity = moveSpeed;
     }
 
-    //Check for collisions using boxcast
+    // Check for collisions using boxcast
     void CheckColision()
     {
-        //Check left for collision
+        // Check left for collision
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.left, colisionDistance, sideMask))
-        {   
+        {
             leftCol = true;
         }
         else
         {
             leftCol = false;
         }
-        //Check right for collision
+        // Check right for collision
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.right, colisionDistance, sideMask))
         {
             rightCol = true;
@@ -425,7 +423,7 @@ public class PlayerMovement2D : MonoBehaviourPun
             rightCol = false;
         }
 
-        //Check down for collision
+        // Check down for collision
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, colisionDistance, sludgeMask))
         {
             grounded = true;
@@ -442,7 +440,7 @@ public class PlayerMovement2D : MonoBehaviourPun
             grounded = false;
         }
 
-        //Wall cling duration decrease
+        // Wall cling duration decrease
         if (onLeftWallCling > 0)
         {
             if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.left, colisionDistance, sideMask) && canWallCling)
@@ -475,7 +473,7 @@ public class PlayerMovement2D : MonoBehaviourPun
             }
         }
 
-        //Wall cling detection if you are still on the wall
+        // Wall cling detection if you are still on the wall
         if ((rightCol && lastSpeed.x > 0) || (rightCol && rightHold) && canWallCling)
         {
             onRightWallCling = clingDuration;
@@ -486,7 +484,7 @@ public class PlayerMovement2D : MonoBehaviourPun
             onLeftWallCling = clingDuration;
             lastSpeed.x = 0;
         }
-        //Reset wall cling when on the ground
+        // Reset wall cling when on the ground
         if (grounded && (onLeftWallCling > 0 || onRightWallCling > 0))
         {
             countWallClingGrounded++;
@@ -503,17 +501,12 @@ public class PlayerMovement2D : MonoBehaviourPun
 
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, 0.05f, sludgeMask))
         {
-            //check if falling platform is below the player and if it is parent it to it.s
+            // Check if falling platform is below the player and if it is parent it to it.s
             RaycastHit2D downHit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, 0.05f, sludgeMask);
-            if (downHit.transform.tag == "Falling Platform")
+            if (transform.parent == null && downHit.transform.tag == "Falling Platform")
             {
                 transform.parent = downHit.transform;
             }
-            else
-            {
-                transform.parent = null;
-            }
-
         }
         else
         {
@@ -537,7 +530,7 @@ public class PlayerMovement2D : MonoBehaviourPun
 
     public void UnParent()
     {
-        //unparent the object
+        // Unparent the object
         transform.parent = null;
     }
 

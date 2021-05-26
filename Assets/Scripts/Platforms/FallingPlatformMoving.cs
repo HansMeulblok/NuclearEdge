@@ -23,7 +23,6 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
 
     private void OnDisable()
     {
-        FindObjectOfType<PlayerMovement2D>().UnParent();
         PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
     }
 
@@ -31,17 +30,26 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
     void Update()
     {
         if (!PhotonNetwork.IsMasterClient) { return; };
+
         if (isFalling)
         {
             timer += Time.deltaTime;
-            //transform.Translate(Vector2.down * (fallingSpeed * Time.deltaTime), Space.World);
-            rb.MovePosition((Vector2)transform.position + (Vector2.down * fallingSpeed * Time.deltaTime));
         }
 
         if (timer >= maxTime)
         {
-            timer = 0; 
+            timer = 0;
             TurnOffPlatform();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (!PhotonNetwork.IsMasterClient) { return; };
+
+        if (isFalling)
+        {
+            rb.MovePosition((Vector2)transform.position + (Vector2.down * fallingSpeed * Time.fixedDeltaTime));
         }
     }
 
@@ -55,6 +63,7 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
 
             if (objectName == gameObject.name)
             {
+                GetComponentInChildren<PlayerMovement2D>()?.UnParent();
                 gameObject.SetActive(false);
             }
         }

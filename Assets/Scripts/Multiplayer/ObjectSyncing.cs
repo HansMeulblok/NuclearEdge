@@ -15,6 +15,7 @@ public class ObjectSyncing : MonoBehaviourPunCallbacks, IPunObservable
 
     [SerializeField]
     float rotationSmoothness = 100f;
+    float delayDistance = 2;
 
     private void Awake()
     {
@@ -38,7 +39,7 @@ public class ObjectSyncing : MonoBehaviourPunCallbacks, IPunObservable
                 stream.SendNext(objectRB.position);
                 stream.SendNext(objectRB.velocity);
 
-               // print("Object position: " + objectRB.position + " with velocity: " + objectRB.velocity);
+                // print("Object position: " + objectRB.position + " with velocity: " + objectRB.velocity);
             }
 
             if (syncRotation) { stream.SendNext(objectRB.rotation); }
@@ -67,13 +68,13 @@ public class ObjectSyncing : MonoBehaviourPunCallbacks, IPunObservable
         // Updates object with new information of others (clients)
         if (!photonView.IsMine)
         {
-            if (syncPosition) 
-            { 
+            if (syncPosition)
+            {
                 objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
-                
-                if(Vector2.Distance(objectRB.position, networkPosition) >= 2f)
+
+                if (Vector2.Distance(objectRB.position, networkPosition) >= delayDistance)
                 {
-                    print("Distance greater then 2");
+                    print("Distance greater than [" + delayDistance + "]. Updating position...");
                     objectRB.position = networkPosition;
                 }
             }

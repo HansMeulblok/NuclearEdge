@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 3860048427860164808}
   - component: {fileID: 3860048427860164823}
   - component: {fileID: 3860048427860164822}
-  - component: {fileID: 3860048427860164820}
   - component: {fileID: 1452580588310239367}
+  - component: {fileID: 7014165649096078603}
   - component: {fileID: 5296331813980562998}
   m_Layer: 9
   m_Name: FallingPlatformStatic
@@ -165,23 +165,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 5
---- !u!114 &3860048427860164820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3860048427860164810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b9d3c52212ca984cbfeb22596c8ef97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteHolder: {fileID: 982780130518860135}
-  collider: {fileID: 3860048427860164823}
-  maxTime: 2
-  fallingSpeed: 4
-  maxDelayTime: 5
 --- !u!251 &1452580588310239367
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -201,6 +184,22 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &7014165649096078603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860048427860164810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9d3c52212ca984cbfeb22596c8ef97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turningOffTime: 0.5
+  fallingDownDur: 2
+  fallingSpeed: 5
+  maxDelayTime: 5
 --- !u!114 &5296331813980562998
 MonoBehaviour:
   m_ObjectHideFlags: 0
