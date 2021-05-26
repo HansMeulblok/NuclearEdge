@@ -1,6 +1,6 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using ExitGames.Client.Photon;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -25,11 +25,46 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     private const int staticPlatformCode = 4;
 
+    private void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == staticPlatformCode)
+        {
+            object[] tempObject = (object[])photonEvent.CustomData;
+            string objectName = (string)tempObject[0];
+            float serverTime = (float)tempObject[1];
+
+            if (objectName == gameObject.name)
+            {
+                startTime = serverTime;
+                steppedOn = true;
+            }
+        }
+    }
+
+    private void ActivateFallingPlatform()
+    {
+        object[] content = new object[] { gameObject.name, (float)PhotonNetwork.Time }; ;
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(staticPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
     private void Start()
     {
         spriteHolder = GetComponentInChildren<SpriteRenderer>();
         platformCollider = GetComponent<BoxCollider2D>();
     }
+
     private void Update()
     {
         // Check if the player is on top of the platform
@@ -40,7 +75,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
             if (hit.transform.tag == "Player" && !canFall && pv.IsMine)
             {
-                activateFallingPlatform();
+                ActivateFallingPlatform();
                 isActivated = true;
             }
         }
@@ -85,40 +120,6 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         FindObjectOfType<PlayerMovement2D>().UnParent();
         canFall = false;
         isActivated = false;
-    }
-
-    private void activateFallingPlatform()
-    {
-        object[] content = new object[] { gameObject.name, (float)PhotonNetwork.Time }; ;
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(staticPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
-    }
-
-    private void OnEnable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
-    }
-
-    private void OnDisable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
-    }
-
-    public void OnEvent(EventData photonEvent)
-    {
-        byte eventCode = photonEvent.Code;
-        if (eventCode == staticPlatformCode)
-        {
-            object[] tempObject = (object[])photonEvent.CustomData;
-            string objectName = (string)tempObject[0];
-            float serverTime = (float)tempObject[1];
-
-            if (objectName == gameObject.name)
-            {
-                startTime = serverTime;
-                steppedOn = true;
-            }
-        }
     }
 
     public void SwitchStaticPlatform(bool isActive)

@@ -15,7 +15,7 @@ public class ObjectSyncing : MonoBehaviourPunCallbacks, IPunObservable
 
     [SerializeField]
     float rotationSmoothness = 100f;
-    float delayDistance = 2;
+    float delayDistance = 5;
 
     private void Awake()
     {
@@ -71,10 +71,10 @@ public class ObjectSyncing : MonoBehaviourPunCallbacks, IPunObservable
             if (syncPosition)
             {
                 objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
-
-                if (Vector2.Distance(objectRB.position, networkPosition) >= delayDistance)
+                float distance = Vector2.Distance(objectRB.position, networkPosition);
+                if (distance >= delayDistance)
                 {
-                    print("Distance greater than [" + delayDistance + "]. Updating position...");
+                    print("Distance of " + gameObject.name + " (" + objectRB.position + "|" + networkPosition + ") greater than [" + distance + "]. Updating position...");
                     objectRB.position = networkPosition;
                 }
             }

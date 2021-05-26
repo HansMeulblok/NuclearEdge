@@ -430,13 +430,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pivot: {fileID: 7306508741832806385}
   firePoint: {fileID: 7306508742359606004}
-  shootingInterval: 2.02
+  shootingInterval: 2
   bulletMoveSpeed: 2
   bulletLifeSpan: 2
-  lerpSpeed: 0
-  waitForLerpTime: 0
   activated: 1
-  amountOfAngles: 0
 --- !u!114 &5229716845314481803
 MonoBehaviour:
   m_ObjectHideFlags: 0

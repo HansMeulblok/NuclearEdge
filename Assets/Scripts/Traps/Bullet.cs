@@ -1,16 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviourPun, IOnEventCallback
 {
     private Vector2 moveDirection;
     private float moveSpeed;
     private float bulletLifeSpan;
-    
+
+    private const int bulletDestroyCode = 7;
+
     private void OnEnable()
     {
-        Invoke("Destroy", bulletLifeSpan);
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+
+        if (PhotonNetwork.IsMasterClient) { Invoke("DestoyBulletEvent", bulletLifeSpan); }
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == bulletDestroyCode)
+        {
+            object[] tempObject = (object[])photonEvent.CustomData;
+            int objectViewID = (int)tempObject[0];
+
+            if (objectViewID == photonView.ViewID)
+            {
+                Destroy();
+            }
+        }
+    }
+
+    private void DestoyBulletEvent()
+    {
+        object[] content = new object[] { photonView.ViewID }; ;
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(bulletDestroyCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     private void Update()
@@ -25,34 +57,19 @@ public class Bullet : MonoBehaviour
             collision.gameObject.GetComponent<PlayerStatusEffects>().isStunned = true;
         }
 
-        Destroy();
+        DestoyBulletEvent();
     }
 
-    //variables that are set in the shooting method in the Cannon.
-    public void SetMoveDirection(Vector2 dir)
+    // Variables that are set in the shooting method in the Cannon.
+    public void SetBulletValues(Vector2 dir, float speed, float lifeSpan)
     {
         moveDirection = dir;
-    }
-
-    public void SetMoveSpeed(float speed)
-    {
         moveSpeed = speed;
-    }
-
-    public void SetBulletLifeSpan(float lifeSpan)
-    {
         bulletLifeSpan = lifeSpan;
     }
 
     private void Destroy()
     {
         gameObject.SetActive(false);
-    }
-
-    private void OnDisable()
-    {
-        CancelInvoke();
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.identity;
     }
 }

@@ -1,17 +1,32 @@
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 using System.Collections;
 using UnityEngine;
 
-public class Cannon : BaseActivator
+/*
+ * IMPORTED
+ * 
+ * This script still has outdated code which isn't being used. This can be confusing, but it maybe needed for later on
+ * or gets decided to be removed. For now cannon can't be angled.
+ */
+
+public class Cannon : BaseActivator, IOnEventCallback
 {
     public GameObject pivot;
     public GameObject firePoint;
 
     [Header("Shooting variables")]
-    [Range(0.2f, 5f)] public float shootingInterval;
-    [SerializeField] private float bulletMoveSpeed;
-    [SerializeField] private float bulletLifeSpan;
+    [Range(0.2f, 5f)] public float shootingInterval = 2;
+    [SerializeField] private float bulletMoveSpeed = 2;
+    [SerializeField] private float bulletLifeSpan = 2;
 
+    public bool activated = true;
+
+    private const int cannonTriggerCode = 6;
+
+    #region Old angle variables
+    /*
     [Header("Rotation variables")]
     [Range(0, 20f)] public float lerpSpeed;
     [Range(0f, 1f)] public float waitForLerpTime;
@@ -21,38 +36,103 @@ public class Cannon : BaseActivator
     private bool changeDir = true;
     private bool lerping = false;
 
-
     private int[] angles = new int[] { 12, 6, 3 };
     private int angleDivision;
-    public bool activated = true;
+
 
     [Header("Angle determination")]
     public MyEnum amountOfAngles = new MyEnum();
-    public enum MyEnum
+    */
+    #endregion
+
+    private void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    private void Start()
+    {
+        // AmountOfAngles();
+
+        if (PhotonNetwork.IsMasterClient && activated) { StartCoroutine(Fire()); }
+    }
+
+    private void ActivateShootEvent()
+    {
+        object[] content = new object[] { gameObject.name }; ;
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(cannonTriggerCode, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == cannonTriggerCode)
+        {
+            object[] tempObject = (object[])photonEvent.CustomData;
+            string objectName = (string)tempObject[0];
+
+            if (objectName == gameObject.name)
+            {
+                Bullet();
+            }
+        }
+    }
+
+    public override void Activate()
+    {
+        // Only master allowed to run Activate (owner of room objects) to prevent out of sync
+        if (!PhotonNetwork.IsMasterClient) { return; }
+
+        activated = !activated;
+
+        // Old code is ChangeAngles()
+        if (activated)
+        {
+            StartCoroutine(Fire());
+        }
+        else
+        {
+            StopCoroutine(Fire());
+        }
+    }
+
+    #region Firing bullet
+    private IEnumerator Fire()
+    {
+        ActivateShootEvent();
+        yield return new WaitForSeconds(shootingInterval);
+        StartCoroutine(Fire());
+    }
+
+    private void Bullet() // Old void name was Fire
+    {
+        // Get bullet from the bulletPool, set the position to the fire point. set the firing direction, bulletLifespan and the bullet movepseed.
+        Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
+        GameObject bullet = ObjectPooler.Instance.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
+        bullet.GetComponent<Bullet>().SetBulletValues(bulDir, bulletMoveSpeed, bulletLifeSpan);
+    }
+    #endregion
+
+    #region Old angeling code
+    /*
+        public enum MyEnum
     {
         High,
         Medium,
         Low
     };
-
-    private void Start()
+    private void Update()
     {
-        AmountOfAngles();
-
-        if (activated) { StartCoroutine(ChangeAngles()); }
-    }
-
-    [PunRPC]
-    public override void Activate()
-    {
-        activated = !activated;
-        if (activated)
+        // lerp to the next angle in the angles section
+        if (lerping)
         {
-            StartCoroutine(ChangeAngles());
-        }
-        else
-        {
-            StopCoroutine(ChangeAngles());
+            pivot.transform.localRotation = Quaternion.Lerp(pivot.transform.localRotation, Quaternion.Euler(0, 0, currentAngle), Time.deltaTime * lerpSpeed);
         }
     }
 
@@ -74,17 +154,7 @@ public class Cannon : BaseActivator
         StartCoroutine(ChangeAngles());
     }
 
-    private void Update()
-    {
-        // lerp to the next angle in the angles section
-        if (lerping)
-        {
-            pivot.transform.localRotation = Quaternion.Lerp(pivot.transform.localRotation, Quaternion.Euler(0, 0, currentAngle), Time.deltaTime * lerpSpeed);
-        }
-    }
-
     #region amount of angles
-
     private void AmountOfAngles()
     {
         // check what the degree change should be
@@ -127,19 +197,6 @@ public class Cannon : BaseActivator
         }
     }
     #endregion
-
-    #region firing bullet
-    private void Fire()
-    {
-        // get bullet from the bulletPool, set the position to the fire point. set the firing direction, bulletLifespan and the bullet movepseed.
-        //Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
-        //GameObject bullet = ObjectPooler.Instance.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
-        //Bullet bulletScript = bullet.GetComponent<Bullet>();
-        
-        //bulletScript.SetMoveDirection(bulDir);
-        //bulletScript.SetBulletLifeSpan(bulletLifeSpan);
-        //bulletScript.SetMoveSpeed(bulletMoveSpeed);
-    }
+    */
     #endregion
-
 }
