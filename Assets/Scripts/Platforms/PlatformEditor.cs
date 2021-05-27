@@ -1,29 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class AdjustablePlatformBehaviour : MonoBehaviour
-{
+public class PlatformEditor : MonoBehaviour
+{ 
     [Header("enable/disable editting mode")]
-    public bool editing = true;
+    public bool editing = false;
 
-    [Header("platform editting variables")]
-    [Range(2f, 30f)] public int platformLength;
-    [Range(1f, 40f)] public int platformHeight;
+    [Header("Size variables")]
+    [Range(1, 10)] public int platformLength;
+    [Range(1, 10)] public int platformHeight;
+    public SpriteRenderer spriteHolder;
     public new BoxCollider2D collider;
 
-    [Header("platform editting variables")]
-    public SpriteRenderer spriteHolder;
-
-    private void Start()
+    void Update()
     {
-        editing = false;
-    }
-
-    private void Update()
-    {
-        //if you want to edit the platform enable editing.
+        //if you want to edit the wall: enable editing.
         if (editing)
         {
+
             //prevent NaN errors
             if (platformHeight == 0 || platformLength == 0)
             {
@@ -36,7 +32,7 @@ public class AdjustablePlatformBehaviour : MonoBehaviour
             spriteHolder.transform.localScale = new Vector3(1, 1, 1);
             float newLength = spriteHolder.transform.localScale.y / platformLength;
             float newHeight = spriteHolder.transform.localScale.y / platformHeight;
-            spriteHolder.transform.localScale = new Vector3(newLength,newHeight , 1);
+            spriteHolder.transform.localScale = new Vector3(newLength, newHeight, 1);
             spriteHolder.size = new Vector2(platformLength, platformHeight);
 
             //update the collider

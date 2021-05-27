@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3081606822016883214}
   - component: {fileID: 4078651198949443754}
   - component: {fileID: 67980660962732785}
+  - component: {fileID: 8295133453132718494}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -32,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 3081606822016883215}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 9200030612070940327}
   m_Father: {fileID: 0}
@@ -172,15 +173,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accel: 30
-  decel: 30
-  airDecel: 15
+  decel: 90
+  airDecel: 0
   maxSpeed: 10
-  knockBackHorizontalStrenght: 0
+  knockBackHorizontalStrenght: 10
   jumpStrenght: 14
-  jumpBufferLenght: 0.2
+  jumpBufferLenght: 0.1
   maxFallSpeed: 15
-  wallJumpHorizontal: 12
-  wallJumpVertical: 10
+  wallJumpHorizontal: 10
+  wallJumpVertical: 12
   knockBackVerticalStrenght: 15
   gravity: 24
   gravZoneMult: 1
@@ -191,16 +192,16 @@ MonoBehaviour:
   downWallGravMult: 0.25
   clingDuration: 0.3
   maxDownSlideSpeed: 3
-  wallJumpBuffer: 0.4
+  wallJumpBuffer: 0.31
   canWallCling: 1
   canWallJump: 1
   colisionDistance: 0.02
   sludgeMask:
     serializedVersion: 2
-    m_Bits: 1791
+    m_Bits: 1536
   sideMask:
     serializedVersion: 2
-    m_Bits: 3839
+    m_Bits: 1024
 --- !u!114 &4078651198949443754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +240,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf504b6ffdb8b64285a29b4a53d80db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8295133453132718494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081606822016883215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 790bd9c098dd4874399cce9b6048c6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCP: 0
+  nextCheckpoint: {fileID: 0}
+  distanceToNextCP: 0
 --- !u!1 &5751272802070745618
 GameObject:
   m_ObjectHideFlags: 0

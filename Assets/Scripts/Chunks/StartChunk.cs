@@ -3,6 +3,7 @@ using TMPro;
 using Photon.Pun;
 using ExitGames.Client.Photon;
 
+
 public class StartChunk : MonoBehaviourPunCallbacks
 {
     public GameObject startingLine;
@@ -25,19 +26,8 @@ public class StartChunk : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!startTimer)
-        {
-            // Clien needs to wait to receive start timer property
-            if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom.CustomProperties["StartTime"] != null)
-            {
-                startTime = (float)PhotonNetwork.CurrentRoom.CustomProperties["StartTime"];
-                startTimer = true;
-            }
-            return;
-        }
-
+        if (!startTimer) { return; }
         float countdownTimer = countdown - (float)(PhotonNetwork.Time - startTime);
-
 
         if (countdownTimer >= 0)
         {
@@ -58,5 +48,15 @@ public class StartChunk : MonoBehaviourPunCallbacks
             startTimer = false;
         }
     }
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("StartTime"))
+        {
+            startTime = (float)PhotonNetwork.CurrentRoom.CustomProperties["StartTime"];
+            startTimer = true;
+        }
+    }
+
 }
 

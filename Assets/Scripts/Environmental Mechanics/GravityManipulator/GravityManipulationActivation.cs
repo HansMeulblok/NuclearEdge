@@ -14,7 +14,7 @@ public class GravityManipulationActivation : BaseActivator
     private bool isLerping = false;
     float lerpValue = 0;
 
-    private float gravInGM = 0.01f, gravOutGM = 1f;
+    public float gravInGM = 0.05f, gravOutGM = 1f, gravMultDown = 5f;
 
     private void Start()
     {
@@ -31,7 +31,6 @@ public class GravityManipulationActivation : BaseActivator
 
     private void Update()
     {
-
         if (isStarted){
             if (timeActivatedCurrent <= 0)
             {
@@ -90,15 +89,6 @@ public class GravityManipulationActivation : BaseActivator
 
         timeActivatedCurrent = timeActivatedOriginal;
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            GameObject player = collision.gameObject;
-            player.GetComponent<PlayerMovement2D>().gravZoneMult = gravInGM;
-        }
-    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -106,6 +96,22 @@ public class GravityManipulationActivation : BaseActivator
             //reset gravity back to normal
             GameObject player = collision.gameObject;
             player.GetComponent<PlayerMovement2D>().gravZoneMult = gravOutGM;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            GameObject player = collision.gameObject;
+            if (player.GetComponent<Rigidbody2D>().velocity.y < 0)
+            {
+                player.GetComponent<PlayerMovement2D>().gravZoneMult = gravInGM * gravMultDown;
+            }
+            else
+            {
+                player.GetComponent<PlayerMovement2D>().gravZoneMult = gravInGM;
+            }
         }
     }
 

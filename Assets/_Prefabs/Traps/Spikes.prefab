@@ -50,7 +50,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 073e55801df5cfe40b5a28d3d5dcd297, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -153,8 +153,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656a9219cca4a684db13c740c7f84eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editing: 1
-  platformLength: 2
-  platformHeight: 1
   spriteHolder: {fileID: 1186041140}
   collider: {fileID: 701153948976307702}
