@@ -1,7 +1,10 @@
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 using UnityEngine;
+using System;
 
-public class PlayerStatusEffects : MonoBehaviourPun
+public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 {
     // Player status effects
     [Header("Status effects")]
@@ -22,7 +25,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
     public bool movementChanged;
     public bool isDead;
     public bool isStunned;
-    public bool leveltesting = true;
+    public bool leveltesting = false;
     public Vector2 respawnPosition;
 
     [Header("Stun Modifiers")]
@@ -43,10 +46,13 @@ public class PlayerStatusEffects : MonoBehaviourPun
     bool canBlink = false;
     bool isInvincible = false;
 
+    private const int slowCode = 8;
+    private const int stunCode = 9;
+
     private void Start()
     {
         // Disable script if player is not the local player.
-        if (photonView != null && !photonView.IsMine) { enabled = false; }
+        //if (photonView != null && !photonView.IsMine) { enabled = false; }
 
 
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -86,8 +92,10 @@ public class PlayerStatusEffects : MonoBehaviourPun
     private void FixedUpdate()
     {
         // Slow debuff
-        if (slowed)
+        if (slowed && photonView.IsMine)
         {
+            // raise event
+            RaiseEvent(photonView.ViewID, slowCode, true);
             statusVisual.enabled = true;
 
             if (!movementChanged)
@@ -106,17 +114,19 @@ public class PlayerStatusEffects : MonoBehaviourPun
             }
         }
 
-        if (isStunned)
+        if (isStunned && photonView.IsMine)
         {
-            //blink sprite
+            // Blink sprite
             if (!isInvincible)
             {
-                InvokeRepeating("Blinking", 0, blinkInterval);
+                // Raise event
+                RaiseEvent(photonView.ViewID, stunCode, true);
+                //StartBlinking();
                 isInvincible = true;
                 playerMovement.KnockBack();
             }
 
-            //slow player
+            // Slow player
 
             if (!movementChanged)
             {
@@ -131,7 +141,9 @@ public class PlayerStatusEffects : MonoBehaviourPun
 
             if (stunTimer >= stunDuration)
             {
-                CancelInvoke("Blinking");
+                // Raise event
+                RaiseEvent(photonView.ViewID, stunCode, false);
+                //StopBlinking();
                 stunTimer = 0;
                 canBlink = false;
                 isStunned = false;
@@ -141,6 +153,15 @@ public class PlayerStatusEffects : MonoBehaviourPun
         }
     }
 
+    private void StartBlinking()
+    {
+        InvokeRepeating("Blinking", 0, blinkInterval);
+    }
+
+    private void StopBlinking()
+    {
+        CancelInvoke("Blinking");
+    }
     private void ResetPlayer()
     {
         isDead = false;
@@ -166,6 +187,38 @@ public class PlayerStatusEffects : MonoBehaviourPun
         slowedTimer = 0;
         movementChanged = false;
         slowed = false;
+    }
+
+    public override void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    public override void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    private void RaiseEvent(int id, int networkCode, bool isActivated)
+    {
+        object[] content = new object[] { id };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent((byte)networkCode, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
+    private void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+
+        if(eventCode == slowCode)
+        {
+
+        }
+
+        if(eventCode == stunCode)
+        {
+            //if(stunCode)
+        }
     }
 
     private void Blinking()
