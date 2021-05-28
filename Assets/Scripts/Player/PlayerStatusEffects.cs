@@ -57,7 +57,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         // Disable script if player is not the local player.
         //if (photonView != null && !photonView.IsMine) { enabled = false; }
 
-        playerColor = GetComponent<SpriteRenderer>().color;
+        Invoke("GetColours", 1.5f);
         rb = gameObject.GetComponent<Rigidbody2D>();
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
         statusVisual = GetComponentsInChildren<SpriteRenderer>()[1];
@@ -176,6 +176,11 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     private void StopBlinking()
     {
         CancelInvoke("Blinking");
+    }
+
+    private void GetColours()
+    {
+        playerColor = GetComponent<SpriteRenderer>().color;
     }
     private void ResetPlayer()
     {
