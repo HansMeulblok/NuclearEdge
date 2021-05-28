@@ -47,6 +47,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     bool canBlink = false;
     bool isInvincible = false;
     bool isSlowed = false;
+    Color playerColor;
 
     private const int slowCode = 8;
     private const int stunCode = 9;
@@ -56,6 +57,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         // Disable script if player is not the local player.
         //if (photonView != null && !photonView.IsMine) { enabled = false; }
 
+        playerColor = GetComponentsInChildren<SpriteRenderer>()[1].color;
 
         rb = gameObject.GetComponent<Rigidbody2D>();
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
@@ -190,7 +192,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     {
         // Reset player visuals
         statusVisual.enabled = false;
-        playerSprite.color = Color.green;
+        playerSprite.color = playerColor;
 
         // Reset player movement stats
         playerMovement.maxSpeed = originalMaxSpeed;
@@ -216,6 +218,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
     private void RaiseEvent(int id, int networkCode, bool isActivated)
     {
+        // raise event and give photon id, network byte and a timestamp from when it was send
         object[] content = new object[] { id, isActivated, (float)PhotonNetwork.Time};
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         PhotonNetwork.RaiseEvent((byte)networkCode, content, raiseEventOptions, SendOptions.SendReliable);
@@ -226,7 +229,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         byte eventCode = photonEvent.Code;
         if(eventCode == slowCode || eventCode == stunCode)
         {
-
+            // continue if received the right codes otherwise return;
         }
         else { return; }
 
@@ -234,12 +237,14 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         int photonId = (int)tempObjects[0];
         bool activate = (bool)tempObjects[1];
         eventTimeStamp = (float)tempObjects[2];
+        // grab objects from array
 
         float timeDif = (float)PhotonNetwork.Time - eventTimeStamp;
-        print(timeDif);
+        // calculcate time difference between the time received and current server time 
 
         if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= (slowedTimer))
         {
+            // enable or disable effect
             if (activate)
             {
                 statusVisual.enabled = true;
@@ -252,7 +257,8 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
         if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= (stunTimer))
         {
-            if(activate)
+            // enable or disable effect
+            if (activate)
             {
                 StartBlinking();
             }
@@ -269,7 +275,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         canBlink = !canBlink;
         if (canBlink)
         {
-            playerSprite.color = Color.green;
+            playerSprite.color = playerColor;
         }
         else
         {
