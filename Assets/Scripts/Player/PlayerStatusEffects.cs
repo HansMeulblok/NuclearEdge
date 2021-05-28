@@ -236,8 +236,9 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         eventTimeStamp = (float)tempObjects[2];
 
         float timeDif = (float)PhotonNetwork.Time - eventTimeStamp;
+        print(timeDif);
 
-        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= (slowedTimer - 1))
+        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= (slowedTimer))
         {
             if (activate)
             {
@@ -249,7 +250,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             }
         }
 
-        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= (stunTimer - 1))
+        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= (stunTimer))
         {
             if(activate)
             {
