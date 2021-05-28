@@ -193,7 +193,7 @@ MonoBehaviour:
   downWallGravMult: 0.25
   clingDuration: 0.3
   maxDownSlideSpeed: 3
-  wallJumpBuffer: 0.31
+  wallJumpBuffer: 0.15
   canWallCling: 1
   canWallJump: 1
   colisionDistance: 0.02
