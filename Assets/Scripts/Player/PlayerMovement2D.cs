@@ -67,16 +67,17 @@ public class PlayerMovement2D : MonoBehaviourPun
 
     //Crushing variables
     public ContactFilter2D crushFilter;
+    [Range(0.0f, 1.0f)]
+    public float crushHitboxMult;
     int countCrushing;
-    List<Collider2D> crushResults;
+    Collider2D[] crushResults = new Collider2D[10];
     bool leftCrush;
     bool rightCrush;
     bool upCrush;
     bool downCrush;
 
-
+    PlayerStatusEffects myStatusEffects;
     Vector3 lastSpeed;
-
 
     //Global variables
     Vector3 moveSpeed;
@@ -90,6 +91,9 @@ public class PlayerMovement2D : MonoBehaviourPun
 
         //Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
+        //Get the player status effects script
+        myStatusEffects = GetComponent<PlayerStatusEffects>();
+
         //Reset movespeed on start
         moveSpeed = Vector3.zero;
     }
@@ -454,78 +458,22 @@ public class PlayerMovement2D : MonoBehaviourPun
             grounded = false;
         }
 
-
-
-        //Check up for crushing
-        if (Physics2D.BoxCast(transform.position, new Vector2(transform.localScale.x, 0.01f), 0, Vector2.up, colisionDistance + transform.localScale.y * 0.5f, sideMask))
-        {
-            upCrush = true;
-        }
-        else
-        {
-            upCrush = false;
-        }
-        //Check down for crushing
-        if (Physics2D.BoxCast(transform.position, new Vector2(transform.localScale.x, 0.01f), 0, Vector2.down, colisionDistance + transform.localScale.y * 0.5f, sideMask))
-        {
-            downCrush = true;
-        }
-        else
-        {
-            downCrush = false;
-        }
-        //Check left for crushing
-        if (Physics2D.BoxCast(transform.position, new Vector2(0.01f, transform.localScale.y), 0, Vector2.left, colisionDistance + transform.localScale.x * 0.5f, sideMask))
-        {
-            leftCrush = true;
-        }
-        else
-        {
-            leftCrush = false;
-        }
-        //Check right for crushing
-        if (Physics2D.BoxCast(transform.position, new Vector2(0.01f, transform.localScale.y), 0, Vector2.right, colisionDistance + transform.localScale.x * 0.5f, sideMask))
-        {
-            rightCrush = true;
-        }
-        else
-        {
-            rightCrush = false;
-        }
-        /*
         //Check for crush with box overlap
-        if (Physics2D.OverlapBox(transform.position, transform.localScale, 0, crushFilter, results:crushResults) > 1)
+        if (Physics2D.OverlapBox(transform.position, transform.localScale * crushHitboxMult, 0, crushFilter, results:crushResults) >= 2)
         {
-            //bool crushed = false;
-            for (int i = 0; i < crushResults.Count; i++)
-            {
-                WallChange wc = crushResults[i].GetComponent<WallChange>();
-                if (wc != null)
-                {
-                    Debug.Log("Overlap crush");
-                }
-            }
-        }
-        */
-
-        //Check for crushing
-        if ((downCrush && upCrush) || (leftCrush && rightCrush))
-        {
-            //Increase counter when two opiside collisions are detected
             countCrushing++;
-            //Have a small buffer to avoid false posistives
-            if (countCrushing >= 3)
+            //Have a buffer to avoid false positives
+            if(countCrushing > 5)
             {
-                Debug.Log("Boxcast crushed");
+                //The player is just dead
+                myStatusEffects.isDead = true;
             }
         }
         else
         {
-            //Reset counter when not getting crushed
+            //Reset counter when not crushed
             countCrushing = 0;
         }
-
-
 
         //Wall cling duration decrease
         if (onLeftWallCling > 0)

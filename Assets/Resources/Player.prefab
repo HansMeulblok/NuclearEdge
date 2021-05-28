@@ -216,6 +216,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  crushHitboxMult: 0.9
 --- !u!114 &4078651198949443754
 MonoBehaviour:
   m_ObjectHideFlags: 0
