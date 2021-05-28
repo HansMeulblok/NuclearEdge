@@ -41,7 +41,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     bool originalcanWallJump;
     bool canBlink = false;
     bool isInvincible = false;
-    bool isSlowed = false;
+    bool isSlowEventCalled = false;
     Color playerColor;
 
     private const int slowCode = 8;
@@ -69,10 +69,10 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         if (slowed)
         {
             // Raise event
-            if (!isSlowed)
+            if (!isSlowEventCalled)
             {
                 RaiseEvent(photonView.ViewID, slowCode, true);
-                isSlowed = true;
+                isSlowEventCalled = true;
             }
             // Turn on effect locally
             statusVisual.enabled = true;
@@ -99,7 +99,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
                     slowedTimer -= (float)PhotonNetwork.Time - eventTimeStamp;
                 }
             }
-            else if (slowedTimer <= 0 && isSlowed)
+            else if (slowedTimer <= 0 && isSlowEventCalled)
             {
                 // Turn off effect for all players
                 RaiseEvent(photonView.ViewID, slowCode, false);
@@ -140,10 +140,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
                 RaiseEvent(photonView.ViewID, stunCode, false);
                 StopBlinking();
                 ResetStats();
-                stunTimer = 0;
-                canBlink = false;
-                isStunned = false;
-                isInvincible = false;
+                stunTimer = 0;           
             }
         }
     }
@@ -172,8 +169,10 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         // Reset player visuals
         statusVisual.enabled = false;
         playerSprite.color = playerColor;
+        StopBlinking();
 
         // Reset player movement stats
+        playerSprite.color = playerColor;
         playerMovement.maxSpeed = originalMaxSpeed;
         playerMovement.jumpStrenght = originalJumpStrength;
         playerMovement.canWallJump = originalcanWallJump;
@@ -182,7 +181,10 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         slowedTimer = 0;
         movementChanged = false;
         slowed = false;
-        isSlowed = false;
+        isSlowEventCalled = false;
+        canBlink = false;
+        isStunned = false;
+        isInvincible = false;
     }
 
     public override void OnEnable()
@@ -246,6 +248,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             {
                 StopBlinking();
                 ResetStats();
+                Invoke("ResetStats", 0.5f);
             }
         }
     }
