@@ -209,7 +209,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     private void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-
+        object[] tempObjects = (object[])photonEvent.CustomData;
         if(eventCode == slowCode)
         {
 
@@ -218,6 +218,9 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         if(eventCode == stunCode)
         {
             //if(stunCode)
+            //{
+
+            //}
         }
     }
 
