@@ -45,6 +45,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     bool originalcanWallJump;
     bool canBlink = false;
     bool isInvincible = false;
+    bool isSlowed = false;
 
     private const int slowCode = 8;
     private const int stunCode = 9;
@@ -95,8 +96,12 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         if (slowed && photonView.IsMine)
         {
             // raise event
-            RaiseEvent(photonView.ViewID, slowCode, true);
-            statusVisual.enabled = true;
+            if(!isSlowed)
+            {
+                RaiseEvent(photonView.ViewID, slowCode, true);
+                isSlowed = true;
+            }
+            //statusVisual.enabled = true;
 
             if (!movementChanged)
             {
@@ -108,9 +113,10 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             movementChanged = true;
 
             if (slowedTimer > 0 && !inSludge) { slowedTimer -= Time.deltaTime; }
-            else if (slowedTimer <= 0)
+            else if (slowedTimer <= 0 && isSlowed)
             {
-                ResetStats();
+                RaiseEvent(photonView.ViewID, slowCode, false);
+                isSlowed = false;
             }
         }
 
@@ -148,7 +154,6 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
                 canBlink = false;
                 isStunned = false;
                 isInvincible = false;
-                ResetStats();
             }
         }
     }
@@ -209,21 +214,39 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     private void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
+        if(eventCode == slowCode || eventCode == stunCode)
+        {
+
+        }
+        else { return; }
+
         object[] tempObjects = (object[])photonEvent.CustomData;
         int photonId = (int)tempObjects[0];
         bool activate = (bool)tempObjects[1];
 
-        if(eventCode == slowCode)
+        if(eventCode == slowCode && photonView.ViewID == photonId)
         {
-
+            if (activate)
+            {
+                statusVisual.enabled = true;
+            }
+            else
+            {
+                ResetStats();
+            }
         }
 
-        if(eventCode == stunCode)
+        if(eventCode == stunCode && photonView.ViewID == photonId)
         {
-            //if(stunCode)
-            //{
-
-            //}
+            if(activate)
+            {
+                StartBlinking();
+            }
+            else
+            {
+                StopBlinking();
+                ResetStats();
+            }
         }
     }
 
