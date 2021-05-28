@@ -201,7 +201,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
     private void RaiseEvent(int id, int networkCode, bool isActivated)
     {
-        object[] content = new object[] { id };
+        object[] content = new object[] { id , isActivated};
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent((byte)networkCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -210,6 +210,9 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     {
         byte eventCode = photonEvent.Code;
         object[] tempObjects = (object[])photonEvent.CustomData;
+        int photonId = (int)tempObjects[0];
+        bool activate = (bool)tempObjects[1];
+
         if(eventCode == slowCode)
         {
 
