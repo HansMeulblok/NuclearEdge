@@ -76,7 +76,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     bool upCrush;
     bool downCrush;
 
-    PlayerStatusEffects myStatusEffects;
+    PlayerManager myPlayerManager;
     Vector3 lastSpeed;
 
     //Global variables
@@ -92,7 +92,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         //Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
         //Get the player status effects script
-        myStatusEffects = GetComponent<PlayerStatusEffects>();
+        myPlayerManager = GetComponent<PlayerManager>();
 
         //Reset movespeed on start
         moveSpeed = Vector3.zero;
@@ -466,7 +466,7 @@ public class PlayerMovement2D : MonoBehaviourPun
             if(countCrushing > 5)
             {
                 //The player is just dead
-                myStatusEffects.isDead = true;
+                myPlayerManager.KillPlayer(PhotonNetwork.NickName);
             }
         }
         else
