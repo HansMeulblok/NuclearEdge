@@ -4,6 +4,7 @@ using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Realtime;
+using TMPro;
 
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -26,6 +27,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         deadPlayers = new List<string>();
 
+        Invoke("SetNames", 1f);
         Invoke("ChangePlayersColor", 1f);
     }
 
@@ -153,6 +155,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 multiTargetCamera.targets.Remove(player);
                 break;
             }
+        }
+    }
+
+    public void SetNames()
+    {
+        foreach (Transform player in multiTargetCamera.targets)
+        {
+            GameObject nameplate = player.transform.Find("Nameplate").gameObject;
+            nameplate.GetComponent<TextMeshPro>().text = player.gameObject.GetComponent<PhotonView>().Owner.NickName;
         }
     }
 }
