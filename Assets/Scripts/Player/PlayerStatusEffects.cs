@@ -42,6 +42,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     SpriteRenderer statusVisual, playerSprite;
     float originalMaxSpeed;
     float originalJumpStrength;
+    float eventTimeStamp;
     bool originalcanWallJump;
     bool canBlink = false;
     bool isInvincible = false;
@@ -88,20 +89,17 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             //permanent death
             // Destroy(this.gameObject);
         }
-    }
 
-    private void FixedUpdate()
-    {
         // Slow debuff
-        if (slowed && photonView.IsMine)
+        if (slowed)
         {
             // raise event
-            if(!isSlowed)
+            if (!isSlowed)
             {
                 RaiseEvent(photonView.ViewID, slowCode, true);
                 isSlowed = true;
             }
-            //statusVisual.enabled = true;
+            statusVisual.enabled = true;
 
             if (!movementChanged)
             {
@@ -112,22 +110,32 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
             movementChanged = true;
 
-            if (slowedTimer > 0 && !inSludge) { slowedTimer -= Time.deltaTime; }
+            if (slowedTimer > 0 && !inSludge)
+            { 
+                if(photonView.IsMine)
+                {
+                    slowedTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    slowedTimer -= (float)PhotonNetwork.Time - eventTimeStamp;
+                }
+            }
             else if (slowedTimer <= 0 && isSlowed)
             {
                 RaiseEvent(photonView.ViewID, slowCode, false);
-                isSlowed = false;
+                ResetStats();
             }
         }
 
-        if (isStunned && photonView.IsMine)
+        if (isStunned)
         {
             // Blink sprite
             if (!isInvincible)
             {
                 // Raise event
                 RaiseEvent(photonView.ViewID, stunCode, true);
-                //StartBlinking();
+                StartBlinking();
                 isInvincible = true;
                 playerMovement.KnockBack();
             }
@@ -149,7 +157,8 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             {
                 // Raise event
                 RaiseEvent(photonView.ViewID, stunCode, false);
-                //StopBlinking();
+                StopBlinking();
+                ResetStats();
                 stunTimer = 0;
                 canBlink = false;
                 isStunned = false;
@@ -192,6 +201,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         slowedTimer = 0;
         movementChanged = false;
         slowed = false;
+        isSlowed = false;
     }
 
     public override void OnEnable()
@@ -206,8 +216,8 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
     private void RaiseEvent(int id, int networkCode, bool isActivated)
     {
-        object[] content = new object[] { id , isActivated};
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        object[] content = new object[] { id , isActivated, PhotonNetwork.Time};
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         PhotonNetwork.RaiseEvent((byte)networkCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
@@ -223,8 +233,11 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         object[] tempObjects = (object[])photonEvent.CustomData;
         int photonId = (int)tempObjects[0];
         bool activate = (bool)tempObjects[1];
+        eventTimeStamp = (float)tempObjects[2];
 
-        if(eventCode == slowCode && photonView.ViewID == photonId)
+        float timeDif = (float)PhotonNetwork.Time - eventTimeStamp;
+
+        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= (slowedTimer - 1))
         {
             if (activate)
             {
@@ -236,7 +249,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             }
         }
 
-        if(eventCode == stunCode && photonView.ViewID == photonId)
+        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= (stunTimer - 1))
         {
             if(activate)
             {

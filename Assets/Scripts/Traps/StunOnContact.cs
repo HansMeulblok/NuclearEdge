@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -13,10 +14,13 @@ public class StunOnContact : MonoBehaviour
         //If it is the player
         if (other.CompareTag("Player"))
         {
-            //Get the PlayerStatusEffects script from the player
-            pse = other.GetComponent<PlayerStatusEffects>();
-            //The player is dead
-            pse.isStunned = true;
+            if(other.GetComponent<PhotonView>().IsMine)
+            {
+                //Get the PlayerStatusEffects script from the player
+                pse = other.GetComponent<PlayerStatusEffects>();
+                //The player is dead
+                pse.isStunned = true;
+            }   
         }
     }
 }
