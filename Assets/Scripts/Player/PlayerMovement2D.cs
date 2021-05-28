@@ -68,7 +68,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     //Crushing variables
     public ContactFilter2D crushFilter;
     int countCrushing;
-    Collider2D[] crushResults;
+    List<Collider2D> crushResults;
     bool leftCrush;
     bool rightCrush;
     bool upCrush;
@@ -492,12 +492,12 @@ public class PlayerMovement2D : MonoBehaviourPun
         {
             rightCrush = false;
         }
-
+        /*
         //Check for crush with box overlap
         if (Physics2D.OverlapBox(transform.position, transform.localScale, 0, crushFilter, results:crushResults) > 1)
         {
             //bool crushed = false;
-            for (int i = 0; i < crushResults.Length; i++)
+            for (int i = 0; i < crushResults.Count; i++)
             {
                 WallChange wc = crushResults[i].GetComponent<WallChange>();
                 if (wc != null)
@@ -506,6 +506,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 }
             }
         }
+        */
 
         //Check for crushing
         if ((downCrush && upCrush) || (leftCrush && rightCrush))
