@@ -64,7 +64,19 @@ public class PlayerMovement2D : MonoBehaviourPun
 
     int countWallClingCollision;
     int countWallClingGrounded;
+
+    //Crushing variables
+    public ContactFilter2D crushFilter;
+    int countCrushing;
+    Collider2D[] crushResults;
+    bool leftCrush;
+    bool rightCrush;
+    bool upCrush;
+    bool downCrush;
+
+
     Vector3 lastSpeed;
+
 
     //Global variables
     Vector3 moveSpeed;
@@ -441,6 +453,78 @@ public class PlayerMovement2D : MonoBehaviourPun
 
             grounded = false;
         }
+
+
+
+        //Check up for crushing
+        if (Physics2D.BoxCast(transform.position, new Vector2(transform.localScale.x, 0.01f), 0, Vector2.up, colisionDistance + transform.localScale.y * 0.5f, sideMask))
+        {
+            upCrush = true;
+        }
+        else
+        {
+            upCrush = false;
+        }
+        //Check down for crushing
+        if (Physics2D.BoxCast(transform.position, new Vector2(transform.localScale.x, 0.01f), 0, Vector2.down, colisionDistance + transform.localScale.y * 0.5f, sideMask))
+        {
+            downCrush = true;
+        }
+        else
+        {
+            downCrush = false;
+        }
+        //Check left for crushing
+        if (Physics2D.BoxCast(transform.position, new Vector2(0.01f, transform.localScale.y), 0, Vector2.left, colisionDistance + transform.localScale.x * 0.5f, sideMask))
+        {
+            leftCrush = true;
+        }
+        else
+        {
+            leftCrush = false;
+        }
+        //Check right for crushing
+        if (Physics2D.BoxCast(transform.position, new Vector2(0.01f, transform.localScale.y), 0, Vector2.right, colisionDistance + transform.localScale.x * 0.5f, sideMask))
+        {
+            rightCrush = true;
+        }
+        else
+        {
+            rightCrush = false;
+        }
+
+        //Check for crush with box overlap
+        if (Physics2D.OverlapBox(transform.position, transform.localScale, 0, crushFilter, results:crushResults) > 1)
+        {
+            //bool crushed = false;
+            for (int i = 0; i < crushResults.Length; i++)
+            {
+                WallChange wc = crushResults[i].GetComponent<WallChange>();
+                if (wc != null)
+                {
+                    Debug.Log("Overlap crush");
+                }
+            }
+        }
+
+        //Check for crushing
+        if ((downCrush && upCrush) || (leftCrush && rightCrush))
+        {
+            //Increase counter when two opiside collisions are detected
+            countCrushing++;
+            //Have a small buffer to avoid false posistives
+            if (countCrushing >= 3)
+            {
+                Debug.Log("Boxcast crushed");
+            }
+        }
+        else
+        {
+            //Reset counter when not getting crushed
+            countCrushing = 0;
+        }
+
+
 
         //Wall cling duration decrease
         if (onLeftWallCling > 0)
