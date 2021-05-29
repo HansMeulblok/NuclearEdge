@@ -32,6 +32,8 @@ public class StartChunk : MonoBehaviourPunCallbacks
         if (countdownTimer >= 0)
         {
             countdownText.text = Mathf.Ceil(countdownTimer).ToString();
+
+
         }
         else if (!activated)
         {

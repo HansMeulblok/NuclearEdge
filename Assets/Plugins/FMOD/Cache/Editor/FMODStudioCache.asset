@@ -60,11 +60,11 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637564205439624375
+  lastModified: 637579173804803696
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 974
+    Value: 1324
   Exists: 1
 --- !u!114 &-8834537167717516915
 MonoBehaviour:
@@ -360,6 +360,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-6655414698797985321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/Stunned
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player/Stunned
+  guid: 9fe8fd7b9142d8429e6d18ad3346dab6
+  Banks:
+  - {fileID: 430877891017928416}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 940
 --- !u!114 &-6481065528773148235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,7 +489,7 @@ MonoBehaviour:
   - {fileID: -3802453412876677959}
   IsStream: 1
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
@@ -759,7 +782,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/MUSIC.bank
   Name: MUSIC
   StudioPath: bank:/MUSIC
-  lastModified: 637564205440148386
+  lastModified: 637579173804977290
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -778,7 +801,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637564205439604435
+  lastModified: 637579173804789081
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -822,6 +845,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-3159855531794582145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Trigger
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Trigger
+  guid: 9792b454236fdc47bef9168e044dab40
+  Banks:
+  - {fileID: 430877891017928416}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 384
 --- !u!114 &-2443155526313268413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -909,6 +955,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-2061235375126095156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/CountDown
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/CountDown
+  guid: 1029c51d52bf36499e14a87c6daf0725
+  Banks:
+  - {fileID: 430877891017928416}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 144
 --- !u!114 &-2020079128509232180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1030,6 +1099,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &-307980174356077794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/StartGame
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/StartGame
+  guid: abb3baccba33944590b8886aa0c4e2c5
+  Banks:
+  - {fileID: 430877891017928416}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4625
 --- !u!114 &-239541033003108258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1074,12 +1166,20 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: 8189284472024905974}
   - {fileID: -5883469218478751946}
+  - {fileID: 4583140289137255725}
+  - {fileID: 8006944204449842841}
+  - {fileID: 469646798977592138}
+  - {fileID: -3159855531794582145}
+  - {fileID: -6655414698797985321}
+  - {fileID: -307980174356077794}
+  - {fileID: -2061235375126095156}
+  - {fileID: 3263795710490624485}
   EditorParameters: []
   MasterBanks:
   - {fileID: -3785463957421738849}
   StringsBanks:
   - {fileID: -8912418390795902800}
-  stringsBankWriteTime: 637564205439624375
+  stringsBankWriteTime: 637579173804803696
   cacheVersion: 6
 --- !u!114 &4976423215005704
 MonoBehaviour:
@@ -1176,10 +1276,33 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 637564205439833823
+  lastModified: 637579173805190579
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &469646798977592138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/Death
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player/Death
+  guid: c690447262849d488d9994faad374a40
+  Banks:
+  - {fileID: 430877891017928416}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 600
 --- !u!114 &626584592683383439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1546,6 +1669,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 147
+--- !u!114 &3263795710490624485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/GO
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/GO
+  guid: 32b121be964e314390adcc20320ac0a2
+  Banks:
+  - {fileID: 430877891017928416}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 384
 --- !u!114 &3399184415052601732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1641,6 +1787,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &4583140289137255725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Traps/Lazer
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Traps/Lazer
+  guid: 00fe6d07f8a31d45a2837f11121298a3
+  Banks:
+  - {fileID: 430877891017928416}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 288
 --- !u!114 &4671271299299994988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1893,6 +2062,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &8006944204449842841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Traps/Cannon
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Traps/Cannon
+  guid: 54116198e62d3e498a1a43d3fac0b87d
+  Banks:
+  - {fileID: 430877891017928416}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 731
 --- !u!114 &8047868141326611908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1978,7 +2170,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 417
+  Length: 240
 --- !u!114 &8216993183755625333
 MonoBehaviour:
   m_ObjectHideFlags: 0

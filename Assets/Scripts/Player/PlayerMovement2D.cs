@@ -316,6 +316,9 @@ public class PlayerMovement2D : MonoBehaviourPun
             {
                 jumpBuffer = 0;
                 moveSpeed.y = jumpStrenght;
+
+                //play one shot in FMOD of jump sound
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
             }
             //When you cling onto a wall do a walljump
             if (onLeftWallCling > 0 && canWallJump)
