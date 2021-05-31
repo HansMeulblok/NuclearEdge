@@ -101,7 +101,9 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
                 }
                 else
                 {
-                    objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
+                    // objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
+
+                    objectRB.MovePosition(objectRB.position + networkPosition * Time.fixedDeltaTime);
                 }
             }
 
