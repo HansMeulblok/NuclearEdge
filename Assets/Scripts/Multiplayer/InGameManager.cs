@@ -11,6 +11,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject finishedMenu;
     private bool pauseMenuEnabled;
 
+    private bool playedOnce = false;
+
     private void Start()
     {
         pauseMenuEnabled = false;
@@ -35,13 +37,23 @@ public class InGameManager : MonoBehaviourPunCallbacks
             {
                 resultText.text = "You Win!";
                 resultText.color = Color.green;
-                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Win");
+                if (!playedOnce)
+                {
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Win");
+                    print("testWin");
+                    playedOnce = !playedOnce;
+                }
             }
             else
             {
                 resultText.text = "You Lose!";
                 resultText.color = Color.red;
-                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Lose");
+                if (!playedOnce)
+                {
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Lose");
+                    print("testLose");
+                    playedOnce = !playedOnce;
+                }
             }
         }
     }
