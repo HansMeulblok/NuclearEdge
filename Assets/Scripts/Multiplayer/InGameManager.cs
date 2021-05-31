@@ -35,11 +35,13 @@ public class InGameManager : MonoBehaviourPunCallbacks
             {
                 resultText.text = "You Win!";
                 resultText.color = Color.green;
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Win");
             }
             else
             {
                 resultText.text = "You Lose!";
                 resultText.color = Color.red;
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Lose");
             }
         }
     }
