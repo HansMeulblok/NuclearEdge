@@ -59,7 +59,7 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
                 timer = 0;
 
                 Vector2 oldPosition = objectRB.position;
-                objectRB.position = networkPosition = (Vector2)stream.ReceiveNext();
+                networkPosition = (Vector2)stream.ReceiveNext();
 
                 deltaPosition = networkPosition - oldPosition;
                 deltaTime = Time.time - lastTime;
@@ -89,6 +89,7 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
 
                 print("Object " + gameObject.name + " has position  " + objectRB.position + " | delta position " + deltaPosition + " | delta time " + deltaTime);
 
+                objectRB.position = networkPosition;
                 objectRB.position = Vector2.Lerp(objectRB.position, objectRB.position + deltaPosition, progress);
 
                 //float distance = Vector2.Distance(objectRB.position, networkPosition);
