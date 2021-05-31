@@ -59,7 +59,7 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
                 timer = 0;
 
                 Vector2 oldPosition = objectRB.position;
-                networkPosition = (Vector2)stream.ReceiveNext();
+                objectRB.position = networkPosition = (Vector2)stream.ReceiveNext();
 
                 deltaPosition = networkPosition - oldPosition;
                 deltaTime = Time.time - lastTime;
