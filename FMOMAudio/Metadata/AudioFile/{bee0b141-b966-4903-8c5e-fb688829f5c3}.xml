@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.01.00">
-	<object class="AudioFile" id="{785b86a1-abfa-4c3b-abf0-54ac03ae6929}">
+	<object class="AudioFile" id="{bee0b141-b966-4903-8c5e-fb688829f5c3}">
 		<property name="assetPath">
-			<value>zapsplat_multimedia_game_sound_musical_warm_bold_retro_70s_synth_complete_finish_003_51326.mp3</value>
+			<value>leisure_video_game_retro_8bit_power_up_002.mp3</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>48</value>
+			<value>44.0999985</value>
 		</property>
 		<property name="channelCount">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<property name="length">
-			<value>2.976</value>
+			<value>0.44408163265306122</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{9676f27f-b7ef-45ff-bfd8-afebecaa7607}</destination>

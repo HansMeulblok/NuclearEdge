@@ -929,7 +929,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 637580592550431653
+  lastModified: 637580635527687278
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1209,7 +1209,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 600
+  Length: 1104
 --- !u!114 &-307980174356077794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1272,11 +1272,11 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637580592536379903
+  lastModified: 637580635526680873
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1374
+    Value: 1412
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -1307,12 +1307,13 @@ MonoBehaviour:
   - {fileID: -1246723460242655112}
   - {fileID: -584969647289608416}
   - {fileID: -5605727809537626208}
+  - {fileID: 1102706969740769875}
   EditorParameters: []
   MasterBanks:
   - {fileID: 4585980992117191327}
   StringsBanks:
   - {fileID: -26859695161277634}
-  stringsBankWriteTime: 637580592536379903
+  stringsBankWriteTime: 637580635526680873
   cacheVersion: 6
 --- !u!114 &4976423215005704
 MonoBehaviour:
@@ -1456,6 +1457,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &1102706969740769875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Traps/Sludge
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Traps/Sludge
+  guid: c01ab3beb9337047953ecff061d66279
+  Banks:
+  - {fileID: -2481207471979351580}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 444
 --- !u!114 &1201005256473739077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2073,7 +2097,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637580592536365025
+  lastModified: 637580635526666235
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -2586,7 +2610,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/MUSIC.bank
   Name: MUSIC
   StudioPath: bank:/MUSIC
-  lastModified: 637580592549166777
+  lastModified: 637580635526973226
   LoadResult: 0
   FileSizes: []
   Exists: 1

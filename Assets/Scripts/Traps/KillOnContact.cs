@@ -36,7 +36,6 @@ public class KillOnContact : MonoBehaviour
             //Get the PlayerStatusEffects script from the player
             pse = other.GetComponent<PlayerStatusEffects>();
             //The player is dead
-            pse.isDead = true;
-        }
+            pse.isDead = true;        }
     }
 }

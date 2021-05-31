@@ -13,6 +13,7 @@ public class PlayerFinish : MonoBehaviourPunCallbacks
             if (photonView.IsMine && !PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
             {
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", photonView.Owner.NickName } });
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/");
             }    
         }
     }
