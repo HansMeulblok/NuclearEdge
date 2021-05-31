@@ -31,6 +31,10 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     public float blinkInterval;
     public float stunDuration;
 
+    // If the current server time - the event time that was received is greater than maxSyncTime, some methods need not be activated.
+    [Header("Sync")]
+    public float maxSyncTime = 4;
+
     float stunTimer;
 
     PlayerMovement2D playerMovement;
@@ -218,7 +222,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
         // Calculcate time difference between the time received and current server time 
 
-        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= 5)
+        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= maxSyncTime)
         {
             // Enable or disable effect
             if (activate)
@@ -231,7 +235,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             }
         }
 
-        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= 5)
+        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= maxSyncTime)
         {
             // Enable or disable effect
             if (activate)
