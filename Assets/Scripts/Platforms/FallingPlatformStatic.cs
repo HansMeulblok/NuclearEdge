@@ -3,8 +3,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
+//[ExecuteInEditMode]
+public class FallingPlatformStatic : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     [Header("Falling variables")]
     public float turningOffTime = 0.5f;
@@ -25,12 +25,12 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     private const int staticPlatformCode = 4;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
-    }
+    } 
 
-    private void OnDisable()
+    public override void OnDisable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
     }
