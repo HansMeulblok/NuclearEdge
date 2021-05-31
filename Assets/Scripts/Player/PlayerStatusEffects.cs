@@ -35,6 +35,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
     PlayerMovement2D playerMovement;
     SpriteRenderer statusVisual, playerSprite;
+    Color playerColor;
     float originalMaxSpeed;
     float originalJumpStrength;
     float eventTimeStamp;
@@ -42,14 +43,16 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     bool canBlink = false;
     bool isInvincible = false;
     bool isSlowEventCalled = false;
-    Color playerColor;
+    
 
+    // Byte codes
     private const int slowCode = 8;
     private const int stunCode = 9;
 
     private void Start()
     {
-        Invoke("GetColours", 1.5f);
+        //get colours a little later because of load time
+        Invoke("GetColours", 2f);
 
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
         statusVisual = GetComponentsInChildren<SpriteRenderer>()[1];
@@ -58,9 +61,6 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         originalMaxSpeed = playerMovement.maxSpeed;
         originalJumpStrength = playerMovement.jumpStrenght;
         originalcanWallJump = playerMovement.canWallJump;
-
-        // For testing purposes only, this should be changed to the starting location of the level
-        respawnPosition = transform.position;   
     }
 
     private void Update()
@@ -84,20 +84,12 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
                 playerMovement.jumpStrenght *= slowJumpModifier;
                 playerMovement.canWallJump = false;
             }
-
             movementChanged = true;
 
             // Check if your are the local player otherwise use the server time
             if (slowedTimer > 0 && !inSludge)
-            { 
-                if(photonView.IsMine)
-                {
-                    slowedTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    slowedTimer -= (float)PhotonNetwork.Time - eventTimeStamp;
-                }
+            {
+                slowedTimer -= Time.deltaTime;
             }
             else if (slowedTimer <= 0 && isSlowEventCalled)
             {
@@ -107,6 +99,8 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             }
         }
 
+
+        // Stun debuff
         if (isStunned)
         {
             // Blink sprite
@@ -178,9 +172,9 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         playerMovement.canWallJump = originalcanWallJump;
 
         // Reset status effect checks
+        slowed = false;
         slowedTimer = 0;
         movementChanged = false;
-        slowed = false;
         isSlowEventCalled = false;
         canBlink = false;
         isStunned = false;
@@ -208,11 +202,11 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     private void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if(eventCode == slowCode || eventCode == stunCode)
+        // Continue if received the right codes otherwise return;
+        if (eventCode != slowCode && eventCode != stunCode)
         {
-            // Continue if received the right codes otherwise return;
+            return;
         }
-        else { return; }
 
         // Grab objects from array
         object[] tempObjects = (object[])photonEvent.CustomData;
@@ -224,7 +218,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
         // Calculcate time difference between the time received and current server time 
 
-        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= (slowedTimer))
+        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= 5)
         {
             // Enable or disable effect
             if (activate)
@@ -237,7 +231,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             }
         }
 
-        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= (stunTimer))
+        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= 5)
         {
             // Enable or disable effect
             if (activate)
@@ -248,7 +242,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             {
                 StopBlinking();
                 ResetStats();
-                Invoke("ResetStats", 0.5f);
+                //Invoke("ResetStats", 0.5f);
             }
         }
     }
