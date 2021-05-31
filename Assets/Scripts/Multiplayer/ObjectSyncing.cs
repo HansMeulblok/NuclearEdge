@@ -10,7 +10,12 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
     private Rigidbody2D objectRB;
 
     private Vector2 networkPosition;
+    private Vector2 deltaPosition;
+
     private float networkRotation;
+    private float lastTime;
+    private float deltaTime;
+    private float timer;
 
     [SerializeField]
     float rotationSmoothness = 100f;
@@ -50,10 +55,18 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
 
             if (syncPosition)
             {
-                objectRB.position = (Vector2)stream.ReceiveNext();
-                //networkPosition = (Vector2)stream.ReceiveNext();
-                //Vector2 temp = networkPosition;
-                //objectRB.velocity = (Vector2)stream.ReceiveNext();
+                timer = 0;
+
+                Vector2 oldPosition = objectRB.position;
+                networkPosition = (Vector2)stream.ReceiveNext();
+
+                deltaPosition = networkPosition - oldPosition;
+                deltaTime = Time.time - lastTime;
+                lastTime = Time.time;
+
+
+                // Vector2 temp = networkPosition;
+                // objectRB.velocity = (Vector2)stream.ReceiveNext();
                 //networkPosition += objectRB.velocity * lag;
 
                 // print("Network object position: " + temp + " with velocity and lag: " + objectRB.velocity + "|" + lag + " results in: " + networkPosition);
@@ -70,7 +83,10 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
         {
             if (syncPosition)
             {
-                //objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
+                timer += Time.fixedDeltaTime;
+                float progress = timer / deltaTime;
+                objectRB.position = Vector2.Lerp(objectRB.position, objectRB.position + deltaPosition, progress);
+                
                 //float distance = Vector2.Distance(objectRB.position, networkPosition);
                 //if (distance >= delayDistance)
                 //{
