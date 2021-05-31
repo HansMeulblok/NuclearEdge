@@ -26,7 +26,7 @@ public class ObjectPooler : MonoBehaviourPun
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> poolDictioray;
 
-    public Vector2 startPosition = new Vector2(0,-30);
+    public Vector2 startPosition = new Vector2(0, -30);
 
     private void Start()
     {
@@ -72,6 +72,8 @@ public class ObjectPooler : MonoBehaviourPun
 
     public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     {
+        if (poolDictioray == null) { return null; }
+
         if (!poolDictioray.ContainsKey(tag))
         {
             Debug.LogWarning("Pool with " + tag + "tag doesn't exist.");
