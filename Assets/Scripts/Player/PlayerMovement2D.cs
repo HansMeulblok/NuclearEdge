@@ -337,6 +337,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 moveSpeed.y = jumpStrenght;
 
                 //play one shot in FMOD of jump sound
+
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
             }
             // When you cling onto a wall do a walljump
@@ -348,6 +349,8 @@ public class PlayerMovement2D : MonoBehaviourPun
                 wallJumpBufferL = wallJumpBuffer;
                 onLeftWallCling = 0;
                 onRightWallCling = 0;
+
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
             }
             // When you cling onto a wall do a walljump
             if (onRightWallCling > 0 && canWallJump)
@@ -358,6 +361,8 @@ public class PlayerMovement2D : MonoBehaviourPun
                 wallJumpBufferR = wallJumpBuffer;
                 onRightWallCling = 0;
                 onLeftWallCling = 0;
+
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
             }
         }
 
