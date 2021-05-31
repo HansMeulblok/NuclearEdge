@@ -2,7 +2,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine;
-using System;
 
 public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 {
@@ -23,9 +22,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     [Header("Player Globals")]
     public bool inSludge;
     public bool movementChanged;
-    public bool isDead;
     public bool isStunned;
-    public bool leveltesting = false;
     public Vector2 respawnPosition;
 
     [Header("Stun Modifiers")]
@@ -34,31 +31,33 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     public float blinkInterval;
     public float stunDuration;
 
-    float stunTimer;
+    // If the current server time - the event time that was received is greater than maxSyncTime, some methods need not be activated.
+    [Header("Sync")]
+    public float maxSyncTime = 4;
 
-    Rigidbody2D rb;
+    float stunTimer;
 
     PlayerMovement2D playerMovement;
     SpriteRenderer statusVisual, playerSprite;
+    Color playerColor;
     float originalMaxSpeed;
     float originalJumpStrength;
     float eventTimeStamp;
     bool originalcanWallJump;
     bool canBlink = false;
     bool isInvincible = false;
-    bool isSlowed = false;
-    Color playerColor;
+    bool isSlowEventCalled = false;
+    
 
+    // Byte codes
     private const int slowCode = 8;
     private const int stunCode = 9;
 
     private void Start()
     {
-        // Disable script if player is not the local player.
-        //if (photonView != null && !photonView.IsMine) { enabled = false; }
+        // Get colours a little later because of load time
+        Invoke("GetColours", 2f);
 
-        Invoke("GetColours", 1.5f);
-        rb = gameObject.GetComponent<Rigidbody2D>();
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
         statusVisual = GetComponentsInChildren<SpriteRenderer>()[1];
         playerSprite = GetComponent<SpriteRenderer>();
@@ -66,69 +65,46 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         originalMaxSpeed = playerMovement.maxSpeed;
         originalJumpStrength = playerMovement.jumpStrenght;
         originalcanWallJump = playerMovement.canWallJump;
-
-        // For testing purposes only, this should be changed to the starting location of the level
-        respawnPosition = transform.position;
-
-       
     }
 
     private void Update()
     {
-        // Temp debug code to kill the player
-        if (Input.GetKeyDown(KeyCode.R) && leveltesting)
-        {
-            isDead = true;
-        }
-
-        if (isDead && leveltesting)
-        {
-            ResetPlayer();
-        }
-        else
-        {
-            //permanent death
-            // Destroy(this.gameObject);
-        }
-
         // Slow debuff
         if (slowed)
         {
-            // raise event
-            if (!isSlowed)
+            // Raise event
+            if (!isSlowEventCalled)
             {
                 RaiseEvent(photonView.ViewID, slowCode, true);
-                isSlowed = true;
+                isSlowEventCalled = true;
             }
+            // Turn on effect locally
             statusVisual.enabled = true;
 
+            // Apply slow modifiers
             if (!movementChanged)
             {
                 playerMovement.maxSpeed *= slowMovementModifier;
                 playerMovement.jumpStrenght *= slowJumpModifier;
                 playerMovement.canWallJump = false;
             }
-
             movementChanged = true;
 
+            // Check if your are the local player otherwise use the server time
             if (slowedTimer > 0 && !inSludge)
-            { 
-                if(photonView.IsMine)
-                {
-                    slowedTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    slowedTimer -= (float)PhotonNetwork.Time - eventTimeStamp;
-                }
-            }
-            else if (slowedTimer <= 0 && isSlowed)
             {
+                slowedTimer -= Time.deltaTime;
+            }
+            else if (slowedTimer <= 0 && isSlowEventCalled)
+            {
+                // Turn off effect for all players
                 RaiseEvent(photonView.ViewID, slowCode, false);
                 ResetStats();
             }
         }
 
+
+        // Stun debuff
         if (isStunned)
         {
             // Blink sprite
@@ -141,7 +117,8 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
                 playerMovement.KnockBack();
             }
 
-            // Slow player
+
+            // Apply slow modifiers
 
             if (!movementChanged)
             {
@@ -152,6 +129,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
             movementChanged = true;
 
+            // Start timer
             stunTimer += Time.deltaTime;
 
             if (stunTimer >= stunDuration)
@@ -160,54 +138,51 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
                 RaiseEvent(photonView.ViewID, stunCode, false);
                 StopBlinking();
                 ResetStats();
-                stunTimer = 0;
-                canBlink = false;
-                isStunned = false;
-                isInvincible = false;
+                stunTimer = 0;           
             }
         }
     }
 
     private void StartBlinking()
     {
+        // Repeat blinking effect
         InvokeRepeating("Blinking", 0, blinkInterval);
     }
 
     private void StopBlinking()
     {
+        // Stop blinking effect
         CancelInvoke("Blinking");
     }
 
     private void GetColours()
     {
+        // Get current player colour
         playerColor = GetComponent<SpriteRenderer>().color;
     }
-    private void ResetPlayer()
-    {
-        isDead = false;
 
-        // TODO: Reset all player debuffs
-        ResetStats();
-        rb.velocity = Vector3.zero;
-        transform.position = respawnPosition;
-    }
 
     private void ResetStats()
     {
         // Reset player visuals
         statusVisual.enabled = false;
         playerSprite.color = playerColor;
+        StopBlinking();
 
         // Reset player movement stats
+        playerSprite.color = playerColor;
         playerMovement.maxSpeed = originalMaxSpeed;
         playerMovement.jumpStrenght = originalJumpStrength;
         playerMovement.canWallJump = originalcanWallJump;
 
         // Reset status effect checks
+        slowed = false;
         slowedTimer = 0;
         movementChanged = false;
-        slowed = false;
-        isSlowed = false;
+        isSlowEventCalled = false;
+        canBlink = false;
+        isStunned = false;
+        isInvincible = false;
     }
 
     public override void OnEnable()
@@ -222,7 +197,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
     private void RaiseEvent(int id, int networkCode, bool isActivated)
     {
-        // raise event and give photon id, network byte and a timestamp from when it was send
+        // Raise event and give photon id, network byte and a timestamp from when it was send
         object[] content = new object[] { id, isActivated, (float)PhotonNetwork.Time};
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         PhotonNetwork.RaiseEvent((byte)networkCode, content, raiseEventOptions, SendOptions.SendReliable);
@@ -231,24 +206,25 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     private void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if(eventCode == slowCode || eventCode == stunCode)
+        // Continue if received the right codes otherwise return;
+        if (eventCode != slowCode && eventCode != stunCode)
         {
-            // continue if received the right codes otherwise return;
+            return;
         }
-        else { return; }
 
+        // Grab objects from array
         object[] tempObjects = (object[])photonEvent.CustomData;
         int photonId = (int)tempObjects[0];
         bool activate = (bool)tempObjects[1];
         eventTimeStamp = (float)tempObjects[2];
-        // grab objects from array
 
         float timeDif = (float)PhotonNetwork.Time - eventTimeStamp;
-        // calculcate time difference between the time received and current server time 
 
-        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= (slowedTimer))
+        // Calculcate time difference between the time received and current server time 
+
+        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= maxSyncTime)
         {
-            // enable or disable effect
+            // Enable or disable effect
             if (activate)
             {
                 statusVisual.enabled = true;
@@ -259,9 +235,9 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             }
         }
 
-        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= (stunTimer))
+        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= maxSyncTime)
         {
-            // enable or disable effect
+            // Enable or disable effect
             if (activate)
             {
                 StartBlinking();
@@ -276,6 +252,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
     private void Blinking()
     {
+        // Blink the player sprite between a tranparent colour and the original colour
         canBlink = !canBlink;
         if (canBlink)
         {
