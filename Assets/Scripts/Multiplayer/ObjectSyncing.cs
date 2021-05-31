@@ -20,7 +20,7 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
 
     [SerializeField]
     float rotationSmoothness = 100f;
-    float delayDistance = 5;
+    float delayDistance = 4;
 
     private void OnEnable()
     {
@@ -58,17 +58,18 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
             {
                 //timer = 0;
 
-                //Vector2 oldPosition = objectRB.position;
+                Vector2 oldPosition = objectRB.position;
                 //networkPosition = (Vector2)stream.ReceiveNext();
 
-                //deltaPosition = networkPosition - oldPosition;
+
                 //deltaTime = Time.time - lastTime;
                 //lastTime = Time.time;
 
                 Vector2 temp = networkPosition;
                 networkPosition = (Vector2)stream.ReceiveNext();
                 objectRB.velocity = (Vector2)stream.ReceiveNext();
-                networkPosition += objectRB.velocity * lag;
+                deltaPosition = networkPosition - oldPosition;
+                //networkPosition += objectRB.velocity * lag;
 
                 // print("Network object position: " + temp + " with velocity and lag: " + objectRB.velocity + "|" + lag + " results in: " + networkPosition);
             }
@@ -101,9 +102,14 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
                 }
                 else
                 {
-                    // objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
-
-                    objectRB.MovePosition(objectRB.position + networkPosition * Time.fixedDeltaTime);
+                    if (objectRB.isKinematic)
+                    {
+                        objectRB.MovePosition(objectRB.position + (deltaPosition * Time.fixedDeltaTime * lag));
+                    }
+                    else
+                    {
+                        objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
+                    }
                 }
             }
 
