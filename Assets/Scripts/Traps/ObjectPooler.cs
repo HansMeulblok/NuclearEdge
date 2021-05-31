@@ -26,11 +26,13 @@ public class ObjectPooler : MonoBehaviourPun
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> poolDictioray;
 
+    public Vector2 startPosition = new Vector2(0,-30);
+
     private void Start()
     {
         if (!PhotonNetwork.IsMasterClient)
         {
-            Invoke("CreatingPools", 1);
+            Invoke("CreatingPools", 2);
         }
         else
         {
@@ -52,14 +54,14 @@ public class ObjectPooler : MonoBehaviourPun
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    GameObject obj = PhotonNetwork.InstantiateRoomObject(pool.tag, new Vector3(-1000, -1000), Quaternion.identity);
-                    obj.SetActive(false);
+                    GameObject obj = PhotonNetwork.InstantiateRoomObject(pool.tag, startPosition, Quaternion.identity);
+                    //obj.SetActive(false);
                     objectPool.Enqueue(obj);
                 }
                 else if (!PhotonNetwork.IsMasterClient)
                 {
                     GameObject obj = PhotonView.Find(viewId).gameObject;
-                    obj.SetActive(false);
+                    //obj.SetActive(false);
                     objectPool.Enqueue(obj);
                     viewId++;
                 }

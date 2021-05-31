@@ -32,7 +32,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         print("Player connected to server.");
-
         if (!PhotonNetwork.InLobby) { PhotonNetwork.JoinLobby(); }
         PhotonNetwork.AutomaticallySyncScene = true;
     }
@@ -105,7 +104,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         print("Joined room successfully.");
         menuManager.CreateLobby(PhotonNetwork.CurrentRoom.Name);
-
         menuManager.startButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
@@ -168,7 +166,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        if(menuManager != null)
+        if (menuManager != null)
         {
             menuManager.startButton.SetActive(PhotonNetwork.IsMasterClient);
         }

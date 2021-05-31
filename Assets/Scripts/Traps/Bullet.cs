@@ -54,7 +54,10 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerStatusEffects>().isStunned = true;
+            if (collision.gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                collision.gameObject.GetComponent<PlayerStatusEffects>().isStunned = true;
+            }
         }
 
         DestoyBulletEvent();
