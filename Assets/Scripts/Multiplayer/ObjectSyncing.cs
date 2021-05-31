@@ -16,6 +16,7 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
     private float lastTime;
     private float deltaTime;
     private float timer;
+    private float lag;
 
     [SerializeField]
     float rotationSmoothness = 100f;
@@ -41,7 +42,7 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
             if (syncPosition)
             {
                 stream.SendNext(objectRB.position);
-                //stream.SendNext(objectRB.velocity);
+                stream.SendNext(objectRB.velocity);
 
                 // print("Object position: " + objectRB.position + " with velocity: " + objectRB.velocity);
             }
@@ -51,22 +52,22 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
         // Receives information of object to others
         else
         {
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
 
             if (syncPosition)
             {
-                timer = 0;
+                //timer = 0;
 
-                Vector2 oldPosition = objectRB.position;
-                networkPosition = (Vector2)stream.ReceiveNext();
+                //Vector2 oldPosition = objectRB.position;
+                //networkPosition = (Vector2)stream.ReceiveNext();
 
-                deltaPosition = networkPosition - oldPosition;
-                deltaTime = Time.time - lastTime;
-                lastTime = Time.time;
-
+                //deltaPosition = networkPosition - oldPosition;
+                //deltaTime = Time.time - lastTime;
+                //lastTime = Time.time;
 
                 // Vector2 temp = networkPosition;
-                // objectRB.velocity = (Vector2)stream.ReceiveNext();
+                networkPosition = (Vector2)stream.ReceiveNext();
+                objectRB.velocity = (Vector2)stream.ReceiveNext();
                 //networkPosition += objectRB.velocity * lag;
 
                 // print("Network object position: " + temp + " with velocity and lag: " + objectRB.velocity + "|" + lag + " results in: " + networkPosition);
@@ -83,16 +84,20 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
         {
             if (syncPosition)
             {
-                timer += Time.fixedDeltaTime;
-                float progress = timer / deltaTime;
-                objectRB.position = Vector2.Lerp(objectRB.position, objectRB.position + deltaPosition, progress);
-                
-                //float distance = Vector2.Distance(objectRB.position, networkPosition);
-                //if (distance >= delayDistance)
-                //{
-                //    print("Distance of " + gameObject.name + " (" + objectRB.position + "|" + networkPosition + ") greater than [" + distance + "]. Updating position...");
-                //    objectRB.position = networkPosition;
-                //}
+                //timer += Time.fixedDeltaTime;
+                //float progress = timer / deltaTime;
+                //objectRB.position = Vector2.Lerp(objectRB.position, objectRB.position + deltaPosition, progress);
+                float distance = Vector2.Distance(objectRB.position, networkPosition);
+
+                if (distance >= delayDistance)
+                {
+                    //print("Distance of " + gameObject.name + " (" + objectRB.position + "|" + networkPosition + ") greater than [" + distance + "]. Updating position...");
+                    objectRB.position = networkPosition;
+                }
+                else
+                {
+                    objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime * lag);
+                }
             }
 
             if (syncRotation) { objectRB.MoveRotation(networkRotation + Time.fixedDeltaTime * rotationSmoothness); }
