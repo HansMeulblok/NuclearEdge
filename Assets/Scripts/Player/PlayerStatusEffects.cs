@@ -55,7 +55,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        //get colours a little later because of load time
+        // Get colours a little later because of load time
         Invoke("GetColours", 2f);
 
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
@@ -129,7 +129,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
 
             movementChanged = true;
 
-            //start timer
+            // Start timer
             stunTimer += Time.deltaTime;
 
             if (stunTimer >= stunDuration)
@@ -246,7 +246,6 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             {
                 StopBlinking();
                 ResetStats();
-                //Invoke("ResetStats", 0.5f);
             }
         }
     }
