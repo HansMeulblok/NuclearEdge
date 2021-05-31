@@ -193,7 +193,7 @@ MonoBehaviour:
   downWallGravMult: 0.25
   clingDuration: 0.3
   maxDownSlideSpeed: 3
-  wallJumpBuffer: 0.31
+  wallJumpBuffer: 0.15
   canWallCling: 1
   canWallJump: 1
   colisionDistance: 0.02
@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf504b6ffdb8b64285a29b4a53d80db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameplate: {fileID: 5853044516670431184}
 --- !u!114 &8295133453132718494
 MonoBehaviour:
   m_ObjectHideFlags: 0

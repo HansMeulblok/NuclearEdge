@@ -8,6 +8,7 @@ using TMPro;
 
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
+    [SerializeField] private GameObject nameplate;
     private Rigidbody2D playerRB;
     private SpriteRenderer playerSprite;
     private MultiTargetCamera multiTargetCamera;
@@ -160,11 +161,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void SetNames()
     {
-        foreach (Transform player in multiTargetCamera.targets)
-        {
-            GameObject nameplate = player.transform.Find("Nameplate").gameObject;
-            nameplate.GetComponent<TextMeshPro>().text = player.gameObject.GetComponent<PhotonView>().Owner.NickName;
-        }
+        nameplate.GetComponent<TextMeshPro>().text = photonView.Owner.NickName;
     }
 }
 
