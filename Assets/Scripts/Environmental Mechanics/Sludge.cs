@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -22,14 +23,16 @@ public class Sludge : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             player = collision.gameObject;
-            playerStatusEffects = player.GetComponent<PlayerStatusEffects>();
+            if(player.GetComponent<PhotonView>().IsMine)
+            {
+                playerStatusEffects = player.GetComponent<PlayerStatusEffects>();
 
-            playerStatusEffects.slowed = true;
-            playerStatusEffects.inSludge = true;
-            playerStatusEffects.slowMovementModifier = slowMovementModifier;
-            playerStatusEffects.slowJumpModifier = slowJumpModifier;
-            playerStatusEffects.slowedTimer = duration;
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Traps/Sludge");
+                playerStatusEffects.slowed = true;
+                playerStatusEffects.inSludge = true;
+                playerStatusEffects.slowMovementModifier = slowMovementModifier;
+                playerStatusEffects.slowJumpModifier = slowJumpModifier;
+                playerStatusEffects.slowedTimer = duration;
+            }        
         }
     }
 

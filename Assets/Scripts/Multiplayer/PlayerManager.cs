@@ -4,9 +4,11 @@ using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Realtime;
+using TMPro;
 
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
+    [SerializeField] private GameObject nameplate;
     private Rigidbody2D playerRB;
     private SpriteRenderer playerSprite;
     private MultiTargetCamera multiTargetCamera;
@@ -26,6 +28,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         deadPlayers = new List<string>();
 
+        Invoke("SetNames", 1f);
         Invoke("ChangePlayersColor", 1f);
     }
 
@@ -67,9 +70,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         // Add player name to list of dead player for server
         if (isRendered && !playerSprite.isVisible && photonView.IsMine)
         {
-            if (!deadPlayers.Contains(PhotonNetwork.NickName)) { deadPlayers.Add(PhotonNetwork.NickName); }
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
+            KillPlayer(PhotonNetwork.NickName);
         }
+    }
+
+    public void KillPlayer(string name)
+    {
+        if (!deadPlayers.Contains(name)) { deadPlayers.Add(name); }
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
     }
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
@@ -149,6 +157,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 break;
             }
         }
+    }
+
+    public void SetNames()
+    {
+        nameplate.GetComponent<TextMeshPro>().text = photonView.Owner.NickName;
     }
 }
 
