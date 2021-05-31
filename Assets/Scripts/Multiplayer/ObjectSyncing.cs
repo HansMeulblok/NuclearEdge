@@ -58,18 +58,17 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
             {
                 //timer = 0;
 
-                Vector2 oldPosition = objectRB.position;
+                //Vector2 oldPosition = objectRB.position;
                 //networkPosition = (Vector2)stream.ReceiveNext();
 
-
+                //deltaPosition = networkPosition - oldPosition;
                 //deltaTime = Time.time - lastTime;
                 //lastTime = Time.time;
 
                 Vector2 temp = networkPosition;
                 networkPosition = (Vector2)stream.ReceiveNext();
                 objectRB.velocity = (Vector2)stream.ReceiveNext();
-                deltaPosition = networkPosition - oldPosition;
-                //networkPosition += objectRB.velocity * lag;
+                networkPosition += objectRB.velocity * lag;
 
                 // print("Network object position: " + temp + " with velocity and lag: " + objectRB.velocity + "|" + lag + " results in: " + networkPosition);
             }
@@ -104,7 +103,7 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
                 {
                     if (objectRB.isKinematic)
                     {
-                        objectRB.MovePosition(objectRB.position + (deltaPosition * Time.fixedDeltaTime * lag));
+                        objectRB.MovePosition(networkPosition);
                     }
                     else
                     {
