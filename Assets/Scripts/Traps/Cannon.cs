@@ -110,15 +110,15 @@ public class Cannon : BaseActivator, IOnEventCallback
 
     public override void Activate()
     {
-        // Only master allowed to run Activate (owner of room objects) to prevent out of sync
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            ActivateShootEventToMaster();
-            return;
-        }
-
         if (coroutine == null)
         {
+            // Only master allowed to run Activate (owner of room objects) to prevent out of sync
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                ActivateShootEventToMaster();
+                return;
+            }
+
             activated = !activated;
 
             // Old code is ChangeAngles()
@@ -139,8 +139,10 @@ public class Cannon : BaseActivator, IOnEventCallback
         }
 
         StopCoroutine(coroutine);
-        coroutine = null;
+        // TODO: Insert cooldown visual
         yield return new WaitForSeconds(shootingInterval);
+        // TODO: Insert cooldown visual
+        coroutine = null;
     }
 
     private void Bullet() // Old void name was Fire
