@@ -116,7 +116,8 @@ public class Cannon : BaseActivator, IOnEventCallback
             ActivateShootEventToMaster();
             return;
         }
-        else
+
+        if (coroutine == null)
         {
             activated = !activated;
 
@@ -138,6 +139,7 @@ public class Cannon : BaseActivator, IOnEventCallback
         }
 
         StopCoroutine(coroutine);
+        coroutine = null;
         yield return new WaitForSeconds(shootingInterval);
     }
 
