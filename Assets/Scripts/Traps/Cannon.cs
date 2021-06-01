@@ -114,6 +114,7 @@ public class Cannon : BaseActivator, IOnEventCallback
         if (!PhotonNetwork.IsMasterClient)
         {
             ActivateShootEventToMaster();
+            return;
         }
         else
         {

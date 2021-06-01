@@ -60,7 +60,14 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
             }
         }
 
-        DestoyBulletEvent();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            DestoyBulletEvent();
+        }
+        else
+        {
+            Destroy();
+        }
     }
 
     // Variables that are set in the shooting method in the Cannon.
