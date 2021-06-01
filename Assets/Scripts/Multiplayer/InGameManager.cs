@@ -12,6 +12,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     private bool pauseMenuEnabled;
 
     private bool playedOnce = false;
+    private bool playerWon;
 
     private void Start()
     {
@@ -35,26 +36,35 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
             if (propertiesThatChanged["playerWon"].Equals(PhotonNetwork.NickName))
             {
+                playerWon = true;
                 resultText.text = "You Win!";
                 resultText.color = Color.green;
-                if (!playedOnce)
-                {
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Win");
-                    print("testWin");
-                    playedOnce = !playedOnce;
-                }
+                Invoke("Sound", 1f);
             }
             else
             {
+                playerWon = false;
                 resultText.text = "You Lose!";
                 resultText.color = Color.red;
-                if (!playedOnce)
-                {
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Lose");
-                    print("testLose");
-                    playedOnce = !playedOnce;
-                }
+                Invoke("Sound", 1f);
             }
+        }
+    }
+
+    private void Sound()
+    {
+        if (!playedOnce)
+        {
+            if (playerWon)
+            {
+
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Win");
+            }
+            else
+            {
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Lose");
+            }
+            playedOnce = !playedOnce;
         }
     }
 

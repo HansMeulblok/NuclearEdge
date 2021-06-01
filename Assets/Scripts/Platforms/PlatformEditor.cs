@@ -9,7 +9,7 @@ public class PlatformEditor : MonoBehaviour
     public bool editing = false;
 
     [Header("Size variables")]
-    [Range(1, 10)] public int platformLength;
+    [Range(1, 20)] public int platformLength;
     [Range(1, 10)] public int platformHeight;
     public SpriteRenderer spriteHolder;
     public new BoxCollider2D collider;
