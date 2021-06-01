@@ -55,13 +55,13 @@ public class ObjectPooler : MonoBehaviourPun
                 if (PhotonNetwork.IsMasterClient)
                 {
                     GameObject obj = PhotonNetwork.InstantiateRoomObject(pool.tag, startPosition, Quaternion.identity);
-                    //obj.SetActive(false);
+                    obj.SetActive(false);
                     objectPool.Enqueue(obj);
                 }
                 else if (!PhotonNetwork.IsMasterClient)
                 {
                     GameObject obj = PhotonView.Find(viewId).gameObject;
-                    //obj.SetActive(false);
+                    obj.SetActive(false);
                     objectPool.Enqueue(obj);
                     viewId++;
                 }
@@ -82,9 +82,9 @@ public class ObjectPooler : MonoBehaviourPun
 
         GameObject objectToSpawn = poolDictioray[tag].Dequeue();
 
-        objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
+        objectToSpawn.SetActive(true);
 
         poolDictioray[tag].Enqueue(objectToSpawn);
 
