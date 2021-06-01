@@ -22,7 +22,7 @@ public class Cannon : BaseActivator, IOnEventCallback
     [SerializeField] private float bulletLifeSpan = 2;
 
     public bool activated = true;
-    IEnumerator coroutine;
+    Coroutine coroutine;
 
     private const int cannonTriggerCode = 6;
     private const int cannonTriggerCodeToMaster = 10;
@@ -63,8 +63,7 @@ public class Cannon : BaseActivator, IOnEventCallback
 
         if (PhotonNetwork.IsMasterClient && activated)
         {
-            coroutine = Fire();
-            StartCoroutine(coroutine);
+            coroutine = StartCoroutine(Fire());
         }
     }
 
@@ -123,11 +122,7 @@ public class Cannon : BaseActivator, IOnEventCallback
             // Old code is ChangeAngles()
             if (activated)
             {
-                StartCoroutine(coroutine);
-            }
-            else
-            {
-                StopCoroutine(coroutine);
+                coroutine = StartCoroutine(Fire());
             }
         }
     }
@@ -140,6 +135,9 @@ public class Cannon : BaseActivator, IOnEventCallback
             ActivateShootEventToAll();
             yield return new WaitForSeconds(shootingInterval);
         }
+
+        StopCoroutine(coroutine);
+        yield return new WaitForSeconds(shootingInterval);
     }
 
     private void Bullet() // Old void name was Fire
