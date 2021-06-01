@@ -110,14 +110,14 @@ public class Cannon : BaseActivator, IOnEventCallback
 
     public override void Activate()
     {
-        activated = !activated;
-
         // Only master allowed to run Activate (owner of room objects) to prevent out of sync
         if (!PhotonNetwork.IsMasterClient)
         {
             ActivateShootEventToMaster();
             return;
         }
+
+        activated = !activated;
 
         // Old code is ChangeAngles()
         if (activated && coroutine == null)
