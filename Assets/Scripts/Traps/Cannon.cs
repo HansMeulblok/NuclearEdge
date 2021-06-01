@@ -113,15 +113,19 @@ public class Cannon : BaseActivator, IOnEventCallback
         // Only master allowed to run Activate (owner of room objects) to prevent out of sync
         if (!PhotonNetwork.IsMasterClient)
         {
+            print("Cliented trigger cannon");
             ActivateShootEventToMaster();
             return;
         }
 
         activated = !activated;
 
+        print("Master triggered activate to " + activated + ". Current coroutine is" + coroutine);
+
         // Old code is ChangeAngles()
         if (activated && coroutine == null)
         {
+            print("Started new coroutine!");
             coroutine = StartCoroutine(Fire());
         }
     }
@@ -141,6 +145,8 @@ public class Cannon : BaseActivator, IOnEventCallback
         // TODO: Insert cooldown visual
         coroutine = null;
         activated = false;
+
+        print("Coroutine [" + coroutine + "] stopped and is set to " + activated);
     }
 
     private void Bullet() // Old void name was Fire
