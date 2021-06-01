@@ -115,7 +115,7 @@ public class Cannon : BaseActivator, IOnEventCallback
         // Get bullet from the bulletPool, set the position to the fire point. set the firing direction, bulletLifespan and the bullet movepseed.
         Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
         GameObject bullet = ObjectPooler.Instance.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().SetBulletValues(bulDir, bulletMoveSpeed, bulletLifeSpan);
+        bullet?.GetComponent<Bullet>().SetBulletValues(bulDir, bulletMoveSpeed, bulletLifeSpan);
     }
     #endregion
 

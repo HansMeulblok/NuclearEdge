@@ -20,7 +20,7 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
 
     [SerializeField]
     float rotationSmoothness = 100f;
-    float delayDistance = 4;
+    float delayDistance = 5;
 
     private void OnEnable()
     {
@@ -92,27 +92,28 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
                 //objectRB.position = networkPosition;
                 //objectRB.position = Vector2.Lerp(objectRB.position, objectRB.position + deltaPosition, progress);
 
-                float distance = Vector2.Distance(objectRB.position, networkPosition);
-
-                if (distance >= delayDistance)
+                if (objectRB.isKinematic)
                 {
-                    //print("Distance of " + gameObject.name + " (" + objectRB.position + "|" + networkPosition + ") greater than [" + distance + "]. Updating position...");
-                    objectRB.position = networkPosition;
+                    objectRB.MovePosition(networkPosition);
                 }
                 else
                 {
-                    if (objectRB.isKinematic)
+                    float distance = Vector2.Distance(objectRB.position, networkPosition);
+
+                    if (distance >= delayDistance)
                     {
-                        objectRB.MovePosition(networkPosition);
+                        //print("Distance of " + gameObject.name + " (" + objectRB.position + "|" + networkPosition + ") greater than [" + distance + "]. Updating position...");
+                        objectRB.position = networkPosition;
                     }
                     else
                     {
                         objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
                     }
+
                 }
             }
-
-            if (syncRotation) { objectRB.MoveRotation(networkRotation + Time.fixedDeltaTime * rotationSmoothness); }
         }
+
+        if (syncRotation) { objectRB.MoveRotation(networkRotation + Time.fixedDeltaTime * rotationSmoothness); }
     }
 }

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4078651198949443754}
   - component: {fileID: 67980660962732785}
   - component: {fileID: 8295133453132718494}
-  - component: {fileID: 6711357675962623299}
+  - component: {fileID: 2852621296878833346}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -155,9 +155,9 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
-  - {fileID: 6711357675962623299}
+  - {fileID: 2852621296878833346}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   currentCP: 0
   nextCheckpoint: {fileID: 0}
   distanceToNextCP: 0
---- !u!114 &6711357675962623299
+--- !u!114 &2852621296878833346
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
