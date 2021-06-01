@@ -22,6 +22,7 @@ public class Cannon : BaseActivator, IOnEventCallback
     [SerializeField] private float bulletLifeSpan = 2;
 
     public bool activated = true;
+    IEnumerator coroutine;
 
     private const int cannonTriggerCode = 6;
     private const int cannonTriggerCodeToMaster = 10;
@@ -114,7 +115,7 @@ public class Cannon : BaseActivator, IOnEventCallback
         else
         {
             activated = !activated;
-            IEnumerator coroutine = Fire();
+            coroutine = Fire();
 
             // Old code is ChangeAngles()
             if (activated)
