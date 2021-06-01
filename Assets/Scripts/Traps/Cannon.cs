@@ -120,12 +120,10 @@ public class Cannon : BaseActivator, IOnEventCallback
         {
             activated = !activated;
 
-
             // Old code is ChangeAngles()
             if (activated)
             {
                 StartCoroutine(coroutine);
-
             }
             else
             {
@@ -137,10 +135,11 @@ public class Cannon : BaseActivator, IOnEventCallback
     #region Firing bullet
     private IEnumerator Fire()
     {
-
-        ActivateShootEventToAll();
-        yield return new WaitForSeconds(shootingInterval);
-        StartCoroutine(Fire());
+        while (activated)
+        {
+            ActivateShootEventToAll();
+            yield return new WaitForSeconds(shootingInterval);
+        }
     }
 
     private void Bullet() // Old void name was Fire
