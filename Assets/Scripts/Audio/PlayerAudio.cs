@@ -2,24 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using Photon.Pun;
 
-public class PlayerAudio : MonoBehaviour
+public class PlayerAudio : MonoBehaviourPun
 {
-    private StudioEventEmitter emitter;
-    private PlayerMovement2D pm;
+    [SerializeField]
+    StudioListener listener;
     private void Start()
     {
-        emitter = GetComponent<StudioEventEmitter>();
-        pm = GetComponent<PlayerMovement2D>();
-    }
-    private void FixedUpdate()
-    {
-        //if (pm.upPressed)
-        //{
-        //    if (pm.grounded)
-        //    {
-        //        emitter.Play();
-        //    }
-        //}
+        if (photonView != null && !photonView.IsMine) { listener.enabled = false; }
     }
 }
