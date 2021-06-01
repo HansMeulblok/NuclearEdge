@@ -61,7 +61,11 @@ public class Cannon : BaseActivator, IOnEventCallback
     {
         // AmountOfAngles();
 
-        if (PhotonNetwork.IsMasterClient && activated) { StartCoroutine(Fire()); }
+        if (PhotonNetwork.IsMasterClient && activated)
+        {
+            coroutine = Fire();
+            StartCoroutine(coroutine);
+        }
     }
 
     private void ActivateShootEventToAll()
@@ -115,12 +119,13 @@ public class Cannon : BaseActivator, IOnEventCallback
         else
         {
             activated = !activated;
-            coroutine = Fire();
+
 
             // Old code is ChangeAngles()
             if (activated)
             {
                 StartCoroutine(coroutine);
+
             }
             else
             {
