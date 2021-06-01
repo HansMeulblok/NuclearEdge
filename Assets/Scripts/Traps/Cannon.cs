@@ -24,6 +24,7 @@ public class Cannon : BaseActivator, IOnEventCallback
     public bool activated = true;
 
     private const int cannonTriggerCode = 6;
+    private const int cannonTriggerCodeToMaster = 7;
 
     #region Old angle variables
     /*
@@ -62,16 +63,24 @@ public class Cannon : BaseActivator, IOnEventCallback
         if (PhotonNetwork.IsMasterClient && activated) { StartCoroutine(Fire()); }
     }
 
-    private void ActivateShootEvent()
+    private void ActivateShootEventToAll()
     {
         object[] content = new object[] { gameObject.name }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(cannonTriggerCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
+    private void ActivateShootEventToMaster()
+    {
+        object[] content = new object[] { gameObject.name }; ;
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+        PhotonNetwork.RaiseEvent(cannonTriggerCodeToMaster, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
+       
         if (eventCode == cannonTriggerCode)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
@@ -82,30 +91,46 @@ public class Cannon : BaseActivator, IOnEventCallback
                 Bullet();
             }
         }
+
+        if (eventCode == cannonTriggerCodeToMaster)
+        {
+            object[] tempObject = (object[])photonEvent.CustomData;
+            string objectName = (string)tempObject[0];
+
+            if (objectName == gameObject.name)
+            {
+                Activate();
+            }
+        }
     }
 
     public override void Activate()
     {
         // Only master allowed to run Activate (owner of room objects) to prevent out of sync
-        if (!PhotonNetwork.IsMasterClient) { return; }
-
-        activated = !activated;
-
-        // Old code is ChangeAngles()
-        if (activated)
+        if (!PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(Fire());
+            ActivateShootEventToMaster();
         }
         else
         {
-            StopCoroutine(Fire());
+            activated = !activated;
+
+            // Old code is ChangeAngles()
+            if (activated)
+            {
+                StartCoroutine(Fire());
+            }
+            else
+            {
+                StopCoroutine(Fire());
+            }
         }
     }
 
     #region Firing bullet
     private IEnumerator Fire()
     {
-        ActivateShootEvent();
+        ActivateShootEventToAll();
         yield return new WaitForSeconds(shootingInterval);
         StartCoroutine(Fire());
     }
