@@ -24,7 +24,7 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
     {
         for (int i = 0; i < activators.Length; i++)
         {
-            if(activators[i].gameObject.tag == "MasterControlled")
+            if(PhotonNetwork.IsMasterClient && activators[i].gameObject.CompareTag("MasterControlled"))
             {
                 activators[i].Activate();
             }
