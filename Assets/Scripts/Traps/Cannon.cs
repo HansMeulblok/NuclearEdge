@@ -24,7 +24,7 @@ public class Cannon : BaseActivator, IOnEventCallback
     public bool activated = true;
 
     private const int cannonTriggerCode = 6;
-    private const int cannonTriggerCodeToMaster = 7;
+    private const int cannonTriggerCodeToMaster = 10;
 
     #region Old angle variables
     /*
@@ -80,7 +80,7 @@ public class Cannon : BaseActivator, IOnEventCallback
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-       
+
         if (eventCode == cannonTriggerCode)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
@@ -130,6 +130,8 @@ public class Cannon : BaseActivator, IOnEventCallback
     #region Firing bullet
     private IEnumerator Fire()
     {
+        if (!activated) { yield break; }
+
         ActivateShootEventToAll();
         yield return new WaitForSeconds(shootingInterval);
         StartCoroutine(Fire());
