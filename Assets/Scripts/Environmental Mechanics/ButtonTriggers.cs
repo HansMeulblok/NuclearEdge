@@ -14,17 +14,22 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
     {
         if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
         {
-            //photonView.RPC("ActivateTraps", RpcTarget.All);
             TriggerTrapsEvent();
         }
     }
 
-    //[PunRPC]
     private void ActivateTraps()
     {
         for (int i = 0; i < activators.Length; i++)
         {
-            activators[i].Activate();
+            if (PhotonNetwork.IsMasterClient && activators[i].gameObject.CompareTag("MasterControlled"))
+            {
+                activators[i].Activate();
+            }
+            else
+            {
+                activators[i].Activate();
+            }
         }
     }
 
@@ -51,9 +56,9 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
         if (eventCode == TriggerTraps)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
-            string trapName = (string)tempObject[0];
+            string triggerName = (string)tempObject[0];
 
-            if (trapName == gameObject.name)
+            if (triggerName == gameObject.name)
             {
                 ActivateTraps();
             }

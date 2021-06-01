@@ -103,21 +103,13 @@ public class Cannon : BaseActivator, IOnEventCallback
 
             if (objectName == gameObject.name)
             {
-                Activate();
+                //activated = true;
             }
         }
     }
 
     public override void Activate()
     {
-        // Only master allowed to run Activate (owner of room objects) to prevent out of sync
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            print("Cliented trigger cannon");
-            ActivateShootEventToMaster();
-            return;
-        }
-
         activated = !activated;
 
         print("Master triggered activate to " + activated + ". Current coroutine is" + coroutine);
