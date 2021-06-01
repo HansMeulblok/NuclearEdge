@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4078651198949443754}
   - component: {fileID: 67980660962732785}
   - component: {fileID: 8295133453132718494}
+  - component: {fileID: 9057667244667645547}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -271,6 +272,20 @@ MonoBehaviour:
   currentCP: 0
   nextCheckpoint: {fileID: 0}
   distanceToNextCP: 0
+--- !u!114 &9057667244667645547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081606822016883215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+  ListenerNumber: -1
 --- !u!1 &5751272802070745618
 GameObject:
   m_ObjectHideFlags: 0

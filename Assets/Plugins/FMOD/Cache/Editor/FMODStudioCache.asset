@@ -929,7 +929,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 637581451814905822
+  lastModified: 637581460669708580
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1128,7 +1128,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 3744
+  Length: 1272
 --- !u!114 &-1493459763504412804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1317,11 +1317,11 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637581451814385028
+  lastModified: 637581460669286978
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1482
+    Value: 1486
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -1345,7 +1345,6 @@ MonoBehaviour:
   - {fileID: -8022493922716680082}
   - {fileID: 7506926249496017369}
   - {fileID: 5791673393350028217}
-  - {fileID: 2101334919804914683}
   - {fileID: 2548417924760307425}
   - {fileID: 4405526394713031852}
   - {fileID: 3779714644400669221}
@@ -1354,12 +1353,13 @@ MonoBehaviour:
   - {fileID: 1102706969740769875}
   - {fileID: -1924165136543300299}
   - {fileID: -1641293606595004249}
+  - {fileID: 9105479563523969189}
   EditorParameters: []
   MasterBanks:
   - {fileID: 4585980992117191327}
   StringsBanks:
   - {fileID: -26859695161277634}
-  stringsBankWriteTime: 637581451814385028
+  stringsBankWriteTime: 637581460669286978
   cacheVersion: 6
 --- !u!114 &4976423215005704
 MonoBehaviour:
@@ -1712,8 +1712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/SFX/Traps/Cannon
   guid: 54116198e62d3e498a1a43d3fac0b87d
-  Banks:
-  - {fileID: -2481207471979351580}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -2143,7 +2142,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637581451814370145
+  lastModified: 637581460669267140
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -2641,6 +2640,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &9105479563523969189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Traps/CannonFire
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Traps/CannonFire
+  guid: 60cf7deb23804049ada6f99aa9b53c81
+  Banks:
+  - {fileID: -2481207471979351580}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 731
 --- !u!114 &9156642587897549045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2656,7 +2678,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/MUSIC.bank
   Name: MUSIC
   StudioPath: bank:/MUSIC
-  lastModified: 637581451814613186
+  lastModified: 637581460669465538
   LoadResult: 0
   FileSizes: []
   Exists: 1
