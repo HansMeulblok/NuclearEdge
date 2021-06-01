@@ -28,7 +28,8 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
             {
                 activators[i].Activate();
             }
-            else
+            
+            if(!activators[i].gameObject.CompareTag("MasterControlled"))
             {
                 activators[i].Activate();
             }
