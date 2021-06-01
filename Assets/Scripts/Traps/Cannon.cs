@@ -114,15 +114,16 @@ public class Cannon : BaseActivator, IOnEventCallback
         else
         {
             activated = !activated;
+            IEnumerator coroutine = Fire();
 
             // Old code is ChangeAngles()
             if (activated)
             {
-                StartCoroutine(Fire());
+                StartCoroutine(coroutine);
             }
             else
             {
-                StopCoroutine(Fire());
+                StopCoroutine(coroutine);
             }
         }
     }
@@ -130,7 +131,6 @@ public class Cannon : BaseActivator, IOnEventCallback
     #region Firing bullet
     private IEnumerator Fire()
     {
-        if (!activated) { yield break; }
 
         ActivateShootEventToAll();
         yield return new WaitForSeconds(shootingInterval);
