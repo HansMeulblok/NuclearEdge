@@ -7,15 +7,12 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
 {
     private Vector2 moveDirection;
     private float moveSpeed;
-    private float bulletLifeSpan;
 
     private const int bulletDestroyCode = 7;
 
     private void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
-
-        if (PhotonNetwork.IsMasterClient) { Invoke("DestoyBulletEvent", bulletLifeSpan); }
     }
 
     private void OnDisable()
@@ -33,14 +30,15 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
 
             if (objectViewID == photonView.ViewID)
             {
+                print("Destroying bullet with id [" + objectViewID + "]");
                 Destroy();
             }
         }
     }
 
-    private void DestoyBulletEvent()
+    private void DestoyBulletEvent(int objectViewID)
     {
-        object[] content = new object[] { photonView.ViewID }; ;
+        object[] content = new object[] { objectViewID }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(bulletDestroyCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -62,24 +60,24 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
 
         if (PhotonNetwork.IsMasterClient)
         {
-            DestoyBulletEvent();
+            DestoyBulletEvent(photonView.ViewID);
+            print("Sending event to destroy bullet with id [" + photonView.ViewID + "]");
         }
-        else
-        {
-            Destroy();
-        }
+
+        Destroy();
     }
 
     // Variables that are set in the shooting method in the Cannon.
-    public void SetBulletValues(Vector2 dir, float speed, float lifeSpan)
+    public void SetBulletProperties(Vector2 dir, float speed, float lifeSpan)
     {
         moveDirection = dir;
         moveSpeed = speed;
-        bulletLifeSpan = lifeSpan;
+
+        //if (PhotonNetwork.IsMasterClient) { Invoke("DestoyBulletEvent", lifeSpan); }
     }
 
     private void Destroy()
     {
-        gameObject.SetActive(false);
+       gameObject.SetActive(false);
     }
 }

@@ -25,7 +25,6 @@ public class Cannon : BaseActivator, IOnEventCallback
     Coroutine coroutine;
 
     private const int cannonTriggerCode = 6;
-    private const int cannonTriggerCodeToMaster = 10;
 
     #region Old angle variables
     /*
@@ -60,25 +59,13 @@ public class Cannon : BaseActivator, IOnEventCallback
     private void Start()
     {
         // AmountOfAngles();
-
-        if (PhotonNetwork.IsMasterClient && activated)
-        {
-            coroutine = StartCoroutine(Fire());
-        }
     }
 
     private void ActivateShootEventToAll()
     {
         object[] content = new object[] { gameObject.name }; ;
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         PhotonNetwork.RaiseEvent(cannonTriggerCode, content, raiseEventOptions, SendOptions.SendReliable);
-    }
-
-    private void ActivateShootEventToMaster()
-    {
-        object[] content = new object[] { gameObject.name }; ;
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-        PhotonNetwork.RaiseEvent(cannonTriggerCodeToMaster, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     public void OnEvent(EventData photonEvent)
@@ -95,50 +82,39 @@ public class Cannon : BaseActivator, IOnEventCallback
                 Bullet();
             }
         }
-
-        if (eventCode == cannonTriggerCodeToMaster)
-        {
-            object[] tempObject = (object[])photonEvent.CustomData;
-            string objectName = (string)tempObject[0];
-
-            if (objectName == gameObject.name)
-            {
-                //activated = true;
-            }
-        }
     }
 
     public override void Activate()
     {
-        activated = !activated;
-
-        print("Master triggered activate to " + activated + ". Current coroutine is" + coroutine);
-
-        // Old code is ChangeAngles()
-        if (activated && coroutine == null)
+        if (PhotonNetwork.IsMasterClient)
         {
-            print("Started new coroutine!");
-            coroutine = StartCoroutine(Fire());
+            activated = !activated;
+
+            // Old code is ChangeAngles()
+            if (activated && coroutine == null)
+            {
+                coroutine = StartCoroutine(Fire());
+            }
         }
     }
 
     #region Firing bullet
     private IEnumerator Fire()
     {
+        yield return new WaitUntil(() => MultiTargetCamera.createdPlayerList == true);
+       
         while (activated)
         {
             ActivateShootEventToAll();
+            Bullet();
             yield return new WaitForSeconds(shootingInterval);
         }
 
-        StopCoroutine(coroutine);
-        // TODO: Insert cooldown visual
+        // TODO: Insert cooldown visual 
         yield return new WaitForSeconds(shootingInterval);
-        // TODO: Insert cooldown visual
+        // TODO: Insert cooldown visual of being ready
         coroutine = null;
         activated = false;
-
-        print("Coroutine [" + coroutine + "] stopped and is set to " + activated);
     }
 
     private void Bullet() // Old void name was Fire
@@ -146,7 +122,8 @@ public class Cannon : BaseActivator, IOnEventCallback
         // Get bullet from the bulletPool, set the position to the fire point. set the firing direction, bulletLifespan and the bullet movepseed.
         Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
         GameObject bullet = ObjectPooler.Instance.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
-        bullet?.GetComponent<Bullet>().SetBulletValues(bulDir, bulletMoveSpeed, bulletLifeSpan);
+        bullet?.GetComponent<Bullet>().SetBulletProperties(bulDir, bulletMoveSpeed, bulletLifeSpan);
+        print("Creating bullet with id [" + bullet?.GetComponent<PhotonView>().ViewID + "]");
     }
     #endregion
 

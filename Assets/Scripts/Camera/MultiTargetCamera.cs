@@ -4,12 +4,14 @@ using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Camera))]
 public class MultiTargetCamera : MonoBehaviourPunCallbacks
 {
     [Header("Targets")]
     public List<Transform> targets = new List<Transform>();
+    public List<PhotonView> pvPlayers = new List<PhotonView>();
     public Transform firstPlayer;
 
     [Header("Camera movement settings")]
@@ -23,6 +25,9 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     public float maxZoom = 10f;
     public float zoomLimit = 10;
     public float getPlayerBuffer = 0.5f;
+
+    public static bool allPlayersCreated;
+    public static bool createdPlayerList;
 
     private Vector3 velocity;
     private Vector3 middlePoint;
@@ -41,10 +46,20 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     Vector3 firstPlayerOffset;
 
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
 
     private void Start()
     {
-
         Screen.SetResolution(1920, 1080, true, 60);
         playerProgressList[0] = player1;
         playerProgressList[1] = player2;
@@ -54,13 +69,22 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         camera = GetComponent<Camera>();
         camera.orthographic = true;
 
-        // TODO: wait for players in loading screen and get them after they are loaded in instead of invoking this there
-        Invoke("GetPlayers", getPlayerBuffer);
+        allPlayersCreated = createdPlayerList = false;
+        StartCoroutine(GetPlayers());
     }
 
     private void LateUpdate()
     {
-        if (targets.Count <= 0 || targets[0] == null) { return; }
+        if (targets.Count <= 0 || targets[0] == null || !allPlayersCreated)
+        {
+            /*
+             * TODO: Add loading screen
+             * Needs to be a seperate if statement with only allPlayerLoaded in it for loading screen
+             */
+
+            return;
+        }
+
         CameraMove();
         CameraZoom();
     }
@@ -126,35 +150,70 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         return bounds.center;
     }
 
-    void GetPlayers()
+    public IEnumerator GetPlayers()
     {
         // Finds all players in scene and adds them to the target list
+        yield return new WaitUntil(() => allPlayersCreated == true);
+
         targets.Clear();
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        pvPlayers.Clear();
+
+        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
 
         foreach (GameObject player in players)
         {
             targets.Add(player.transform);
+            pvPlayers.Add(player.GetComponent<PhotonView>());
+        }
+
+        createdPlayerList = true;
+    }
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        // Disable player if found in list of players
+        if (propertiesThatChanged["DeadPlayers"] != null && createdPlayerList)
+        {
+            List<int> deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
+                     
+            foreach (Transform target in targets.ToList())
+            {
+                int viewID = target.GetComponent<PhotonView>().ViewID;
+                if (deadPlayers.Contains(viewID))
+                {
+                    targets.Remove(target);
+                    target.gameObject.SetActive(false);
+                }
+            }
+
+            if (targets.Count == 1)
+            {
+                if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
+                {
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "playerWon", targets[0].GetComponent<PhotonView>().Owner.UserId } });
+                }
+            }
+        };
+    }
+
+    public void RemovePlayer(string userId)
+    {
+        foreach (PhotonView player in pvPlayers.ToList())
+        {
+            if (player.Owner.UserId == userId)
+            {
+                targets.Remove(player.gameObject.transform);
+                pvPlayers.Remove(player);
+            }
         }
     }
 
     // Updates players and camera when a player leaves
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        GetPlayers();
+        RemovePlayer(otherPlayer.UserId);
     }
 
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
-    }
-
-    public override void OnDisable()
-    {
-        base.OnDisable();
-        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
-    }
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
@@ -189,7 +248,6 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                     playerNames[i] = name;
                     break;
                 }
-
             }
         }
 
@@ -292,7 +350,6 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         PhotonNetwork.RaiseEvent(firstPlaceCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
-
     private void SetFirstPlace(EventData photonEvent)
     {
         object[] tempObjects = (object[])photonEvent.CustomData;
@@ -317,5 +374,4 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         playerNames[swapFirst] = playerNames[swapSecond];
         playerNames[swapSecond] = tempName;
     }
-
 }

@@ -2,7 +2,6 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviourPunCallbacks
 {
@@ -31,7 +30,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         {
             finishedMenu.SetActive(true);
 
-            if (propertiesThatChanged["playerWon"].Equals(PhotonNetwork.NickName))
+            if (propertiesThatChanged["playerWon"].Equals(PhotonNetwork.LocalPlayer.UserId))
             {
                 resultText.text = "You Win!";
                 resultText.color = Color.green;

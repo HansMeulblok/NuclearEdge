@@ -16,14 +16,18 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
 
     private void OnEnable()
     {
-        rb = GetComponent<Rigidbody2D>();
-        platformEditor = GetComponent<PlatformEditor>();
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
     }
 
     private void OnDisable()
     {
         PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        platformEditor = GetComponent<PlatformEditor>();
     }
 
     // Update is called once per frame

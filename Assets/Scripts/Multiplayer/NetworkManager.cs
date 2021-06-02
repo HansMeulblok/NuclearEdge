@@ -8,8 +8,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public MenuManager menuManager;
 
-    private string playerName;
-
     void Start()
     {
         DontDestroyOnLoad(this);

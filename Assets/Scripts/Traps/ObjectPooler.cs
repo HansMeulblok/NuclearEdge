@@ -1,8 +1,9 @@
 ﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooler : MonoBehaviourPun
+public class ObjectPooler : MonoBehaviourPunCallbacks
 {
     [System.Serializable]
     public class Pool
@@ -20,29 +21,28 @@ public class ObjectPooler : MonoBehaviourPun
     {
         Instance = this;
     }
-
     #endregion
+
+    public Vector2 startPosition = new Vector2(0, -30);
 
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> poolDictioray;
 
-    public Vector2 startPosition = new Vector2(0, -30);
+    private bool createdObjectPool = false;
 
     private void Start()
     {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            Invoke("CreatingPools", 2);
-        }
-        else
-        {
-            CreatingPools();
-        }
+        StartCoroutine(CreatingPools());
     }
 
     // Use this for initialization
-    void CreatingPools()
+    IEnumerator CreatingPools()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            yield return new WaitUntil(() => createdObjectPool == true);
+        }
+
         poolDictioray = new Dictionary<string, Queue<GameObject>>();
         int viewId = 1;
 
@@ -68,6 +68,14 @@ public class ObjectPooler : MonoBehaviourPun
             }
             poolDictioray.Add(pool.tag, objectPool);
         }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            createdObjectPool = true;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "MasterCreatedPool", createdObjectPool } });
+        }
+
+        yield break;
     }
 
     public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
@@ -89,5 +97,13 @@ public class ObjectPooler : MonoBehaviourPun
         poolDictioray[tag].Enqueue(objectToSpawn);
 
         return objectToSpawn;
+    }
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged["MasterCreatedPool"] != null)
+        {
+            createdObjectPool = (bool)propertiesThatChanged["MasterCreatedPool"];
+        }
     }
 }
