@@ -30,15 +30,14 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
 
             if (objectViewID == photonView.ViewID)
             {
-                print("Destroying bullet with id [" + objectViewID + "]");
                 Destroy();
             }
         }
     }
 
-    private void DestoyBulletEvent(int objectViewID)
+    private void DestoyBulletEvent()
     {
-        object[] content = new object[] { objectViewID }; ;
+        object[] content = new object[] { photonView.ViewID }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(bulletDestroyCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -58,12 +57,7 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
             }
         }
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            DestoyBulletEvent(photonView.ViewID);
-            print("Sending event to destroy bullet with id [" + photonView.ViewID + "]");
-        }
-
+        if (PhotonNetwork.IsMasterClient) { DestoyBulletEvent(); }
         Destroy();
     }
 
@@ -73,11 +67,11 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
         moveDirection = dir;
         moveSpeed = speed;
 
-        //if (PhotonNetwork.IsMasterClient) { Invoke("DestoyBulletEvent", lifeSpan); }
+        if (PhotonNetwork.IsMasterClient) { Invoke("DestoyBulletEvent", lifeSpan); }
     }
 
     private void Destroy()
     {
-       gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

@@ -11,7 +11,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void Start()
     {
         DontDestroyOnLoad(this);
+        ConnectToServer();
+    }
 
+    public void ConnectToServer()
+    {
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();

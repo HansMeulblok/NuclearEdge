@@ -2,7 +2,6 @@ using UnityEngine;
 using Photon.Pun;
 using System.Collections.Generic;
 using System.Linq;
-using Photon.Realtime;
 using System.Collections;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
@@ -16,7 +15,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        if (!photonView.IsMine) { enabled = false; }
+        if (!photonView.IsMine) { enabled = false; return; }
 
         playerSprite = GetComponent<SpriteRenderer>();
         multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
@@ -27,10 +26,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-
-            playersLoaded.Add(photonView.ViewID, true);
+            if (!playersLoaded.ContainsKey(photonView.ViewID)) { playersLoaded.Add(photonView.ViewID, true); }
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "PlayersLoaded", playersLoaded } });
-            print("Loaded as Master");
         }
         else
         {
@@ -58,20 +55,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // Disable player if found in list of players
         if (propertiesThatChanged["DeadPlayers"] != null)
         {
-            deadPlayers.Clear();
             deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
         };
 
         if (propertiesThatChanged["PlayersLoaded"] != null)
         {
-            playersLoaded.Clear();
             playersLoaded = (Dictionary<int, bool>)propertiesThatChanged["PlayersLoaded"];
-            
-            print("Players loaded: " + playersLoaded.Count + " | Player counter: " + PhotonNetwork.CurrentRoom.PlayerCount);
-           
+
             if (playersLoaded.Count >= PhotonNetwork.CurrentRoom.PlayerCount)
             {
-                print("All players loaded");
                 MultiTargetCamera.allPlayersCreated = true;
             }
         }
@@ -80,7 +72,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public IEnumerator CheckMasterLoaded()
     {
         yield return new WaitUntil(() => playersLoaded.Count >= 1);
-        print("Master loaded for client");
+
         if (!playersLoaded.ContainsKey(photonView.ViewID))
         {
             playersLoaded.Add(photonView.ViewID, true);
@@ -93,7 +85,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public IEnumerator ChangePlayersColor()
     {
         yield return new WaitUntil(() => MultiTargetCamera.createdPlayerList == true);
-        print("Changing colors...");
 
         int i = 0;
         Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };

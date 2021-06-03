@@ -171,11 +171,12 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
-        // Disable player if found in list of players
+
         if (propertiesThatChanged["DeadPlayers"] != null && createdPlayerList)
         {
             List<int> deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
-                     
+
+            // Disable player if found in list of players
             foreach (Transform target in targets.ToList())
             {
                 int viewID = target.GetComponent<PhotonView>().ViewID;
@@ -186,6 +187,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
+            // If one player is left, it wins
             if (targets.Count == 1)
             {
                 if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))

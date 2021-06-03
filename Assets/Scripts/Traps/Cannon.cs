@@ -46,19 +46,23 @@ public class Cannon : BaseActivator, IOnEventCallback
     */
     #endregion
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
     }
 
     private void Start()
     {
         // AmountOfAngles();
+
+        if (PhotonNetwork.IsMasterClient && activated) { coroutine = StartCoroutine(Fire()); }
     }
 
     private void ActivateShootEventToAll()
@@ -102,7 +106,7 @@ public class Cannon : BaseActivator, IOnEventCallback
     private IEnumerator Fire()
     {
         yield return new WaitUntil(() => MultiTargetCamera.createdPlayerList == true);
-       
+
         while (activated)
         {
             ActivateShootEventToAll();
@@ -110,9 +114,9 @@ public class Cannon : BaseActivator, IOnEventCallback
             yield return new WaitForSeconds(shootingInterval);
         }
 
-        // TODO: Insert cooldown visual 
+        // TODO: Insert visual that shows trigger on cooldown
         yield return new WaitForSeconds(shootingInterval);
-        // TODO: Insert cooldown visual of being ready
+        // TODO: Revert visual to normal
         coroutine = null;
         activated = false;
     }
@@ -123,9 +127,16 @@ public class Cannon : BaseActivator, IOnEventCallback
         Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
         GameObject bullet = ObjectPooler.Instance.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
         bullet?.GetComponent<Bullet>().SetBulletProperties(bulDir, bulletMoveSpeed, bulletLifeSpan);
-        print("Creating bullet with id [" + bullet?.GetComponent<PhotonView>().ViewID + "]");
     }
     #endregion
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Start();
+        }
+    }
 
     #region Old angeling code
     /*
