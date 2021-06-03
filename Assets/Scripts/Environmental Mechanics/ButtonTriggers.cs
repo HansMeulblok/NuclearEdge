@@ -22,6 +22,7 @@ public class ButtonTriggers : MonoBehaviour
             {
                 activators[i].Activate();
             }
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Trigger");
         }
     }
 
