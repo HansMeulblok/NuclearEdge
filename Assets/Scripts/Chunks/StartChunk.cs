@@ -28,7 +28,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!startTimer) { countdownText.text = ""; return; }
+        if (!startTimer) { return; }
         float countdownTimer = countdown - (float)(PhotonNetwork.Time - startTime);
 
         if (countdownTimer >= -1)
@@ -57,6 +57,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
         }
         else
         {
+            countdownText.text = "";
             startTimer = false;
         }
     }

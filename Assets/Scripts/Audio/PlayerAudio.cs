@@ -10,6 +10,6 @@ public class PlayerAudio : MonoBehaviourPun
     StudioListener listener;
     private void Start()
     {
-        if (photonView != null && !photonView.IsMine) { listener.enabled = false; }
+        if (!photonView.IsMine) { listener.enabled = false; }
     }
 }

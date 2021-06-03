@@ -138,7 +138,6 @@ public class Cannon : BaseActivator
         bullet.GetComponent<Bullet>().SetBulletLifeSpan(bulletLifeSpan);
         bullet.GetComponent<Bullet>().SetMoveSpeed(bulletMoveSpeed);
         bullet.GetComponent<Bullet>().PlaySound();
-
     }
     #endregion
 

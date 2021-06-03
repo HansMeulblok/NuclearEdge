@@ -87,12 +87,12 @@ public class PlayerMovement2D : MonoBehaviourPun
         // Disable script if player is not the local player.
         if (photonView != null && !photonView.IsMine) { enabled = false; }
 
-        //Get the rigidbody
+        // Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
-        //Get the player status effects script
+        // Get the player status effects script
         myPlayerManager = GetComponent<PlayerManager>();
 
-        //Reset movespeed on start
+        // Reset movespeed on start
         moveSpeed = Vector3.zero;
     }
 
@@ -105,13 +105,13 @@ public class PlayerMovement2D : MonoBehaviourPun
     // FixedUpdate is called at a fixed interval
     void FixedUpdate()
     {
-        //Check for colisions
+        // Check for colisions
         CheckColision();
-        //Change horizontal movement
+        // Change horizontal movement
         HorizontalMove();
-        //Change vertical movement
+        // Change vertical movement
         VerticalMove();
-        //Pressed should always be in effect one fixedUpdate after keydown
+        // Pressed should always be in effect one fixedUpdate after keydown
         ResetPressed();
 
     }
@@ -336,8 +336,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 jumpBuffer = 0;
                 moveSpeed.y = jumpStrenght;
 
-                //play one shot in FMOD of jump sound
-
+                // Play one shot in FMOD of jump sound
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
             }
             // When you cling onto a wall do a walljump

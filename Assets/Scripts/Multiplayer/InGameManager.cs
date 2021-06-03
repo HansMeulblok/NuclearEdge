@@ -2,7 +2,6 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviourPunCallbacks
 {
@@ -10,7 +9,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject finishedMenu;
     private bool pauseMenuEnabled;
-
     private bool playedOnce = false;
     private bool playerWon;
 
@@ -57,7 +55,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
         {
             if (playerWon)
             {
-
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Win");
             }
             else
