@@ -78,6 +78,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (!deadPlayers.Contains(name)) { deadPlayers.Add(name); }
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
+
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Death");
     }
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)

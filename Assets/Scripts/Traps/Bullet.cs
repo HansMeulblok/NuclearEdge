@@ -54,4 +54,9 @@ public class Bullet : MonoBehaviour
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.identity;
     }
+
+    public void PlaySound()
+    {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Traps/CannonFire", transform.position);
+    }
 }

@@ -115,6 +115,8 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
                 StartBlinking();
                 isInvincible = true;
                 playerMovement.KnockBack();
+
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Stunned");
             }
 
 

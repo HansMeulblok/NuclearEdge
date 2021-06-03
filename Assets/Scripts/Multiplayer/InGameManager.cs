@@ -2,7 +2,6 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviourPunCallbacks
 {
@@ -10,6 +9,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject finishedMenu;
     private bool pauseMenuEnabled;
+    private bool playedOnce = false;
+    private bool playerWon;
 
     private void Start()
     {
@@ -33,14 +34,34 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
             if (propertiesThatChanged["playerWon"].Equals(PhotonNetwork.NickName))
             {
+                playerWon = true;
                 resultText.text = "You Win!";
                 resultText.color = Color.green;
+                Invoke("Sound", 1f);
             }
             else
             {
+                playerWon = false;
                 resultText.text = "You Lose!";
                 resultText.color = Color.red;
+                Invoke("Sound", 1f);
             }
+        }
+    }
+
+    private void Sound()
+    {
+        if (!playedOnce)
+        {
+            if (playerWon)
+            {
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Win");
+            }
+            else
+            {
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Lose");
+            }
+            playedOnce = !playedOnce;
         }
     }
 
