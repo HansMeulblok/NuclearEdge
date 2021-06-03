@@ -123,7 +123,8 @@ public class LevelGenerator : MonoBehaviour
 
                 //Get the checkpoint manager of the newly spawned inbetween chunk
                 tempCPController2 = newInbetweenChunk.GetComponentInChildren<CheckpointController>();
-
+                //Start the controller via a function to keep things in order
+                tempCPController2.StartController();
                 //Update the next checkpoint for the chunk to be the inbetween chunk
                 tempCPController.UpdateNextCheckpoint(tempCPController2.GetFirstCP());
             }
