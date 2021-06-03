@@ -997,7 +997,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 637583228052059123
+  lastModified: 637583282679579070
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1385,11 +1385,11 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637583228051568084
+  lastModified: 637583282679047760
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1580
+    Value: 1626
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -1429,7 +1429,7 @@ MonoBehaviour:
   - {fileID: 4585980992117191327}
   StringsBanks:
   - {fileID: -26859695161277634}
-  stringsBankWriteTime: 637583228051568084
+  stringsBankWriteTime: 637583282679047760
   cacheVersion: 6
 --- !u!114 &4976423215005704
 MonoBehaviour:
@@ -2212,7 +2212,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637583228051553450
+  lastModified: 637583282679032868
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -2745,12 +2745,12 @@ MonoBehaviour:
   m_Name: event:/SFX/Traps/CannonFire
   m_EditorClassIdentifier: 
   Path: event:/SFX/Traps/CannonFire
-  guid: 60cf7deb23804049ada6f99aa9b53c81
+  guid: 3c8379b066a59e45bfba22f41af82cc2
   Banks:
   - {fileID: -2481207471979351580}
   IsStream: 0
   Is3D: 1
-  IsOneShot: 0
+  IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
@@ -2770,7 +2770,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/MUSIC.bank
   Name: MUSIC
   StudioPath: bank:/MUSIC
-  lastModified: 637583228051758640
+  lastModified: 637583282679286367
   LoadResult: 0
   FileSizes: []
   Exists: 1
