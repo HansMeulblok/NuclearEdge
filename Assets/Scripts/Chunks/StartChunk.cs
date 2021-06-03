@@ -9,13 +9,12 @@ public class StartChunk : MonoBehaviourPunCallbacks
     public TMP_Text countdownText;
     public float countdown = 5;
 
-
-    private bool activated;
     private bool startTimer = false;
+    private bool playedSound = false;
     private float startTime;
     private string tempCd = "";
 
-    private bool playedSound = false;
+
 
     private void Start()
     {
@@ -35,17 +34,20 @@ public class StartChunk : MonoBehaviourPunCallbacks
         if (countdownTimer >= -1)
         {
             countdownText.text = Mathf.Ceil(countdownTimer).ToString();
+            float countdownCeil = Mathf.Ceil(countdownTimer);
 
             if (countdownText.text != tempCd)
             {
-                if (countdownText.text != "0" && countdownText.text!= "GOOO!")
+                if (countdownText.text != "GOOO!" && countdownCeil > 0 && countdownCeil <= countdown)
                 {
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/CountDown");
-                } else if (countdownText.text == "0")
+                }
+                else if (countdownText.text == "0")
                 {
                     countdownText.text = "GOOO!";
                     if (!playedSound)
                     {
+                        startingLine.GetComponent<TriggerPlatform>().Activate();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/GO");
                         playedSound = !playedSound;
                     }
@@ -53,12 +55,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
                 tempCd = countdownText.text;
             }
         }
-        else if (!activated)
-        {
-            startingLine.GetComponent<TriggerPlatform>().Activate();
-            activated = true;
-        }
-        else if (countdownTimer >= -2)
+        else
         {
             startTimer = false;
         }
