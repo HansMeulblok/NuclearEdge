@@ -165,4 +165,9 @@ public class MenuManager : MonoBehaviourPunCallbacks
     {
         Application.Quit();
     }
+
+    public void PlayMenuSound()
+    {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/MenuNavigation");
+    }
 }

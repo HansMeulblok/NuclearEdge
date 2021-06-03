@@ -25,7 +25,7 @@ public class GravityManipulationActivation : BaseActivator
         timeActivatedCurrent = timeActivatedOriginal;
         if(isStatic)
         {
-            Activate();
+            //Activate();
         }
     }
 
@@ -78,6 +78,8 @@ public class GravityManipulationActivation : BaseActivator
         lerpValue = 0;
         isLerping = true;
         isStarted = true;
+
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Traps/GravityManipulator", transform.position);
     }
 
     //deactivates the GM activation

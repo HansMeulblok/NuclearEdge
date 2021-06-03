@@ -34,6 +34,8 @@ public class Laser : BaseActivator
 
     private float laserWidth;
 
+    private bool hasPlayed = false;
+
     public override void Activate()
     {
         //toggle laser on of on activate
@@ -62,6 +64,7 @@ public class Laser : BaseActivator
             timer += Time.deltaTime;
             if(timer < buildUpTime)
             {
+                hasPlayed = false;
                 //Visual feedback
                 buildUpFX.SetActive(true);
                 //lineRenderer.enabled = false;
@@ -91,6 +94,12 @@ public class Laser : BaseActivator
                 {
                     timer = 0;
                     durationTimer = 0;
+                }
+                //play sound when laser fires
+                if (!hasPlayed)
+                {
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Traps/Laser", transform.position);
+                    hasPlayed = !hasPlayed;
                 }
             }
         }
