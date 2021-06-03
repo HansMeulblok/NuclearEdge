@@ -74,4 +74,8 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
     {
         gameObject.SetActive(false);
     }
+    public void PlaySound()
+    {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Traps/CannonFire", transform.position);
+    }
 }

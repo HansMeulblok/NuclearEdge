@@ -129,6 +129,7 @@ public class Cannon : BaseActivator, IOnEventCallback
         Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
         GameObject bullet = ObjectPooler.Instance?.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
         bullet?.GetComponent<Bullet>().SetBulletProperties(bulDir, BULLET_SPEED, BULLET_LIFESPAN);
+        bullet.GetComponent<Bullet>().PlaySound();
     }
     #endregion
 
@@ -218,6 +219,7 @@ public class Cannon : BaseActivator, IOnEventCallback
         }
     }
     #endregion
+<<<<<<< HEAD
     */
     #endregion
 }

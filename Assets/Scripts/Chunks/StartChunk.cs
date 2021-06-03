@@ -3,16 +3,18 @@ using TMPro;
 using Photon.Pun;
 using ExitGames.Client.Photon;
 
-
 public class StartChunk : MonoBehaviourPunCallbacks
 {
     public GameObject startingLine;
     public TMP_Text countdownText;
     public float COUNTDOWN = 5;
 
-    private bool activated;
     private bool startTimer = false;
+    private bool playedSound = false;
     private float startTime;
+    private string tempCd = "";
+
+
 
     private void Start()
     {
@@ -29,18 +31,29 @@ public class StartChunk : MonoBehaviourPunCallbacks
         if (!startTimer) { return; }
         float countdownTimer = COUNTDOWN - (float)(PhotonNetwork.Time - startTime);
 
-        if (countdownTimer >= 0)
+        if (countdownTimer >= -1)
         {
             countdownText.text = Mathf.Ceil(countdownTimer).ToString();
-        }
-        else if (!activated)
-        {
-            startingLine.GetComponent<TriggerPlatform>().Activate();
-            activated = true;
-        }
-        else if (countdownTimer >= -1)
-        {
-            countdownText.text = "GOOO!";
+            float countdownCeil = Mathf.Ceil(countdownTimer);
+
+            if (countdownText.text != tempCd)
+            {
+                if (countdownText.text != "GOOO!" && countdownCeil > 0 && countdownCeil <= countdown)
+                {
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/CountDown");
+                }
+                else if (countdownText.text == "0")
+                {
+                    countdownText.text = "GOOO!";
+                    if (!playedSound)
+                    {
+                        startingLine.GetComponent<TriggerPlatform>().Activate();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/GO");
+                        playedSound = !playedSound;
+                    }
+                }
+                tempCd = countdownText.text;
+            }
         }
         else
         {
@@ -57,6 +70,5 @@ public class StartChunk : MonoBehaviourPunCallbacks
             startTimer = true;
         }
     }
-
 }
 

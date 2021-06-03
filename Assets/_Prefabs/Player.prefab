@@ -14,7 +14,10 @@ GameObject:
   - component: {fileID: 3081606822016883209}
   - component: {fileID: 3081606822016883214}
   - component: {fileID: 4078651198949443754}
+  - component: {fileID: 501673029901795301}
+  - component: {fileID: 4592117072935599856}
   - component: {fileID: 1562657374221246186}
+  - component: {fileID: 1695946721938516339}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -177,6 +180,21 @@ MonoBehaviour:
   sideMask:
     serializedVersion: 2
     m_Bits: 0
+  crushFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  crushHitboxMult: 0
 --- !u!114 &4078651198949443754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,14 +213,52 @@ MonoBehaviour:
   slowJumpModifier: 0
   inSludge: 0
   movementChanged: 0
-  isDead: 0
   isStunned: 0
-  leveltesting: 1
   respawnPosition: {x: 0, y: 0}
   stunMovementModifier: 0
   stunJumpModifier: 0
   blinkInterval: 0
   stunDuration: 0
+  maxSyncTime: 4
+--- !u!114 &501673029901795301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081606822016883215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 0
+--- !u!114 &4592117072935599856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081606822016883215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 501673029901795301}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &1562657374221246186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +274,20 @@ MonoBehaviour:
   currentCP: 0
   nextCheckpoint: {fileID: 0}
   distanceToNextCP: 0
+--- !u!114 &1695946721938516339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081606822016883215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+  ListenerNumber: -1
 --- !u!1 &5751272802070745618
 GameObject:
   m_ObjectHideFlags: 0

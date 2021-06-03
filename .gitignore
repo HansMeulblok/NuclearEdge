@@ -63,3 +63,5 @@ crashlytics-build.properties
 
 # Unity editor settings
 UserSettings/
+
+fmod_editor.log

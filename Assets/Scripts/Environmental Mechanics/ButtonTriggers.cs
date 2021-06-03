@@ -7,11 +7,21 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
 {
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
+    
+    [SerializeField] private float rotationSpeed;
+    private float scale = 1.25f;
+
+    private void Update()
+    {
+        transform.Rotate(new Vector3(0, 0, -1) * (Time.deltaTime * rotationSpeed));
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
         {
+            transform.localScale = new Vector3(scale, scale, 1);
             TriggerTrapsEvent();
         }
     }
@@ -35,7 +45,7 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
     {
         if (!PhotonNetwork.InRoom) { return; }
 
-        object[] content = new object[] { transform.position};
+        object[] content = new object[] { transform.position };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(EventCodes.TRIGGER_TRAPS, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -62,6 +72,13 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
             {
                 ActivateTraps();
             }
+
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Trigger");
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        transform.localScale = new Vector3(1, 1, 1);
     }
 }

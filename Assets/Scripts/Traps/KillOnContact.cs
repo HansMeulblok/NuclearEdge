@@ -16,12 +16,12 @@ public class KillOnContact : MonoBehaviour
 
     private void Update()
     {
-      //if you want to edit the platform enable editing.
+      // If you want to edit the platform enable editing.
         if (editing)
         {
             transform.localScale = new Vector3(platformLength, platformHeight, transform.localScale.z);
 
-            //update the collider
+            // Update the collider
             collider.enabled = false;
             collider.enabled = true;
         }
@@ -30,13 +30,14 @@ public class KillOnContact : MonoBehaviour
     //When something enters the trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //If it is the player
+        // If it is the player
         if (other.CompareTag("Player"))
         {
-            //Get the PlayerStatusEffects script from the player
+            // Get the PlayerStatusEffects script from the player
             pse = other.GetComponent<PlayerStatusEffects>();
-            //The player is dead
-            pse.isDead = true;
+            // The player is dead
+            // pse.isDead = true;
+            // We're not using this script anymore
         }
     }
 }

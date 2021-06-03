@@ -1,4 +1,6 @@
 using Photon.Pun;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement2D : MonoBehaviourPun
@@ -55,13 +57,24 @@ public class PlayerMovement2D : MonoBehaviourPun
     // Input
     bool upPressed;
     bool upHold;
-    bool leftPressed;
+    // Commented out to remove unused warning
+    //bool leftPressed;
     bool leftHold;
-    bool rightPressed;
+    // Commented out to remove unused warning
+    //bool rightPressed;
     bool rightHold;
 
     int countWallClingCollision;
     int countWallClingGrounded;
+
+    // Crushing variables
+    public ContactFilter2D crushFilter;
+    [Range(0.0f, 1.0f)]
+    public float crushHitboxMult;
+    int countCrushing;
+    Collider2D[] crushResults = new Collider2D[10];
+
+    PlayerManager myPlayerManager;
     Vector3 lastSpeed;
 
     // Global variables
@@ -76,6 +89,9 @@ public class PlayerMovement2D : MonoBehaviourPun
 
         // Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
+        // Get the player status effects script
+        myPlayerManager = GetComponent<PlayerManager>();
+
         // Reset movespeed on start
         moveSpeed = Vector3.zero;
     }
@@ -115,10 +131,12 @@ public class PlayerMovement2D : MonoBehaviourPun
         {
             upHold = false;
         }
+        /* Commented out to remove unused warning
         if (Input.GetKeyDown(KeyCode.A))
         {
             leftPressed = true;
         }
+        */
         if (Input.GetKey(KeyCode.A))
         {
             leftHold = true;
@@ -127,10 +145,12 @@ public class PlayerMovement2D : MonoBehaviourPun
         {
             leftHold = false;
         }
+        /* Commented out to remove unused warning
         if (Input.GetKeyDown(KeyCode.D))
         {
             rightPressed = true;
         }
+        */
         if (Input.GetKey(KeyCode.D))
         {
             rightHold = true;
@@ -146,8 +166,9 @@ public class PlayerMovement2D : MonoBehaviourPun
     void ResetPressed()
     {
         upPressed = false;
-        leftPressed = false;
-        rightPressed = false;
+        // Commented out to remove unused warning
+        //leftPressed = false;
+        //rightPressed = false;
     }
 
     // This function handles horizontal movement
@@ -314,6 +335,9 @@ public class PlayerMovement2D : MonoBehaviourPun
             {
                 jumpBuffer = 0;
                 moveSpeed.y = jumpStrenght;
+
+                // Play one shot in FMOD of jump sound
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
             }
             // When you cling onto a wall do a walljump
             if (onLeftWallCling > 0 && canWallJump)
@@ -324,6 +348,8 @@ public class PlayerMovement2D : MonoBehaviourPun
                 wallJumpBufferL = wallJumpBuffer;
                 onLeftWallCling = 0;
                 onRightWallCling = 0;
+
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
             }
             // When you cling onto a wall do a walljump
             if (onRightWallCling > 0 && canWallJump)
@@ -334,6 +360,8 @@ public class PlayerMovement2D : MonoBehaviourPun
                 wallJumpBufferR = wallJumpBuffer;
                 onRightWallCling = 0;
                 onLeftWallCling = 0;
+
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
             }
         }
 
@@ -430,28 +458,29 @@ public class PlayerMovement2D : MonoBehaviourPun
         }
         else
         {
-            if (rb.velocity.y < 0)
-            {
-                RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, colisionDistance);
-                Vector3 test = transform.position;
-                test.y += hit.distance;
-            }
-
             grounded = false;
         }
 
-        // Wall cling duration decrease
+        // Check if the player is getting crushed
+        CrushTest();
+
+        // If the player doesn't detect collision with the wall it's clinging on for more than 5 updates in a row, the player is no longer clinging to the wall
         if (onLeftWallCling > 0)
         {
+            // Check if there still is a wall to the left
             if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.left, colisionDistance, sideMask) && canWallCling)
             {
+                // Reset the counter
                 countWallClingCollision = 0;
             }
             else
             {
+                // Count the number of updates not detecting the wall
                 countWallClingCollision++;
+                // When the wall hasn't been detected for more than 5 frames
                 if (countWallClingCollision >= 5)
                 {
+                    // Disable wall cling
                     onLeftWallCling = 0;
                 }
             }
@@ -459,31 +488,40 @@ public class PlayerMovement2D : MonoBehaviourPun
         }
         if (onRightWallCling > 0)
         {
+            // Check if there still is a wall to the right
             if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.right, colisionDistance, sideMask) && canWallCling)
             {
+                // Reset the counter
                 countWallClingCollision = 0;
             }
             else
             {
+                // Count the number of updates not detecting the wall
                 countWallClingCollision++;
+                // When the wall hasn't been detected for more than 5 frames
                 if (countWallClingCollision >= 5)
                 {
+                    // Disable wall cling
                     onRightWallCling = 0;
                 }
             }
         }
 
-        // Wall cling detection if you are still on the wall
+        // When moving into the right wall or when against the right wall holding right start wallclinging
         if ((rightCol && lastSpeed.x > 0) || (rightCol && rightHold) && canWallCling)
         {
+            // Start wall clinging on the right wall
             onRightWallCling = clingDuration;
             lastSpeed.x = 0;
         }
+        // When moving into the left wall or when against the right wall holding right start wallclinging
         if ((leftCol && lastSpeed.x < 0) || (leftCol && leftHold) && canWallCling)
         {
+            // Start wall clinging on the left wall
             onLeftWallCling = clingDuration;
             lastSpeed.x = 0;
         }
+
         // Reset wall cling when on the ground
         if (grounded && (onLeftWallCling > 0 || onRightWallCling > 0))
         {
@@ -513,15 +551,19 @@ public class PlayerMovement2D : MonoBehaviourPun
             transform.parent = null;
         }
 
+        // When clinging on a wall horizontal movement shouldn't be possible, so when horizontal movement in detected reset wall cling
         if (onLeftWallCling > 0 || onRightWallCling > 0)
         {
+            // Horizontal movemenent is a significant amount
             if (rb.velocity.x > 0.1 || rb.velocity.x < -0.1)
             {
+                // Reset both wall clings
                 onLeftWallCling = 0;
                 onRightWallCling = 0;
             }
         }
 
+        // Keep track of fast movement so long
         if (rb.velocity.x > 0.1 || rb.velocity.x < -0.1 || grounded)
         {
             lastSpeed = rb.velocity;
@@ -552,5 +594,26 @@ public class PlayerMovement2D : MonoBehaviourPun
         }
 
         rb.velocity = moveSpeed;
+    }
+
+    // This function tests if the player hitbox is overlapping with more than 1 other hitbox and "crushes" him when this is the case for more than 5 updates
+    void CrushTest()
+    {
+        // Check for crush with box overlap
+        if (Physics2D.OverlapBox(transform.position, transform.localScale * crushHitboxMult, 0, crushFilter, results: crushResults) >= 2)
+        {
+            countCrushing++;
+            // Have a buffer to avoid false positives
+            if (countCrushing > 5)
+            {
+                // The player is just dead
+                myPlayerManager.KillPlayer(PhotonNetwork.NickName); // Fix this
+            }
+        }
+        else
+        {
+            // Reset counter when not crushed
+            countCrushing = 0;
+        }
     }
 }
