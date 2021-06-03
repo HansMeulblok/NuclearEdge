@@ -1,4 +1,4 @@
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -7,10 +7,10 @@ using UnityEngine;
 public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 {
     [Header("Falling variables")]
-    public float turningOffTime = 0.5f;
-    public float fallingDownDur = 2;
-    public float fallingSpeed = 5;
-    public float maxDelayTime = 5;
+    public float TURNING_OFF_TIME = 0.5f;
+    public float FALLING_DOWN_DUR = 2;
+    public float FALLING_SPEED = 5;
+    public float MAX_DELAT_TIME = 5;
 
     private float startTime;
     private float timer;
@@ -23,8 +23,6 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     private BoxCollider2D platformCollider;
     private GameObject newPlatform;
 
-    private const int staticPlatformCode = 4;
-
     public void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
@@ -32,13 +30,13 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     public void OnDisable()
     {
-        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
     }
 
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if (eventCode == staticPlatformCode)
+        if (eventCode == EventCodes.PLATFORM_STATIC﻿)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
             string objectName = (string)tempObject[0];
@@ -54,9 +52,11 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
 
     private void ActivateFallingPlatform()
     {
+        if (!PhotonNetwork.InRoom) { return; }
+
         object[] content = new object[] { gameObject.name, (float)PhotonNetwork.Time }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(staticPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(EventCodes.PLATFORM_STATIC, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     private void Start()
@@ -86,7 +86,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             timer = (float)(PhotonNetwork.Time - startTime);
 
             // If receiving event took longer than delay time, skip falling
-            if (timer >= maxDelayTime)
+            if (timer >= MAX_DELAT_TIME)
             {
                 steppedOn = isActivated = false;
                 timer = 0;
@@ -98,10 +98,10 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         }
 
         // If timer is maxed out start falling
-        if (timer >= turningOffTime && timer < maxDelayTime)
+        if (timer >= TURNING_OFF_TIME && timer < MAX_DELAT_TIME)
         {
             newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatformMoving", transform.position, Quaternion.identity);
-            newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, fallingSpeed, fallingDownDur);
+            newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, FALLING_SPEED, FALLING_DOWN_DUR);
             SwitchStaticPlatform(false);
 
             // Reset trigger of moving platform
@@ -109,7 +109,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
             timer = 0;
 
             // Reset static platform when moving platform is done
-            Invoke("ResetStaticPlatform", fallingDownDur);
+            Invoke("ResetStaticPlatform", FALLING_DOWN_DUR);
         }
     }
 

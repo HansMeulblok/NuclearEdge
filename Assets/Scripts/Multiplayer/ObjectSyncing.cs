@@ -10,17 +10,12 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
     private Rigidbody2D objectRB;
 
     private Vector2 networkPosition;
-    private Vector2 deltaPosition;
-
     private float networkRotation;
-    private float lastTime;
-    private float deltaTime;
-    private float timer;
     private float lag;
 
     [SerializeField]
-    float rotationSmoothness = 100f;
-    float delayDistance = 5;
+    float ROTATION_SMOOTHNESS = 100f;
+    float DELAY_DISTANCE = 5;
 
     private void OnEnable()
     {
@@ -43,8 +38,6 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
             {
                 stream.SendNext(objectRB.position);
                 stream.SendNext(objectRB.velocity);
-
-                // print("Object position: " + objectRB.position + " with velocity: " + objectRB.velocity);
             }
 
             if (syncRotation) { stream.SendNext(objectRB.rotation); }
@@ -56,21 +49,9 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
 
             if (syncPosition)
             {
-                //timer = 0;
-
-                //Vector2 oldPosition = objectRB.position;
-                //networkPosition = (Vector2)stream.ReceiveNext();
-
-                //deltaPosition = networkPosition - oldPosition;
-                //deltaTime = Time.time - lastTime;
-                //lastTime = Time.time;
-
-                Vector2 temp = networkPosition;
                 networkPosition = (Vector2)stream.ReceiveNext();
                 objectRB.velocity = (Vector2)stream.ReceiveNext();
                 networkPosition += objectRB.velocity * lag;
-
-                // print("Network object position: " + temp + " with velocity and lag: " + objectRB.velocity + "|" + lag + " results in: " + networkPosition);
             }
 
             if (syncRotation) { networkRotation = (float)stream.ReceiveNext(); }
@@ -84,36 +65,19 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
         {
             if (syncPosition)
             {
-                //timer += Time.fixedDeltaTime;
-                //float progress = timer / deltaTime;
+                float distance = Vector2.Distance(objectRB.position, networkPosition);
 
-                //print("Object " + gameObject.name + " has position  " + objectRB.position + " | delta position " + deltaPosition + " | delta time " + deltaTime);
-
-                //objectRB.position = networkPosition;
-                //objectRB.position = Vector2.Lerp(objectRB.position, objectRB.position + deltaPosition, progress);
-
-                if (objectRB.isKinematic)
+                if (distance >= DELAY_DISTANCE)
                 {
-                    objectRB.MovePosition(networkPosition);
+                    objectRB.position = networkPosition;
                 }
                 else
                 {
-                    float distance = Vector2.Distance(objectRB.position, networkPosition);
-
-                    if (distance >= delayDistance)
-                    {
-                        //print("Distance of " + gameObject.name + " (" + objectRB.position + "|" + networkPosition + ") greater than [" + distance + "]. Updating position...");
-                        objectRB.position = networkPosition;
-                    }
-                    else
-                    {
-                        objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
-                    }
-
+                    objectRB.position = Vector2.MoveTowards(objectRB.position, networkPosition, Time.fixedDeltaTime);
                 }
             }
         }
 
-        if (syncRotation) { objectRB.MoveRotation(networkRotation + Time.fixedDeltaTime * rotationSmoothness); }
+        if (syncRotation) { objectRB.MoveRotation(networkRotation + Time.fixedDeltaTime * ROTATION_SMOOTHNESS); }
     }
 }

@@ -8,8 +8,6 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
 
-    public const byte TriggerTraps = 3;
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
@@ -35,9 +33,11 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
 
     private void TriggerTrapsEvent()
     {
-        object[] content = new object[] { gameObject.name };
+        if (!PhotonNetwork.InRoom) { return; }
+
+        object[] content = new object[] { transform.position};
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(TriggerTraps, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(EventCodes.TRIGGER_TRAPS, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     private void OnEnable()
@@ -53,12 +53,12 @@ public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if (eventCode == TriggerTraps)
+        if (eventCode == EventCodes.TRIGGER_TRAPS)
         {
-            object[] tempObject = (object[])photonEvent.CustomData;
-            string triggerName = (string)tempObject[0];
+            object[] data = (object[])photonEvent.CustomData;
+            Vector3 position = (Vector3)data[0];
 
-            if (triggerName == gameObject.name)
+            if (position == transform.position)
             {
                 ActivateTraps();
             }

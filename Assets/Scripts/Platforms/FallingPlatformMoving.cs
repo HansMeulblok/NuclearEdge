@@ -12,8 +12,6 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
     private Rigidbody2D rb;
     private PlatformEditor platformEditor;
 
-    private const int movingPlatformCode = 5;
-
     private void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
@@ -60,7 +58,7 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if (eventCode == movingPlatformCode)
+        if (eventCode == EventCodes.PLATFORM_MOVING)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
             string objectName = (string)tempObject[0];
@@ -90,8 +88,10 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
 
     void TurnOffPlatform()
     {
+        if (!PhotonNetwork.InRoom) { return; }
+
         object[] content = new object[] { gameObject.name }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(movingPlatformCode, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(EventCodes.PLATFORM_MOVING, content, raiseEventOptions, SendOptions.SendReliable);
     }
 }

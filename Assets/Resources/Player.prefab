@@ -270,7 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncPosition: 1
   syncRotation: 0
-  rotationSmoothness: 100
+  ROTATION_SMOOTHNESS: 100
 --- !u!1 &5751272802070745618
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
 {
     public GameObject startingLine;
     public TMP_Text countdownText;
-    public float countdown = 5;
+    public float COUNTDOWN = 5;
 
     private bool activated;
     private bool startTimer = false;
@@ -27,7 +27,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
     private void Update()
     {
         if (!startTimer) { return; }
-        float countdownTimer = countdown - (float)(PhotonNetwork.Time - startTime);
+        float countdownTimer = COUNTDOWN - (float)(PhotonNetwork.Time - startTime);
 
         if (countdownTimer >= 0)
         {

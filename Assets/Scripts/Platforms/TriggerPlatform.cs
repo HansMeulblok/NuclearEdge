@@ -1,11 +1,10 @@
 using UnityEngine;
-using Photon.Pun;
+
 [ExecuteInEditMode]
 public class TriggerPlatform : BaseActivator
 {
 
     public bool isSolid;
-    PhotonView pv;
     private Color platformColor;
 
     public SpriteRenderer spriteHolder;
@@ -13,7 +12,6 @@ public class TriggerPlatform : BaseActivator
 
     private void Start()
     {
-        pv = GetComponent<PhotonView>();
         Swap();
     }
 

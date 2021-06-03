@@ -8,8 +8,6 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
     private Vector2 moveDirection;
     private float moveSpeed;
 
-    private const int bulletDestroyCode = 7;
-
     private void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
@@ -23,7 +21,7 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if (eventCode == bulletDestroyCode)
+        if (eventCode == EventCodes.BULLET_DESTROY)
         {
             object[] tempObject = (object[])photonEvent.CustomData;
             int objectViewID = (int)tempObject[0];
@@ -37,14 +35,16 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
 
     private void DestoyBulletEvent()
     {
-        object[] content = new object[] { photonView.ViewID }; ;
+        if (!PhotonNetwork.InRoom) { return; }
+
+        object[] content = new object[] { photonView.ViewID };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(bulletDestroyCode, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(EventCodes.BULLET_DESTROY, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     private void Update()
     {
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        if (MultiTargetCamera.createdPlayerList) { transform.Translate(moveDirection * moveSpeed * Time.deltaTime); }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

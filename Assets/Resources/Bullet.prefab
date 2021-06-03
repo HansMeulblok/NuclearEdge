@@ -173,4 +173,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncPosition: 1
   syncRotation: 0
-  rotationSmoothness: 100
+  ROTATION_SMOOTHNESS: 100

@@ -41,11 +41,6 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     string[] playerNames = new string[4];
     object[][] playerProgressList = new object[4][];
 
-    private const int cpCode = 1;
-    private const int firstPlaceCode = 2;
-
-    Vector3 firstPlayerOffset;
-
     public override void OnEnable()
     {
         base.OnEnable();
@@ -78,7 +73,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         if (targets.Count <= 0 || targets[0] == null || !allPlayersCreated)
         {
             /*
-             * TODO: Add loading screen
+             * TODO: Add visual loading screen
              * Needs to be a seperate if statement with only allPlayerLoaded in it for loading screen
              */
 
@@ -187,7 +182,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            // If one player is left, it wins
+            // If one player is left, it wins   
             if (targets.Count == 1)
             {
                 if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
@@ -219,12 +214,12 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if (eventCode == cpCode)
+        if (eventCode == EventCodes.CHECKPOINT)
         {
             CalculatePlacements(photonEvent);
         }
 
-        if (eventCode == firstPlaceCode)
+        if (eventCode == EventCodes.FIRST_PLACE)
         {
             SetFirstPlace(photonEvent);
         }
@@ -349,7 +344,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.InRoom) { return; }
         object[] content = new object[] { playerNames[0] };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(firstPlaceCode, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(EventCodes.FIRST_PLACE, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     private void SetFirstPlace(EventData photonEvent)

@@ -16,15 +16,15 @@ public class Cannon : BaseActivator, IOnEventCallback
     public GameObject pivot;
     public GameObject firePoint;
 
-    [Header("Shooting variables")]
-    [Range(0.2f, 5f)] public float shootingInterval = 2;
-    [SerializeField] private float bulletMoveSpeed = 2;
-    [SerializeField] private float bulletLifeSpan = 2;
-
     public bool activated = true;
-    Coroutine coroutine;
 
-    private const int cannonTriggerCode = 6;
+    [Header("Shooting variables")]
+    [Range(0.2f, 5f)] public float SHOOTING_INTERVAL = 2;
+    
+    [SerializeField] private float BULLET_SPEED = 2;
+    [SerializeField] private float BULLET_LIFESPAN = 2;
+
+    Coroutine coroutine;
 
     #region Old angle variables
     /*
@@ -67,21 +67,23 @@ public class Cannon : BaseActivator, IOnEventCallback
 
     private void ActivateShootEventToAll()
     {
-        object[] content = new object[] { gameObject.name }; ;
+        if (!PhotonNetwork.InRoom) { return; }
+
+        object[] content = new object[] { transform.position }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-        PhotonNetwork.RaiseEvent(cannonTriggerCode, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(EventCodes.TRIGGER_TRAPS, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
 
-        if (eventCode == cannonTriggerCode)
+        if (eventCode == EventCodes.TRIGGER_TRAPS)
         {
-            object[] tempObject = (object[])photonEvent.CustomData;
-            string objectName = (string)tempObject[0];
+            object[] data = (object[])photonEvent.CustomData;
+            Vector3 position = (Vector3)data[0];
 
-            if (objectName == gameObject.name)
+            if (position == transform.position)
             {
                 Bullet();
             }
@@ -111,11 +113,11 @@ public class Cannon : BaseActivator, IOnEventCallback
         {
             ActivateShootEventToAll();
             Bullet();
-            yield return new WaitForSeconds(shootingInterval);
+            yield return new WaitForSeconds(SHOOTING_INTERVAL);
         }
 
         // TODO: Insert visual that shows trigger on cooldown
-        yield return new WaitForSeconds(shootingInterval);
+        yield return new WaitForSeconds(SHOOTING_INTERVAL);
         // TODO: Revert visual to normal
         coroutine = null;
         activated = false;
@@ -125,8 +127,8 @@ public class Cannon : BaseActivator, IOnEventCallback
     {
         // Get bullet from the bulletPool, set the position to the fire point. set the firing direction, bulletLifespan and the bullet movepseed.
         Vector2 bulDir = ((Vector2)firePoint.transform.position - (Vector2)pivot.transform.position).normalized;
-        GameObject bullet = ObjectPooler.Instance.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
-        bullet?.GetComponent<Bullet>().SetBulletProperties(bulDir, bulletMoveSpeed, bulletLifeSpan);
+        GameObject bullet = ObjectPooler.Instance?.SpawnFromPool("Bullet", firePoint.transform.position, Quaternion.identity);
+        bullet?.GetComponent<Bullet>().SetBulletProperties(bulDir, BULLET_SPEED, BULLET_LIFESPAN);
     }
     #endregion
 
