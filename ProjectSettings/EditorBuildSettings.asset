@@ -17,7 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Archive/OldScenes/DragonsDenPresentation.unity
     guid: 245672bf05525304d9c20db131d12739
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Levels/Level_01 1.unity
     guid: 899e829048d05aa4e8c8fc607cd64abb
+  - enabled: 1
+    path: Assets/Scenes/Chunks/ChuckDesign 2.unity
+    guid: e4f70867424482a439de593fd1a22617
   m_configObjects: {}
