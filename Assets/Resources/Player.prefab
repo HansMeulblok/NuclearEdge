@@ -236,14 +236,13 @@ MonoBehaviour:
   slowJumpModifier: 0
   inSludge: 0
   movementChanged: 0
-  isDead: 0
   isStunned: 0
-  leveltesting: 1
   respawnPosition: {x: 0, y: 0}
   stunMovementModifier: 0.6
   stunJumpModifier: 0.6
   blinkInterval: 0.2
   stunDuration: 3
+  maxSyncTime: 4
 --- !u!114 &67980660962732785
 MonoBehaviour:
   m_ObjectHideFlags: 0
