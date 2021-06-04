@@ -120,7 +120,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", true } });
         int i = Random.Range(1, SceneManager.sceneCountInBuildSettings);
-        PhotonNetwork.LoadLevel(i); // TODO: Change this to the scene which we will be using for the level
+        PhotonNetwork.LoadLevel(i);
         SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for host
     }
 
@@ -161,9 +161,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1) && !playerFound)
+        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0) && !playerFound)
         {
-            PhotonNetwork.Instantiate("Player", Vector3.zero - new Vector3(0,0,10), Quaternion.identity);
+            PhotonNetwork.Instantiate("Player", Vector3.zero - new Vector3(0, 0, 10), Quaternion.identity);
         }
     }
 
