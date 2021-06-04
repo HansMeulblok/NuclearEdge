@@ -24,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Chunks/ChuckDesign 2.unity
     guid: e4f70867424482a439de593fd1a22617
   - enabled: 1
-    path: Assets/Scenes/Chunks/Chunktesting.unity
+    path: Assets/Scenes/Levels/Canyon_Level.unity
     guid: df8722d540ee8c241b3703b3c20df105
   m_configObjects: {}
