@@ -4,12 +4,14 @@ using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Camera))]
 public class MultiTargetCamera : MonoBehaviourPunCallbacks
 {
     [Header("Targets")]
     public List<Transform> targets = new List<Transform>();
+    public List<PhotonView> pvPlayers = new List<PhotonView>();
     public Transform firstPlayer;
 
     [Header("Camera movement settings")]
@@ -24,6 +26,9 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     public float zoomLimit = 10;
     public float getPlayerBuffer = 0.5f;
 
+    public static bool allPlayersCreated;
+    public static bool createdPlayerList;
+
     private Vector3 velocity;
     private Vector3 middlePoint;
     private new Camera camera;
@@ -33,18 +38,23 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     object[] player3 = new object[2];
     object[] player4 = new object[2];
 
-    string[] playerNames = new string[4];
+    string[] playerActorIds = new string[4];
     object[][] playerProgressList = new object[4][];
 
-    private const int cpCode = 3;
-    private const int firstPlaceCode = 4;
-
-    Vector3 firstPlayerOffset;
-
-
-    private void Start()
+    public override void OnEnable()
     {
+        base.OnEnable();
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
 
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    private void Awake()
+    {
         Screen.SetResolution(1920, 1080, true, 60);
         playerProgressList[0] = player1;
         playerProgressList[1] = player2;
@@ -54,13 +64,22 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         camera = GetComponent<Camera>();
         camera.orthographic = true;
 
-        // TODO: wait for players in loading screen and get them after they are loaded in instead of invoking this there
-        Invoke("GetPlayers", getPlayerBuffer);
+        allPlayersCreated = createdPlayerList = false;
+        StartCoroutine(GetPlayers());
     }
 
     private void LateUpdate()
     {
-        if (targets.Count <= 0 || targets[0] == null) { return; }
+        if (targets.Count <= 0 || targets[0] == null || !allPlayersCreated)
+        {
+            /*
+             * TODO: Add visual loading screen
+             * Needs to be a seperate if statement with only allPlayerLoaded in it for loading screen
+             */
+
+            return;
+        }
+
         CameraMove();
         CameraZoom();
     }
@@ -126,44 +145,80 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         return bounds.center;
     }
 
-    void GetPlayers()
+    public IEnumerator GetPlayers()
     {
         // Finds all players in scene and adds them to the target list
+        yield return new WaitUntil(() => allPlayersCreated == true);
+
         targets.Clear();
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        pvPlayers.Clear();
+
+        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
 
         foreach (GameObject player in players)
         {
             targets.Add(player.transform);
+            pvPlayers.Add(player.GetComponent<PhotonView>());
+        }
+
+        createdPlayerList = true;
+    }
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged["DeadPlayers"] != null && createdPlayerList)
+        {
+            List<int> deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
+
+            // Disable player if found in list of players
+            foreach (Transform target in targets.ToList())
+            {
+                int actorId = target.GetComponent<PhotonView>().OwnerActorNr;
+                if (deadPlayers.Contains(actorId))
+                {
+                    targets.Remove(target);
+                    target.gameObject.SetActive(false);
+                }
+            }
+
+            // If one player is left, it wins   
+            if (targets.Count == 1)
+            {
+                if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
+                {
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "playerWon", targets[0].GetComponent<PhotonView>().Owner.UserId } });
+                }
+            }
+        };
+    }
+
+    public void RemovePlayer(int actorID)
+    {
+        foreach (PhotonView player in pvPlayers.ToList())
+        {
+            if (player.OwnerActorNr == actorID)
+            {
+                targets.Remove(player.gameObject.transform);
+                pvPlayers.Remove(player);
+            }
         }
     }
 
     // Updates players and camera when a player leaves
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        GetPlayers();
+        RemovePlayer(otherPlayer.ActorNumber);
     }
 
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
-    }
-
-    public override void OnDisable()
-    {
-        base.OnDisable();
-        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
-    }
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        if (eventCode == cpCode)
+        if (eventCode == EventCodes.CHECKPOINT)
         {
             CalculatePlacements(photonEvent);
         }
 
-        if (eventCode == firstPlaceCode)
+        if (eventCode == EventCodes.FIRST_PLACE)
         {
             SetFirstPlace(photonEvent);
         }
@@ -171,31 +226,30 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     private void CalculatePlacements(EventData photonEvent)
     {
-        object[] tempObjects = (object[])photonEvent.CustomData;
-        string name = (string)tempObjects[0];
-        int cp = (int)tempObjects[1];
-        float distance = (float)tempObjects[2];
+        object[] data = (object[])photonEvent.CustomData;
+        string actorId = (string)data[0];
+        int cp = (int)data[1];
+        float distance = (float)data[2];
 
-        if (!playerNames.Contains(name))
+        if (!playerActorIds.Contains(actorId))
         {
-            for (int i = 0; i < playerNames.Length; i++)
+            for (int i = 0; i < playerActorIds.Length; i++)
             {
-                if (playerNames[i] != null)
+                if (playerActorIds[i] != null)
                 {
                     continue;
                 }
                 else
                 {
-                    playerNames[i] = name;
+                    playerActorIds[i] = actorId;
                     break;
                 }
-
             }
         }
 
-        for (int i = 0; i < playerNames.Length; i++)
+        for (int i = 0; i < playerActorIds.Length; i++)
         {
-            if (playerNames[i] == name)
+            if (playerActorIds[i] == actorId)
             {
                 playerProgressList[i][0] = cp;
                 playerProgressList[i][1] = distance;
@@ -208,7 +262,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             // Keep track if there was a swap in this loop
             bool swapped = false;
 
-            if (playerNames[0] != null && playerNames[1] != null)
+            if (playerActorIds[0] != null && playerActorIds[1] != null)
             {
                 // Check if the first entry in the array has a bigger distance to the next checkpoint than the second entry in the array
                 if ((float)playerProgressList[0][1] > (float)playerProgressList[1][1])
@@ -220,7 +274,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (playerNames[1] != null && playerNames[2] != null)
+            if (playerActorIds[1] != null && playerActorIds[2] != null)
             {
                 if ((float)playerProgressList[1][1] > (float)playerProgressList[2][1])
                 {
@@ -229,7 +283,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (playerNames[2] != null && playerNames[3] != null)
+            if (playerActorIds[2] != null && playerActorIds[3] != null)
             {
                 if ((float)playerProgressList[2][1] > (float)playerProgressList[3][1])
                 {
@@ -250,7 +304,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         {
             // Keep track if there was a swap in this loop
             bool swapped = false;
-            if (playerNames[0] != null && playerNames[1] != null)
+            if (playerActorIds[0] != null && playerActorIds[1] != null)
             {
                 // Check if the first entry in the array has a smaller checkpoint number than the second entry in the array
                 if ((int)playerProgressList[0][0] < (int)playerProgressList[1][0])
@@ -262,7 +316,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (playerNames[1] != null && playerNames[2] != null)
+            if (playerActorIds[1] != null && playerActorIds[2] != null)
             {
                 if ((int)playerProgressList[1][0] < (int)playerProgressList[2][0])
                 {
@@ -271,7 +325,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (playerNames[2] != null && playerNames[3] != null)
+            if (playerActorIds[2] != null && playerActorIds[3] != null)
             {
                 if ((int)playerProgressList[2][0] < (int)playerProgressList[3][0])
                 {
@@ -287,19 +341,19 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         }
 
         if (!PhotonNetwork.InRoom) { return; }
-        object[] content = new object[] { playerNames[0] };
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(firstPlaceCode, content, raiseEventOptions, SendOptions.SendReliable);
-    }
 
+        object[] content = new object[] { playerActorIds[0] };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(EventCodes.FIRST_PLACE, content, raiseEventOptions, SendOptions.SendReliable);
+    }
 
     private void SetFirstPlace(EventData photonEvent)
     {
-        object[] tempObjects = (object[])photonEvent.CustomData;
+        object[] data = (object[])photonEvent.CustomData;
 
         for (int i = 0; i < targets.Count; i++)
         {
-            if (targets[i].GetComponent<PhotonView>().Owner.NickName == (string)tempObjects[0])
+            if (targets[i].GetComponent<PhotonView>().OwnerActorNr.ToString() == (string)data[0])
             {
                 firstPlayer = targets[i];
             }
@@ -313,9 +367,8 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         playerProgressList[swapFirst] = playerProgressList[swapSecond];
         playerProgressList[swapSecond] = tempObject;
 
-        string tempName = playerNames[swapFirst];
-        playerNames[swapFirst] = playerNames[swapSecond];
-        playerNames[swapSecond] = tempName;
+        string tempName = playerActorIds[swapFirst];
+        playerActorIds[swapFirst] = playerActorIds[swapSecond];
+        playerActorIds[swapSecond] = tempName;
     }
-
 }

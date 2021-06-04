@@ -8,12 +8,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public MenuManager menuManager;
 
-    private string playerName;
-
     void Start()
     {
         DontDestroyOnLoad(this);
+        ConnectToServer();
+    }
 
+    public void ConnectToServer()
+    {
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();
@@ -32,7 +34,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         print("Player connected to server.");
-
         if (!PhotonNetwork.InLobby) { PhotonNetwork.JoinLobby(); }
         PhotonNetwork.AutomaticallySyncScene = true;
     }
@@ -105,7 +106,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         print("Joined room successfully.");
         menuManager.CreateLobby(PhotonNetwork.CurrentRoom.Name);
-
         menuManager.startButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
@@ -155,7 +155,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            if (player.GetComponent<PhotonView>().Owner.NickName == PhotonNetwork.NickName)
+            if (player.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 playerFound = true;
             }
@@ -169,7 +169,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        if(menuManager != null)
+        if (menuManager != null)
         {
             menuManager.startButton.SetActive(PhotonNetwork.IsMasterClient);
         }

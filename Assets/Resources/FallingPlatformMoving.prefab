@@ -50,7 +50,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 073e55801df5cfe40b5a28d3d5dcd297, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,11 +93,13 @@ GameObject:
   - component: {fileID: 3860048427860164808}
   - component: {fileID: 3860048427860164823}
   - component: {fileID: 3860048427860164822}
-  - component: {fileID: 3860048427860164820}
   - component: {fileID: 1452580588310239367}
   - component: {fileID: 5296331813980562998}
+  - component: {fileID: -1202963358358386587}
+  - component: {fileID: 7654745971886045477}
+  - component: {fileID: 5033620353513336592}
   m_Layer: 9
-  m_Name: Falling Platform
+  m_Name: FallingPlatformMoving
   m_TagString: Falling Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,23 +167,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 5
---- !u!114 &3860048427860164820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3860048427860164810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b9d3c52212ca984cbfeb22596c8ef97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteHolder: {fileID: 982780130518860135}
-  collider: {fileID: 3860048427860164823}
-  maxTime: 2
-  fallingSpeed: 4
-  resetTime: 3
 --- !u!251 &1452580588310239367
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -213,8 +198,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e37072cfbd7254aa44a89480804846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editing: 1
+  editing: 0
   platformLength: 0
   platformHeight: 0
   spriteHolder: {fileID: 982780130518860135}
   collider: {fileID: 3860048427860164823}
+--- !u!114 &-1202963358358386587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860048427860164810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939cb57fd5b26e9498b960e5c1e3b60c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7654745971886045477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860048427860164810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5033620353513336592}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5033620353513336592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860048427860164810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 3

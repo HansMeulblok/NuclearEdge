@@ -1,143 +1,131 @@
 using UnityEngine;
 using Photon.Pun;
-using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 using Photon.Realtime;
 using TMPro;
 
-public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private GameObject nameplate;
-    private Rigidbody2D playerRB;
     private SpriteRenderer playerSprite;
-    private MultiTargetCamera multiTargetCamera;
 
+    private MultiTargetCamera multiTargetCamera;
+    private Dictionary<int, bool> playersLoaded;
+    private Dictionary<int, string> playerColors;
+
+    private List<int> deadPlayers;
     private bool isRendered = false;
-    private List<string> deadPlayers;
-    private Dictionary<string, string> playerColors;
-    private Vector2 networkPosition;
-    private float networkRotation;
 
     void Awake()
     {
-        playerRB = GetComponent<Rigidbody2D>();
+        if (!photonView.IsMine) { enabled = false; return; }
 
         playerSprite = GetComponent<SpriteRenderer>();
         multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
 
-        deadPlayers = new List<string>();
+        deadPlayers = new List<int>();
+        playersLoaded = new Dictionary<int, bool>();
 
-        Invoke("SetNames", 1f);
-        Invoke("ChangePlayersColor", 1f);
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        // Sends information of player to others
-        if (stream.IsWriting)
+        if (PhotonNetwork.IsMasterClient)
         {
-            stream.SendNext(playerRB.position);
-            // stream.SendNext(playerRB.rotation);
-            stream.SendNext(playerRB.velocity);
+            if (!playersLoaded.ContainsKey(photonView.ViewID)) { playersLoaded.Add(photonView.ViewID, true); }
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "PlayersLoaded", playersLoaded } });
+
+            StartCoroutine(ChangePlayersColor());
         }
         else
         {
-            // Receives information of other players
-            networkPosition = (Vector2)stream.ReceiveNext();
-            // networkRotation = (float)stream.ReceiveNext();
-            playerRB.velocity = (Vector2)stream.ReceiveNext();
-
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            networkPosition += playerRB.velocity * lag;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        // Updates position of others.
-        if (!photonView.IsMine)
-        {
-            playerRB.position = Vector2.MoveTowards(playerRB.position, networkPosition, Time.fixedDeltaTime);
-
-            // Uncomment this and networkRotation variable (above) to enable rotation sync
-            // playerRB.MoveRotation(networkRotation + Time.fixedDeltaTime * 100.0f); 
+            StartCoroutine(CheckMasterLoaded());
         }
     }
 
     private void Update()
     {
         // Add player name to list of dead player for server
-        if (isRendered && !playerSprite.isVisible && photonView.IsMine)
+        if (MultiTargetCamera.createdPlayerList && isRendered && !playerSprite.isVisible)
         {
-            KillPlayer(PhotonNetwork.NickName);
+            KillPlayer();
         }
     }
 
-    public void KillPlayer(string name)
+    public void KillPlayer()
     {
-        if (!deadPlayers.Contains(name)) { deadPlayers.Add(name); }
-        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
-
-        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Death");
+        if (!deadPlayers.Contains(photonView.OwnerActorNr))
+        {
+            deadPlayers.Add(photonView.OwnerActorNr);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
+        }
     }
 
-    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         // Disable player if found in list of players
         if (propertiesThatChanged["DeadPlayers"] != null)
         {
-            deadPlayers = (propertiesThatChanged["DeadPlayers"] as string[]).ToList();
+            deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
+        };
 
-            if (deadPlayers.Contains(photonView.Owner.NickName))
-            {
-                if (multiTargetCamera.targets.Count != 0)
-                {
-                    multiTargetCamera.targets.Remove(transform);
-                    gameObject.SetActive(false);
-                }
-            }
+        if (propertiesThatChanged["PlayersLoaded"] != null)
+        {
+            playersLoaded = (Dictionary<int, bool>)propertiesThatChanged["PlayersLoaded"];
 
-            if (multiTargetCamera.targets.Count == 1)
+            if (playersLoaded.Count >= PhotonNetwork.CurrentRoom.PlayerCount)
             {
-                if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerWon"))
-                {
-                    PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerWon", multiTargetCamera.targets[0].gameObject.GetComponent<PhotonView>().Owner.NickName } });
-                }
+                MultiTargetCamera.allPlayersCreated = true;
             }
         };
 
         if (propertiesThatChanged["playerColors"] != null)
         {
-            playerColors = propertiesThatChanged["playerColors"] as Dictionary<string, string>;
+            playerColors = propertiesThatChanged["playerColors"] as Dictionary<int, string>;
 
-            foreach (Transform player in multiTargetCamera.targets)
+            // Sets name and color of players
+            foreach (PhotonView player in multiTargetCamera.pvPlayers)
             {
-                string playerName = player.GetComponent<PhotonView>().Owner.NickName;
-                Color colorTemp = new Color();
-                ColorUtility.TryParseHtmlString(playerColors[playerName], out colorTemp);
-                player.gameObject.GetComponent<SpriteRenderer>().color = colorTemp;
+                ColorUtility.TryParseHtmlString(playerColors[player.ViewID], out Color colorTemp);
+
+                player.GetComponent<SpriteRenderer>().color = colorTemp;
+                player.GetComponentInChildren<TextMeshPro>().text = player.Owner.NickName;
+                player.GetComponent<PlayerStatusEffects>().GetColours();
             }
         }
     }
 
-    public void ChangePlayersColor()
+    public IEnumerator CheckMasterLoaded()
     {
-        if (PhotonNetwork.IsMasterClient)
+        yield return new WaitUntil(() => playersLoaded.Count >= 1);
+
+        if (!playersLoaded.ContainsKey(photonView.ViewID))
         {
-            Dictionary<string, string> playerColors = new Dictionary<string, string>();
-            Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };
-            for (int i = 0; i < multiTargetCamera.targets.Count; i++)
-            {
-                string playerName = multiTargetCamera.targets[i].gameObject.GetComponent<PhotonView>().Owner.NickName;
-                string color = $"#{ColorUtility.ToHtmlStringRGBA(playerColor[i])}";
-                playerColors.Add(playerName, color);
-            }
-            if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerColors"))
-            {
-                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "playerColors", playerColors } });
-            }
+            playersLoaded.Add(photonView.ViewID, true);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "PlayersLoaded", playersLoaded } });
         }
+
+        yield break;
+    }
+
+    public IEnumerator ChangePlayersColor()
+    {
+        yield return new WaitUntil(() => MultiTargetCamera.createdPlayerList == true);
+
+        Dictionary<int, string> playerColors = new Dictionary<int, string>();
+        Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };
+
+        int i = 0;
+        foreach (PhotonView player in multiTargetCamera.pvPlayers)
+        {
+            string color = $"#{ColorUtility.ToHtmlStringRGBA(playerColor[i])}";
+            playerColors.Add(player.ViewID, color);
+            i++;
+        }
+
+        if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerColors"))
+        {
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "playerColors", playerColors } });
+        }
+
+        yield break;
     }
 
     // Check if player is rendered
@@ -148,22 +136,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        foreach (Transform player in multiTargetCamera.targets)
-        {
-            string playerName = player.gameObject.GetComponent<PhotonView>().Owner.NickName;
-            if (otherPlayer.NickName == playerName)
-            {
-                if (!deadPlayers.Contains(playerName)) { deadPlayers.Add(playerName); }
-                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
-                multiTargetCamera.targets.Remove(player);
-                break;
-            }
-        }
-    }
-
-    public void SetNames()
-    {
-        nameplate.GetComponent<TextMeshPro>().text = photonView.Owner.NickName;
+        if (!deadPlayers.Contains(otherPlayer.ActorNumber)) { deadPlayers.Add(otherPlayer.ActorNumber); }
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
     }
 }
 

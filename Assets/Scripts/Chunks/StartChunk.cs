@@ -7,14 +7,12 @@ public class StartChunk : MonoBehaviourPunCallbacks
 {
     public GameObject startingLine;
     public TMP_Text countdownText;
-    public float countdown = 5;
+    public float COUNTDOWN = 5;
 
     private bool startTimer = false;
     private bool playedSound = false;
     private float startTime;
     private string tempCd = "";
-
-
 
     private void Start()
     {
@@ -29,7 +27,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
     private void Update()
     {
         if (!startTimer) { return; }
-        float countdownTimer = countdown - (float)(PhotonNetwork.Time - startTime);
+        float countdownTimer = COUNTDOWN - (float)(PhotonNetwork.Time - startTime);
 
         if (countdownTimer >= -1)
         {
@@ -38,7 +36,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
 
             if (countdownText.text != tempCd)
             {
-                if (countdownText.text != "GOOO!" && countdownCeil > 0 && countdownCeil <= countdown)
+                if (countdownText.text != "GOOO!" && countdownCeil > 0 && countdownCeil <= COUNTDOWN)
                 {
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/CountDown");
                 }

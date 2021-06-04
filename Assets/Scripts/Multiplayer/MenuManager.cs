@@ -77,6 +77,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
         else if (!PhotonNetwork.IsConnected)
         {
             inputError.text = "Not connected to server. Try again.";
+            networkManager.ConnectToServer();
             return;
         }
         else

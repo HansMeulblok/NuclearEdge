@@ -2591,6 +2591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db92a80a241b2441b25bb8e245a9b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSolid: 1
+  isSolid: 1
   spriteHolder: {fileID: 5975832916971038864}
   collider: {fileID: 8346632628531846259}
