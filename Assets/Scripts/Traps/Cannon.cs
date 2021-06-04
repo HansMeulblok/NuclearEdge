@@ -219,7 +219,6 @@ public class Cannon : BaseActivator
         }
     }
     #endregion
-<<<<<<< HEAD
     */
     #endregion
 }
