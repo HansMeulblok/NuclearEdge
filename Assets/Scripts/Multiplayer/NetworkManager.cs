@@ -154,7 +154,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            if (player.GetComponent<PhotonView>().Owner.NickName == PhotonNetwork.NickName)
+            print("Found player!");
+            if (player.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 playerFound = true;
             }
