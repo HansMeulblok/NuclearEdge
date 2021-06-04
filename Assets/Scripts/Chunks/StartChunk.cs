@@ -38,7 +38,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
 
             if (countdownText.text != tempCd)
             {
-                if (countdownText.text != "GOOO!" && countdownCeil > 0 && countdownCeil <= countdown)
+                if (countdownText.text != "GOOO!" && countdownCeil > 0 && countdownCeil <= COUNTDOWN)
                 {
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/CountDown");
                 }

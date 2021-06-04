@@ -53,7 +53,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
     }
 
-    private void Start()
+    private void Awake()
     {
         Screen.SetResolution(1920, 1080, true, 60);
         playerProgressList[0] = player1;
@@ -169,13 +169,13 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
         if (propertiesThatChanged["DeadPlayers"] != null && createdPlayerList)
         {
-            List<int> deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
+            List<string> deadPlayers = (propertiesThatChanged["DeadPlayers"] as string[]).ToList();
 
             // Disable player if found in list of players
             foreach (Transform target in targets.ToList())
             {
-                int viewID = target.GetComponent<PhotonView>().ViewID;
-                if (deadPlayers.Contains(viewID))
+                string userID = target.GetComponent<PhotonView>().Owner.UserId;
+                if (deadPlayers.Contains(userID))
                 {
                     targets.Remove(target);
                     target.gameObject.SetActive(false);
@@ -227,10 +227,10 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     private void CalculatePlacements(EventData photonEvent)
     {
-        object[] tempObjects = (object[])photonEvent.CustomData;
-        string name = (string)tempObjects[0];
-        int cp = (int)tempObjects[1];
-        float distance = (float)tempObjects[2];
+        object[] data = (object[])photonEvent.CustomData;
+        string name = (string)data[0];
+        int cp = (int)data[1];
+        float distance = (float)data[2];
 
         if (!playerNames.Contains(name))
         {

@@ -1,9 +1,9 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class PlayerStatusEffects : MonoBehaviourPunCallbacks
+public class PlayerStatusEffects : MonoBehaviourPun
 {
     // Player status effects
     [Header("Status effects")]
@@ -47,16 +47,21 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     bool canBlink = false;
     bool isInvincible = false;
     bool isSlowEventCalled = false;
-    
 
-    // Byte codes
-    private const int slowCode = 8;
-    private const int stunCode = 9;
+    private void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
 
     private void Start()
     {
         // Get colours a little later because of load time
-        Invoke("GetColours", 2f);
+        Invoke("GetColours", 2f); // Change this
 
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
         statusVisual = GetComponentsInChildren<SpriteRenderer>()[1];
@@ -75,7 +80,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             // Raise event
             if (!isSlowEventCalled)
             {
-                RaiseEvent(photonView.ViewID, slowCode, true);
+                RaiseEvent(photonView.ViewID, EventCodes.SLOW_TRIGGER, true);
                 isSlowEventCalled = true;
             }
             // Turn on effect locally
@@ -98,11 +103,10 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             else if (slowedTimer <= 0 && isSlowEventCalled)
             {
                 // Turn off effect for all players
-                RaiseEvent(photonView.ViewID, slowCode, false);
+                RaiseEvent(photonView.ViewID, EventCodes.SLOW_TRIGGER, false);
                 ResetStats();
             }
         }
-
 
         // Stun debuff
         if (isStunned)
@@ -111,7 +115,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             if (!isInvincible)
             {
                 // Raise event
-                RaiseEvent(photonView.ViewID, stunCode, true);
+                RaiseEvent(photonView.ViewID, EventCodes.STUN_TRIGGER, true);
                 StartBlinking();
                 isInvincible = true;
                 playerMovement.KnockBack();
@@ -137,11 +141,25 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             if (stunTimer >= stunDuration)
             {
                 // Raise event
-                RaiseEvent(photonView.ViewID, stunCode, false);
+                RaiseEvent(photonView.ViewID, EventCodes.STUN_TRIGGER, false);
                 StopBlinking();
                 ResetStats();
-                stunTimer = 0;           
+                stunTimer = 0;
             }
+        }
+    }
+
+    private void Blinking()
+    {
+        // Blink the player sprite between a tranparent colour and the original colour
+        canBlink = !canBlink;
+        if (canBlink)
+        {
+            playerSprite.color = playerColor;
+        }
+        else
+        {
+            playerSprite.color = Color.clear;
         }
     }
 
@@ -162,7 +180,6 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         // Get current player colour
         playerColor = GetComponent<SpriteRenderer>().color;
     }
-
 
     private void ResetStats()
     {
@@ -187,20 +204,12 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
         isInvincible = false;
     }
 
-    public override void OnEnable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
-    }
-
-    public override void OnDisable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
-    }
-
     private void RaiseEvent(int id, int networkCode, bool isActivated)
     {
+        if (!PhotonNetwork.InRoom) { return; }
+
         // Raise event and give photon id, network byte and a timestamp from when it was send
-        object[] content = new object[] { id, isActivated, (float)PhotonNetwork.Time};
+        object[] content = new object[] { id, isActivated, (float)PhotonNetwork.Time };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         PhotonNetwork.RaiseEvent((byte)networkCode, content, raiseEventOptions, SendOptions.SendReliable);
     }
@@ -209,22 +218,22 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
     {
         byte eventCode = photonEvent.Code;
         // Continue if received the right codes otherwise return;
-        if (eventCode != slowCode && eventCode != stunCode)
+        if (eventCode != EventCodes.SLOW_TRIGGER && eventCode != EventCodes.STUN_TRIGGER)
         {
             return;
         }
 
         // Grab objects from array
-        object[] tempObjects = (object[])photonEvent.CustomData;
-        int photonId = (int)tempObjects[0];
-        bool activate = (bool)tempObjects[1];
-        eventTimeStamp = (float)tempObjects[2];
+        object[] data = (object[])photonEvent.CustomData;
+        int photonId = (int)data[0];
+        bool activate = (bool)data[1];
+        eventTimeStamp = (float)data[2];
 
         float timeDif = (float)PhotonNetwork.Time - eventTimeStamp;
 
         // Calculcate time difference between the time received and current server time 
 
-        if(eventCode == slowCode && photonView.ViewID == photonId && timeDif <= maxSyncTime)
+        if (eventCode == EventCodes.SLOW_TRIGGER && photonView.ViewID == photonId && timeDif <= maxSyncTime)
         {
             // Enable or disable effect
             if (activate)
@@ -237,7 +246,7 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
             }
         }
 
-        if(eventCode == stunCode && photonView.ViewID == photonId && timeDif <= maxSyncTime)
+        if (eventCode == EventCodes.STUN_TRIGGER && photonView.ViewID == photonId && timeDif <= maxSyncTime)
         {
             // Enable or disable effect
             if (activate)
@@ -249,20 +258,6 @@ public class PlayerStatusEffects : MonoBehaviourPunCallbacks
                 StopBlinking();
                 ResetStats();
             }
-        }
-    }
-
-    private void Blinking()
-    {
-        // Blink the player sprite between a tranparent colour and the original colour
-        canBlink = !canBlink;
-        if (canBlink)
-        {
-            playerSprite.color = playerColor;
-        }
-        else
-        {
-            playerSprite.color = Color.clear;
         }
     }
 }

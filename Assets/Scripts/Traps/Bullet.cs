@@ -3,7 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class Bullet : MonoBehaviourPun, IOnEventCallback
+public class Bullet : MonoBehaviourPun
 {
     private Vector2 moveDirection;
     private float moveSpeed;
@@ -23,8 +23,8 @@ public class Bullet : MonoBehaviourPun, IOnEventCallback
         byte eventCode = photonEvent.Code;
         if (eventCode == EventCodes.BULLET_DESTROY)
         {
-            object[] tempObject = (object[])photonEvent.CustomData;
-            int objectViewID = (int)tempObject[0];
+            object[] data = (object[])photonEvent.CustomData;
+            int objectViewID = (int)data[0];
 
             if (objectViewID == photonView.ViewID)
             {

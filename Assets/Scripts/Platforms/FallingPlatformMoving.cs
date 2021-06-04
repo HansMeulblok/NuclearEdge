@@ -3,7 +3,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
+public class FallingPlatformMoving : MonoBehaviourPun
 {
     private bool isFalling = false;
     private float fallingSpeed;
@@ -60,10 +60,10 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
         byte eventCode = photonEvent.Code;
         if (eventCode == EventCodes.PLATFORM_MOVING)
         {
-            object[] tempObject = (object[])photonEvent.CustomData;
-            string objectName = (string)tempObject[0];
+            object[] data = (object[])photonEvent.CustomData;
+            Vector3 position = (Vector3)data[0];
 
-            if (objectName == gameObject.name)
+            if (position == transform.position)
             {
                 GetComponentInChildren<PlayerMovement2D>()?.UnParent();
                 gameObject.SetActive(false);
@@ -90,7 +90,7 @@ public class FallingPlatformMoving : MonoBehaviourPun, IOnEventCallback
     {
         if (!PhotonNetwork.InRoom) { return; }
 
-        object[] content = new object[] { gameObject.name }; ;
+        object[] content = new object[] { transform.position }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(EventCodes.PLATFORM_MOVING, content, raiseEventOptions, SendOptions.SendReliable);
     }

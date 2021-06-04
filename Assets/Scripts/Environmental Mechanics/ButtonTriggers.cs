@@ -3,7 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-public class ButtonTriggers : MonoBehaviourPun, IOnEventCallback
+public class ButtonTriggers : MonoBehaviourPun
 {
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;

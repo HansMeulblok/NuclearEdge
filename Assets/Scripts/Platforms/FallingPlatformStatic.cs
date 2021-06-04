@@ -4,7 +4,7 @@ using Photon.Realtime;
 using UnityEngine;
 
 //[ExecuteInEditMode]
-public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
+public class FallingPlatformStatic : MonoBehaviourPun
 {
     [Header("Falling variables")]
     public float TURNING_OFF_TIME = 0.5f;
@@ -38,11 +38,11 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
         byte eventCode = photonEvent.Code;
         if (eventCode == EventCodes.PLATFORM_STATIC﻿)
         {
-            object[] tempObject = (object[])photonEvent.CustomData;
-            string objectName = (string)tempObject[0];
-            float serverTime = (float)tempObject[1];
+            object[] data = (object[])photonEvent.CustomData;
+            Vector3 position = (Vector3)data[0];
+            float serverTime = (float)data[1];
 
-            if (objectName == gameObject.name)
+            if (position == transform.position)
             {
                 startTime = serverTime;
                 steppedOn = true;
@@ -54,7 +54,7 @@ public class FallingPlatformStatic : MonoBehaviourPun, IOnEventCallback
     {
         if (!PhotonNetwork.InRoom) { return; }
 
-        object[] content = new object[] { gameObject.name, (float)PhotonNetwork.Time }; ;
+        object[] content = new object[] { transform.position, (float)PhotonNetwork.Time }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(EventCodes.PLATFORM_STATIC, content, raiseEventOptions, SendOptions.SendReliable);
     }

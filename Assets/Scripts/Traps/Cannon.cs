@@ -11,7 +11,7 @@ using UnityEngine;
  * or gets decided to be removed. For now cannon can't be angled.
  */
 
-public class Cannon : BaseActivator, IOnEventCallback
+public class Cannon : BaseActivator
 {
     public GameObject pivot;
     public GameObject firePoint;

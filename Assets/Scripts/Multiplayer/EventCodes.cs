@@ -17,4 +17,6 @@ public class EventCodes : MonoBehaviour
     public const int PLATFORM_MOVING = 5;
     public const int CANNON_TRIIGER = 6;
     public const int BULLET_DESTROY = 7;
+    public const int SLOW_TRIGGER = 8;
+    public const int STUN_TRIGGER = 9;
 }
