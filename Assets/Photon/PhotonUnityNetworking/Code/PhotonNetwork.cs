@@ -64,7 +64,7 @@ namespace Photon.Pun
     public static partial class PhotonNetwork
     {
         /// <summary>Version number of PUN. Used in the AppVersion, which separates your playerbase in matchmaking.</summary>
-        public const string PunVersion = "2.30";
+        public const string PunVersion = "2.31";
 
         /// <summary>Version number of your game. Setting this updates the AppVersion, which separates your playerbase in matchmaking.</summary>
         /// <remarks>
@@ -660,7 +660,6 @@ namespace Photon.Pun
 
             set
             {
-                NetworkingClient.LoadBalancingPeer.IsSendingOnlyAcks = !value;
                 isMessageQueueRunning = value;
             }
         }
@@ -1037,7 +1036,7 @@ namespace Photon.Pun
             ConnectionProtocol protocol = PhotonNetwork.PhotonServerSettings.AppSettings.Protocol;
             NetworkingClient = new LoadBalancingClient(protocol);
             NetworkingClient.LoadBalancingPeer.QuickResendAttempts = 2;
-            NetworkingClient.LoadBalancingPeer.SentCountAllowance = 7;
+            NetworkingClient.LoadBalancingPeer.SentCountAllowance = 9;
 
             NetworkingClient.EventReceived -= OnEvent;
             NetworkingClient.EventReceived += OnEvent;
@@ -1048,7 +1047,6 @@ namespace Photon.Pun
 
             StartupStopwatch = new Stopwatch();
             StartupStopwatch.Start();
-            NetworkingClient.LoadBalancingPeer.LocalMsTimestampDelegate = () => (int)StartupStopwatch.ElapsedMilliseconds;
 
             // using a singleton PhotonHandler to control the new client (which is also a singleton for PUN)
             PhotonHandler.Instance.Client = NetworkingClient;

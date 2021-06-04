@@ -32,7 +32,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         {
             finishedMenu.SetActive(true);
 
-            if (propertiesThatChanged["playerWon"].Equals(PhotonNetwork.NickName))
+            if (propertiesThatChanged["playerWon"].Equals(PhotonNetwork.LocalPlayer.UserId))
             {
                 playerWon = true;
                 resultText.text = "You Win!";

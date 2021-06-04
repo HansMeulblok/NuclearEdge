@@ -1,60 +1,79 @@
-using System.Collections;
-using System.Collections.Generic;
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviourPun
 {
     private Vector2 moveDirection;
     private float moveSpeed;
-    private float bulletLifeSpan;
+
     private void OnEnable()
     {
-        Invoke("Destroy", bulletLifeSpan);
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == EventCodes.BULLET_DESTROY)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            int objectViewID = (int)data[0];
+
+            if (objectViewID == photonView.ViewID)
+            {
+                Destroy();
+            }
+        }
+    }
+
+    private void DestoyBulletEvent()
+    {
+        if (!PhotonNetwork.InRoom) { return; }
+
+        object[] content = new object[] { photonView.ViewID };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(EventCodes.BULLET_DESTROY, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     private void Update()
     {
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        if (MultiTargetCamera.createdPlayerList) { transform.Translate(moveDirection * moveSpeed * Time.deltaTime); }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerStatusEffects>().isStunned = true;
+            if (collision.gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                collision.gameObject.GetComponent<PlayerStatusEffects>().isStunned = true;
+            }
         }
 
+        if (PhotonNetwork.IsMasterClient) { DestoyBulletEvent(); }
         Destroy();
     }
 
-    //variables that are set in the shooting method in the Cannon.
-    public void SetMoveDirection(Vector2 dir)
+    // Variables that are set in the shooting method in the Cannon.
+    public void SetBulletProperties(Vector2 dir, float speed, float lifeSpan)
     {
         moveDirection = dir;
-    }
-
-    public void SetMoveSpeed(float speed)
-    {
         moveSpeed = speed;
-    }
 
-    public void SetBulletLifeSpan(float lifeSpan)
-    {
-        bulletLifeSpan = lifeSpan;
+        if (PhotonNetwork.IsMasterClient) { Invoke("DestoyBulletEvent", lifeSpan); }
     }
 
     private void Destroy()
     {
         gameObject.SetActive(false);
     }
-
-    private void OnDisable()
-    {
-        CancelInvoke();
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.identity;
-    }
-
     public void PlaySound()
     {
         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Traps/CannonFire", transform.position);

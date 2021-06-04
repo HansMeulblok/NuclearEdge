@@ -1,9 +1,10 @@
 using UnityEngine;
+
 [ExecuteInEditMode]
 public class TriggerPlatform : BaseActivator
 {
 
-    public bool startSolid;
+    public bool isSolid;
     private Color platformColor;
 
     public SpriteRenderer spriteHolder;
@@ -22,15 +23,14 @@ public class TriggerPlatform : BaseActivator
     public void Trigger()
     {
         //swtich bool and get the color
-        startSolid = !startSolid;
+        isSolid = !isSolid;
         Swap();
     }
 
     public void Swap()
     {
         platformColor = spriteHolder.GetComponent<SpriteRenderer>().color;
-
-        if (startSolid)
+        if (isSolid)
         {
             //turn on collider and set the alpha to 100%
             GetComponent<BoxCollider2D>().enabled = true;

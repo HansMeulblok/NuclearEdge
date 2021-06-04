@@ -1,10 +1,13 @@
-using System.Collections;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class ButtonTriggers : MonoBehaviour
+public class ButtonTriggers : MonoBehaviourPun
 {
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
+
     [SerializeField] private float rotationSpeed;
     private float scale = 1.25f;
 
@@ -15,14 +18,67 @@ public class ButtonTriggers : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        transform.localScale = new Vector3(scale, scale, 1);
-        if (other.gameObject.CompareTag("Player"))
+
+        if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
         {
-            for (int i = 0; i < activators.Length; i++)
+            transform.localScale = new Vector3(scale, scale, 1);
+            TriggerTrapsEvent();
+        }
+    }
+
+    private void ActivateTraps()
+    {
+        for (int i = 0; i < activators.Length; i++)
+        {
+            /* 
+             * Some triggers should only be triggered by the master (like activating cannon),
+             * this is a work around for that. Add MasterControlled tag to any trap that needs
+             * to be controlled ONLY by the master.
+             */
+
+            if (PhotonNetwork.IsMasterClient && activators[i].gameObject.CompareTag("MasterControlled"))
             {
                 activators[i].Activate();
             }
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Trigger");
+            else
+            {
+                activators[i].Activate();
+            }
+        }
+    }
+
+    private void TriggerTrapsEvent()
+    {
+        if (!PhotonNetwork.InRoom) { return; }
+
+        object[] content = new object[] { transform.position };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(EventCodes.TRIGGER_TRAPS, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
+    private void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == EventCodes.TRIGGER_TRAPS)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            Vector3 position = (Vector3)data[0];
+
+            if (position == transform.position)
+            {
+                ActivateTraps();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Trigger");
+            }
         }
     }
 

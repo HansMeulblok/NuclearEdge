@@ -10,9 +10,7 @@ public class PlayerCPTracker : MonoBehaviourPunCallbacks
     public GameObject nextCheckpoint;
     public float distanceToNextCP;
 
-    private const int cpCode = 3;
     private const float checkPointUpdate = 0.2f;
-
 
     private void Start()
     {
@@ -67,10 +65,8 @@ public class PlayerCPTracker : MonoBehaviourPunCallbacks
         int currentCheckpoint = CurrentCheckpoint();
         float currentDistance = DistanceToNextCP();
 
-        object[] content = new object[] { photonView.Owner.NickName, currentCheckpoint, currentDistance };
+        object[] content = new object[] { photonView.OwnerActorNr.ToString(), currentCheckpoint, currentDistance };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-        PhotonNetwork.RaiseEvent(cpCode, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(EventCodes.CHECKPOINT, content, raiseEventOptions, SendOptions.SendReliable);
     }
-
-
 }

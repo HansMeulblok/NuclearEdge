@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db92a80a241b2441b25bb8e245a9b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSolid: 0
+  isSolid: 0
   spriteHolder: {fileID: 1356327603}
   collider: {fileID: 2394611285974163024}
 --- !u!114 &7950499306656650216
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e37072cfbd7254aa44a89480804846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editing: 1
+  editing: 0
   platformLength: 3
   platformHeight: 1
   spriteHolder: {fileID: 1356327603}

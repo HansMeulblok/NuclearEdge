@@ -1,6 +1,4 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement2D : MonoBehaviourPun
@@ -74,7 +72,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     int countCrushing;
     Collider2D[] crushResults = new Collider2D[10];
 
-    PlayerManager myPlayerManager;
+    PlayerManager playerManager;
     Vector3 lastSpeed;
 
     // Global variables
@@ -90,7 +88,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         // Get the rigidbody
         rb = GetComponent<Rigidbody2D>();
         // Get the player status effects script
-        myPlayerManager = GetComponent<PlayerManager>();
+        playerManager = GetComponent<PlayerManager>();
 
         // Reset movespeed on start
         moveSpeed = Vector3.zero;
@@ -113,7 +111,6 @@ public class PlayerMovement2D : MonoBehaviourPun
         VerticalMove();
         // Pressed should always be in effect one fixedUpdate after keydown
         ResetPressed();
-
     }
 
     // This function checks the relevant inputs
@@ -434,7 +431,7 @@ public class PlayerMovement2D : MonoBehaviourPun
     {
         // Check left for collision
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.left, colisionDistance, sideMask))
-        {   
+        {
             leftCol = true;
         }
         else
@@ -541,15 +538,10 @@ public class PlayerMovement2D : MonoBehaviourPun
         {
             // Check if falling platform is below the player and if it is parent it to it.s
             RaycastHit2D downHit = Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, 0.05f, sludgeMask);
-            if (downHit.transform.tag == "Falling Platform")
+            if (transform.parent == null && downHit.transform.tag == "Falling Platform")
             {
                 transform.parent = downHit.transform;
             }
-            else
-            {
-                transform.parent = null;
-            }
-
         }
         else
         {
@@ -612,7 +604,7 @@ public class PlayerMovement2D : MonoBehaviourPun
             if (countCrushing > 5)
             {
                 // The player is just dead
-                myPlayerManager.KillPlayer(PhotonNetwork.NickName);
+                playerManager.KillPlayer();
             }
         }
         else

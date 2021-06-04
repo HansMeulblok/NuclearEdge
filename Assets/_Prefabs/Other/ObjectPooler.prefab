@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 747686762429411012}
-  - component: {fileID: 747686762429411013}
+  - component: {fileID: 4773552247528915502}
   m_Layer: 0
-  m_Name: BulletPool
+  m_Name: ObjectPooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &747686762429411013
+--- !u!114 &4773552247528915502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,7 +40,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 747686762429411014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4bfecdc04deb5245be2577d5890294f, type: 3}
+  m_Script: {fileID: 11500000, guid: c797efdeb1fb16741ab756c6e8edf80a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledBullet: {fileID: 139550010757552029, guid: 74a36165dcdc4cf469c450c685c9890f, type: 3}
+  pools:
+  - tag: Bullet
+    prefab: {fileID: 910021367111986399, guid: ef9838641c53688469a2e5eeceaf5136, type: 3}
+    size: 10
+  - tag: FallingPlatformMoving
+    prefab: {fileID: 3860048427860164810, guid: afde2062720c3e146bf2f5ed98d45246, type: 3}
+    size: 10

@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Photon.Pun;
 
-public abstract class BaseActivator : MonoBehaviour
+public abstract class BaseActivator : MonoBehaviourPunCallbacks
 {
     //The base activate fuction
     public abstract void Activate();
+
 }
