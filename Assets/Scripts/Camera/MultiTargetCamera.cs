@@ -38,7 +38,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     object[] player3 = new object[2];
     object[] player4 = new object[2];
 
-    string[] playerNames = new string[4];
+    string[] playerActorIds = new string[4];
     object[][] playerProgressList = new object[4][];
 
     public override void OnEnable()
@@ -228,29 +228,29 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     private void CalculatePlacements(EventData photonEvent)
     {
         object[] data = (object[])photonEvent.CustomData;
-        string name = (string)data[0];
+        string actorId = (string)data[0];
         int cp = (int)data[1];
         float distance = (float)data[2];
 
-        if (!playerNames.Contains(name))
+        if (!playerActorIds.Contains(actorId))
         {
-            for (int i = 0; i < playerNames.Length; i++)
+            for (int i = 0; i < playerActorIds.Length; i++)
             {
-                if (playerNames[i] != null)
+                if (playerActorIds[i] != null)
                 {
                     continue;
                 }
                 else
                 {
-                    playerNames[i] = name;
+                    playerActorIds[i] = actorId;
                     break;
                 }
             }
         }
 
-        for (int i = 0; i < playerNames.Length; i++)
+        for (int i = 0; i < playerActorIds.Length; i++)
         {
-            if (playerNames[i] == name)
+            if (playerActorIds[i] == actorId)
             {
                 playerProgressList[i][0] = cp;
                 playerProgressList[i][1] = distance;
@@ -263,7 +263,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             // Keep track if there was a swap in this loop
             bool swapped = false;
 
-            if (playerNames[0] != null && playerNames[1] != null)
+            if (playerActorIds[0] != null && playerActorIds[1] != null)
             {
                 // Check if the first entry in the array has a bigger distance to the next checkpoint than the second entry in the array
                 if ((float)playerProgressList[0][1] > (float)playerProgressList[1][1])
@@ -275,7 +275,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (playerNames[1] != null && playerNames[2] != null)
+            if (playerActorIds[1] != null && playerActorIds[2] != null)
             {
                 if ((float)playerProgressList[1][1] > (float)playerProgressList[2][1])
                 {
@@ -284,7 +284,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (playerNames[2] != null && playerNames[3] != null)
+            if (playerActorIds[2] != null && playerActorIds[3] != null)
             {
                 if ((float)playerProgressList[2][1] > (float)playerProgressList[3][1])
                 {
@@ -305,7 +305,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         {
             // Keep track if there was a swap in this loop
             bool swapped = false;
-            if (playerNames[0] != null && playerNames[1] != null)
+            if (playerActorIds[0] != null && playerActorIds[1] != null)
             {
                 // Check if the first entry in the array has a smaller checkpoint number than the second entry in the array
                 if ((int)playerProgressList[0][0] < (int)playerProgressList[1][0])
@@ -317,7 +317,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (playerNames[1] != null && playerNames[2] != null)
+            if (playerActorIds[1] != null && playerActorIds[2] != null)
             {
                 if ((int)playerProgressList[1][0] < (int)playerProgressList[2][0])
                 {
@@ -326,7 +326,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (playerNames[2] != null && playerNames[3] != null)
+            if (playerActorIds[2] != null && playerActorIds[3] != null)
             {
                 if ((int)playerProgressList[2][0] < (int)playerProgressList[3][0])
                 {
@@ -342,18 +342,19 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         }
 
         if (!PhotonNetwork.InRoom) { return; }
-        object[] content = new object[] { playerNames[0] };
+
+        object[] content = new object[] { playerActorIds[0] };
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(EventCodes.FIRST_PLACE, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
     private void SetFirstPlace(EventData photonEvent)
     {
-        object[] tempObjects = (object[])photonEvent.CustomData;
+        object[] data = (object[])photonEvent.CustomData;
 
         for (int i = 0; i < targets.Count; i++)
         {
-            if (targets[i].GetComponent<PhotonView>().Owner.NickName == (string)tempObjects[0])
+            if (targets[i].GetComponent<PhotonView>().OwnerActorNr.ToString() == (string)data[0])
             {
                 firstPlayer = targets[i];
             }
@@ -367,8 +368,8 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         playerProgressList[swapFirst] = playerProgressList[swapSecond];
         playerProgressList[swapSecond] = tempObject;
 
-        string tempName = playerNames[swapFirst];
-        playerNames[swapFirst] = playerNames[swapSecond];
-        playerNames[swapSecond] = tempName;
+        string tempName = playerActorIds[swapFirst];
+        playerActorIds[swapFirst] = playerActorIds[swapSecond];
+        playerActorIds[swapSecond] = tempName;
     }
 }

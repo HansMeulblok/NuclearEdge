@@ -14,8 +14,6 @@ public class StartChunk : MonoBehaviourPunCallbacks
     private float startTime;
     private string tempCd = "";
 
-
-
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
