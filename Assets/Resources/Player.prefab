@@ -234,16 +234,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowed: 0
   slowedTimer: 0
-  slowMovementModifier: 0
-  slowJumpModifier: 0
+  slowMovementModifier: 0.75
+  slowJumpModifier: 0.75
   inSludge: 0
   movementChanged: 0
   isStunned: 0
   respawnPosition: {x: 0, y: 0}
-  stunMovementModifier: 0.6
-  stunJumpModifier: 0.6
+  stunMovementModifier: 0.4
+  stunJumpModifier: 0.55
   blinkInterval: 0.2
-  stunDuration: 3
+  stunDuration: 1.5
   maxSyncTime: 4
 --- !u!114 &67980660962732785
 MonoBehaviour:
