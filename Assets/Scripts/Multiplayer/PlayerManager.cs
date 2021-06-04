@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             if (!playersLoaded.ContainsKey(photonView.ViewID)) { playersLoaded.Add(photonView.ViewID, true); }
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "PlayersLoaded", playersLoaded } });
-            print("Master [" + photonView.OwnerActorNr + "] ready.");
+            
             StartCoroutine(ChangePlayersColor());
         }
         else
@@ -70,10 +70,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             playersLoaded = (Dictionary<int, bool>)propertiesThatChanged["PlayersLoaded"];
 
-            print("Players loaded [" + playersLoaded.Count + "] | Max player [" + PhotonNetwork.CurrentRoom.PlayerCount + "]");
             if (playersLoaded.Count >= PhotonNetwork.CurrentRoom.PlayerCount)
             {
-                print("Everyone loaded...");
                 MultiTargetCamera.allPlayersCreated = true;
             }
         };
@@ -101,7 +99,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             playersLoaded.Add(photonView.ViewID, true);
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "PlayersLoaded", playersLoaded } });
-            print("Player [" + photonView.OwnerActorNr + "] ready.");
         }
 
         yield break;

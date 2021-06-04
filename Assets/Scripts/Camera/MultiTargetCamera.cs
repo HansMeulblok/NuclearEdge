@@ -161,7 +161,6 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             pvPlayers.Add(player.GetComponent<PhotonView>());
         }
 
-        print("List created!");
         createdPlayerList = true;
     }
 
@@ -175,7 +174,6 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             foreach (Transform target in targets.ToList())
             {
                 int actorId = target.GetComponent<PhotonView>().OwnerActorNr;
-                print(actorId);
                 if (deadPlayers.Contains(actorId))
                 {
                     targets.Remove(target);
