@@ -111,7 +111,6 @@ public class PlayerMovement2D : MonoBehaviourPun
         VerticalMove();
         // Pressed should always be in effect one fixedUpdate after keydown
         ResetPressed();
-
     }
 
     // This function checks the relevant inputs

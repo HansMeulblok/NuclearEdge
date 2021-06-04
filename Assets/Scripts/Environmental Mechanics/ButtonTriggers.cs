@@ -71,9 +71,8 @@ public class ButtonTriggers : MonoBehaviourPun
             if (position == transform.position)
             {
                 ActivateTraps();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Trigger");
             }
-
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Trigger");
         }
     }
 

@@ -123,9 +123,7 @@ public class FallingPlatformStatic : MonoBehaviourPun
     }
 
     public void SwitchStaticPlatform(bool isActive)
-    {
-        print("Switching platform to " + isActive);
-        
+    {       
         if (isActive)
         {
             spriteHolder.enabled = true;

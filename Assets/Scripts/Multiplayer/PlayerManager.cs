@@ -14,7 +14,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private Dictionary<int, bool> playersLoaded;
     private Dictionary<int, string> playerColors;
 
-    private List<string> deadPlayers;
+    private List<int> deadPlayers;
     private bool isRendered = false;
 
     void Awake()
@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         playerSprite = GetComponent<SpriteRenderer>();
         multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
 
-        deadPlayers = new List<string>();
+        deadPlayers = new List<int>();
         playersLoaded = new Dictionary<int, bool>();
 
         if (PhotonNetwork.IsMasterClient)
@@ -51,9 +51,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     public void KillPlayer()
     {
-        if (!deadPlayers.Contains(photonView.Owner.UserId))
+        if (!deadPlayers.Contains(photonView.OwnerActorNr))
         {
-            deadPlayers.Add(photonView.Owner.UserId);
+            deadPlayers.Add(photonView.OwnerActorNr) ;
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
         }
     }
@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // Disable player if found in list of players
         if (propertiesThatChanged["DeadPlayers"] != null)
         {
-            deadPlayers = (propertiesThatChanged["DeadPlayers"] as string[]).ToList();
+            deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
         };
 
         if (propertiesThatChanged["PlayersLoaded"] != null)
@@ -88,7 +88,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 player.gameObject.GetComponent<SpriteRenderer>().color = colorTemp;
                 player.gameObject.GetComponentInChildren<TextMeshPro>().text = player.Owner.NickName;
             }
-
         }
     }
 
@@ -136,7 +135,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if (!deadPlayers.Contains(otherPlayer.UserId)) { deadPlayers.Add(otherPlayer.UserId); }
+
+        if (!deadPlayers.Contains(otherPlayer.ActorNumber)) { deadPlayers.Add(otherPlayer.ActorNumber); }
         PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
     }
 }

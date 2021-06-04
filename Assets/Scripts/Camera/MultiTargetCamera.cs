@@ -166,16 +166,16 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
-
         if (propertiesThatChanged["DeadPlayers"] != null && createdPlayerList)
         {
-            List<string> deadPlayers = (propertiesThatChanged["DeadPlayers"] as string[]).ToList();
+            List<int> deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
 
             // Disable player if found in list of players
             foreach (Transform target in targets.ToList())
             {
-                string userID = target.GetComponent<PhotonView>().Owner.UserId;
-                if (deadPlayers.Contains(userID))
+                int actorId = target.GetComponent<PhotonView>().OwnerActorNr;
+                print(actorId);
+                if (deadPlayers.Contains(actorId))
                 {
                     targets.Remove(target);
                     target.gameObject.SetActive(false);
@@ -193,11 +193,11 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         };
     }
 
-    public void RemovePlayer(string userId)
+    public void RemovePlayer(int actorID)
     {
         foreach (PhotonView player in pvPlayers.ToList())
         {
-            if (player.Owner.UserId == userId)
+            if (player.OwnerActorNr == actorID)
             {
                 targets.Remove(player.gameObject.transform);
                 pvPlayers.Remove(player);
@@ -208,7 +208,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
     // Updates players and camera when a player leaves
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        RemovePlayer(otherPlayer.UserId);
+        RemovePlayer(otherPlayer.ActorNumber);
     }
 
     public void OnEvent(EventData photonEvent)
