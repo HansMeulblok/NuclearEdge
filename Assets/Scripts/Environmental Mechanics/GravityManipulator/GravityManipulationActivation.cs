@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class GravityManipulationActivation : BaseActivator
 {
-    private float timeActivatedCurrent;
+    [Header("Size of activated gravity zone")]
+    public Vector2 activatedScale;
+
     public float timeActivatedOriginal = 5f;
     public bool isStatic = false;
+    
+    private float timeActivatedCurrent;
     private bool isStarted = false;
 
     private Vector2 deactivatedScale;
-    [Header("Size of activated gravity zone")]
-    public Vector2 activatedScale;
+    
     private float lerpTime = 1f;
     private bool isLerping = false;
     float lerpValue = 0;
@@ -22,16 +25,13 @@ public class GravityManipulationActivation : BaseActivator
 
         transform.localScale = deactivatedScale;
 
-        timeActivatedCurrent = timeActivatedOriginal;
-        if(isStatic)
-        {
-            //Activate();
-        }
+        timeActivatedCurrent = timeActivatedOriginal;   
     }
 
     private void Update()
     {
-        if (isStarted){
+        if (isStarted)
+        {
             if (timeActivatedCurrent <= 0)
             {
                 Deactivate();
@@ -44,7 +44,7 @@ public class GravityManipulationActivation : BaseActivator
         }
     }
 
-    //fixed update handles lerping between startScale and desiredScale
+    // Fixed update handles lerping between startScale and desiredScale
     private void FixedUpdate()
     {
         lerpValue += lerpTime * Time.fixedDeltaTime;
@@ -72,7 +72,7 @@ public class GravityManipulationActivation : BaseActivator
         }
     }
 
-    //activates the GM activation
+    // Activates the GM activation
     public override void Activate()
     {
         lerpValue = 0;
@@ -82,7 +82,7 @@ public class GravityManipulationActivation : BaseActivator
         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Traps/GravityManipulator", transform.position);
     }
 
-    //deactivates the GM activation
+    // Deactivates the GM activation
     private void Deactivate()
     {
         lerpValue = 0;
@@ -95,7 +95,7 @@ public class GravityManipulationActivation : BaseActivator
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //reset gravity back to normal
+            // Reset gravity back to normal
             GameObject player = collision.gameObject;
             player.GetComponent<PlayerMovement2D>().gravZoneMult = gravOutGM;
         }
