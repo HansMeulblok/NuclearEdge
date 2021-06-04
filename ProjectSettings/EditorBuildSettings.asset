@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Levels/Level_01 1.unity
     guid: 899e829048d05aa4e8c8fc607cd64abb
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Chunks/ChuckDesign 2.unity
     guid: e4f70867424482a439de593fd1a22617
   - enabled: 1
