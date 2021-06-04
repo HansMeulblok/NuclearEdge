@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             if (!playersLoaded.ContainsKey(photonView.ViewID)) { playersLoaded.Add(photonView.ViewID, true); }
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "PlayersLoaded", playersLoaded } });
-            
+
             StartCoroutine(ChangePlayersColor());
         }
         else
@@ -85,8 +85,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             {
                 ColorUtility.TryParseHtmlString(playerColors[player.ViewID], out Color colorTemp);
 
-                player.gameObject.GetComponent<SpriteRenderer>().color = colorTemp;
-                player.gameObject.GetComponentInChildren<TextMeshPro>().text = player.Owner.NickName;
+                player.GetComponent<SpriteRenderer>().color = colorTemp;
+                player.GetComponentInChildren<TextMeshPro>().text = player.Owner.NickName;
+                player.GetComponent<PlayerStatusEffects>().GetColours();
             }
         }
     }

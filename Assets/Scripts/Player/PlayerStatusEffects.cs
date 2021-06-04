@@ -60,9 +60,6 @@ public class PlayerStatusEffects : MonoBehaviourPun
 
     private void Start()
     {
-        // Get colours a little later because of load time
-        Invoke("GetColours", 2f); // Change this
-
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
         statusVisual = GetComponentsInChildren<SpriteRenderer>()[1];
         playerSprite = GetComponent<SpriteRenderer>();
@@ -175,7 +172,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
         CancelInvoke("Blinking");
     }
 
-    private void GetColours()
+    public void GetColours()
     {
         // Get current player colour
         playerColor = GetComponent<SpriteRenderer>().color;
