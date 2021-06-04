@@ -7,7 +7,7 @@ public class ButtonTriggers : MonoBehaviourPun
 {
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
-    
+
     [SerializeField] private float rotationSpeed;
     private float scale = 1.25f;
 
@@ -30,6 +30,12 @@ public class ButtonTriggers : MonoBehaviourPun
     {
         for (int i = 0; i < activators.Length; i++)
         {
+            /* 
+             * Some triggers should only be triggered by the master (like activating cannon),
+             * this is a work around for that. Add MasterControlled tag to any trap that needs
+             * to be controlled ONLY by the master.
+             */
+
             if (PhotonNetwork.IsMasterClient && activators[i].gameObject.CompareTag("MasterControlled"))
             {
                 activators[i].Activate();
