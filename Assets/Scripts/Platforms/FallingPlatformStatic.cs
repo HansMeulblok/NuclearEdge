@@ -10,7 +10,7 @@ public class FallingPlatformStatic : MonoBehaviourPun
     public float TURNING_OFF_TIME = 0.5f;
     public float FALLING_DOWN_DUR = 2;
     public float FALLING_SPEED = 5;
-    public float MAX_DELAT_TIME = 5;
+    public float MAX_DELAY_TIME = 5;
 
     private float startTime;
     private float timer;
@@ -26,7 +26,7 @@ public class FallingPlatformStatic : MonoBehaviourPun
     public void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
-    } 
+    }
 
     public void OnDisable()
     {
@@ -86,7 +86,7 @@ public class FallingPlatformStatic : MonoBehaviourPun
             timer = (float)(PhotonNetwork.Time - startTime);
 
             // If receiving event took longer than delay time, skip falling
-            if (timer >= MAX_DELAT_TIME)
+            if (timer >= MAX_DELAY_TIME)
             {
                 steppedOn = isActivated = false;
                 timer = 0;
@@ -98,7 +98,7 @@ public class FallingPlatformStatic : MonoBehaviourPun
         }
 
         // If timer is maxed out start falling
-        if (timer >= TURNING_OFF_TIME && timer < MAX_DELAT_TIME)
+        if (timer >= TURNING_OFF_TIME && timer < MAX_DELAY_TIME)
         {
             newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatformMoving", transform.position, Quaternion.identity);
             newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, FALLING_SPEED, FALLING_DOWN_DUR);
@@ -124,6 +124,8 @@ public class FallingPlatformStatic : MonoBehaviourPun
 
     public void SwitchStaticPlatform(bool isActive)
     {
+        print("Switching platform to " + isActive);
+        
         if (isActive)
         {
             spriteHolder.enabled = true;
