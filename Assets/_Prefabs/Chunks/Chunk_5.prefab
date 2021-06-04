@@ -51688,6 +51688,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: isSolid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: startSolid
       value: 1
       objectReference: {fileID: 0}
@@ -52809,6 +52813,10 @@ PrefabInstance:
     - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: isSolid
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3355242864516840006, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: startSolid
