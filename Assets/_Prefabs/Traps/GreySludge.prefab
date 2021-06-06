@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteHolder: {fileID: 2278374189921796746}
   collider: {fileID: 8735285717185618575}
-  slowMovementModifier: 0.75
+  slowMovementModifier: 0.6
   slowJumpModifier: 0.75
   duration: 0.5
 --- !u!114 &8491245970865039632
