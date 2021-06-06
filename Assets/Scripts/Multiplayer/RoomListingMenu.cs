@@ -17,7 +17,7 @@ public class RoomListingMenu : MonoBehaviourPunCallbacks
         foreach (RoomInfo info in roomList)
         {
             // Removed room from room list.
-            if (info.RemovedFromList && info.PlayerCount == info.MaxPlayers && !info.IsOpen)
+            if (info.RemovedFromList)
             {
                 int index = listOfRooms.FindIndex(room => room.RoomInfo.Name == info.Name);
                 if (index != -1)
