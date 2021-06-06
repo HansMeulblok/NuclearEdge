@@ -26,7 +26,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             print("Connecting to server....");
 
-            PhotonNetwork.GameVersion = "0.0.1";
+            PhotonNetwork.GameVersion = "0.0.2";
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -120,7 +120,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", true } });
         PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = false;
-        PhotonNetwork.LoadLevel(1); // TODO: Change this to the scene which we will be using for the level
+        int i = Random.Range(1, SceneManager.sceneCountInBuildSettings);
+        PhotonNetwork.LoadLevel(i); 
         SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for host
     }
 
