@@ -162,7 +162,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1) && !playerFound)
+        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0) && !playerFound)
         {
             PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
         }
