@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
 {
     [Header("Menu")]
     public GameObject menuPanel;
-    public int characterLimit;
+    public int characterLimit = 12;
     public TMP_InputField playerNameInput;
 
     private TMP_Text inputError;

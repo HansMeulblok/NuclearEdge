@@ -163,7 +163,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0) && !playerFound)
         {
-            PhotonNetwork.Instantiate("Player", Vector3.zero - new Vector3(0, 0, 10), Quaternion.identity);
+            PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
         }
     }
 
