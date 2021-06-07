@@ -28,7 +28,7 @@ public class ObjectPooler : MonoBehaviourPunCallbacks
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> poolDictioray;
 
-    public bool createdObjectPool = false;
+    [HideInInspector] public bool createdObjectPool = false;
 
     private void Start()
     {

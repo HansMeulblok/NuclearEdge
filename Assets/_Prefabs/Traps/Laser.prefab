@@ -155,9 +155,9 @@ MonoBehaviour:
   isActivated: 1
   reflections: 3
   maxLength: 50
-  maxChargeWidth: 0.5
-  chargeColor: {r: 1, g: 1, b: 1, a: 0}
-  damageColor: {r: 0, g: 1, b: 1, a: 0}
+  maxChargeWidth: 0.508
+  chargeColor: {r: 1, g: 1, b: 1, a: 0.19215687}
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7270996208096424650
 GameObject:
   m_ObjectHideFlags: 0

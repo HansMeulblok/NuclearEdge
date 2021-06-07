@@ -5617,15 +5617,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuPanel: {fileID: 996680300829247898}
-  characterLimit: 0
-  playerNameInput: {fileID: 0}
+  characterLimit: 12
+  playerNameInput: {fileID: 8964834057702683755}
   localPanel: {fileID: 996680299974167615}
   l_createRoomNameInput: {fileID: 996680300626547535}
   l_joinNameInput: {fileID: 996680300339534813}
   multiplayerPanel: {fileID: 996680299339904670}
   mp_createRoomNameInput: {fileID: 996680300004836643}
   mp_joinNameInput: {fileID: 996680300051989363}
-  mp_playerCount: {fileID: 0}
+  mp_playerCount: {fileID: 8827968633113139188}
   lobbyPanel: {fileID: 996680299987934798}
   lobbyName: {fileID: 996680300329927447}
   startButton: {fileID: 996680300579876992}

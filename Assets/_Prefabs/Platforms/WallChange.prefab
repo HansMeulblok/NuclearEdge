@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3898707194316694104}
   m_Layer: 10
   m_Name: WallChange
-  m_TagString: Untagged
+  m_TagString: TileMap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,9 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8873ff00366a23242ae97c47b66e7379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editing: 1
-  platformLength: 0
-  platformHeight: 0
   spriteHolder: {fileID: 1182384586}
   collider: {fileID: 1289297621454970644}
   hasMoved: 0
