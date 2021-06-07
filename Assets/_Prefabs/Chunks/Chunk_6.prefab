@@ -403,7 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 12
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 6784421495475571980}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &1928213717363767457
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 17
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 7810081975609650948}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &6469049783514491861
@@ -657,7 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 15
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 1661773183489867581}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &661981685587182839
@@ -911,7 +911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 7
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 4075382521646094201}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &1656780148333462973
@@ -37910,7 +37910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 9
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 118916243949375852}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &3250337807977392556
@@ -38164,7 +38164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 3
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 5496709427357788894}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &8658985163437704460
@@ -38323,7 +38323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 4
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 6555864317926218693}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &7239720709155126036
@@ -38577,7 +38577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 11
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 121074179475777724}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &6984923993689279976
@@ -38704,7 +38704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 14
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 1898549048153093219}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &2823864184162659178
@@ -38958,7 +38958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 6
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 7847206187812339855}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &4448798366177936169
@@ -39467,7 +39467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 16
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 5921131121198641044}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &6103641823050783317
@@ -39594,7 +39594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 13
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 6378063642975800951}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &7973549470724999340
@@ -40071,7 +40071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 5
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 4564996988204892244}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &6006706550005434553
@@ -40881,7 +40881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 10
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 470500158798723417}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &4313262555337078572
@@ -43776,7 +43776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCPNumber: 8
   checkpointNumber: 0
-  nextCheckpoint: {fileID: 0}
+  nextCheckpoint: {fileID: 6688925689652528425}
   isFirstCP: 0
   isLastCP: 0
 --- !u!61 &8094998301139239768
