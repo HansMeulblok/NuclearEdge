@@ -5,13 +5,14 @@ using System.Linq;
 using System.Collections;
 using Photon.Realtime;
 using TMPro;
+using ExitGames.Client.Photon;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
     private SpriteRenderer playerSprite;
 
     private MultiTargetCamera multiTargetCamera;
-    private Dictionary<int, bool> playersLoaded;
+    private List<int> playersLoaded;
     private Dictionary<int, string> playerColors;
 
     private List<int> deadPlayers;
@@ -25,20 +26,88 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
 
         deadPlayers = new List<int>();
-        playersLoaded = new Dictionary<int, bool>();
+        playersLoaded = new List<int>();
 
         if (PhotonNetwork.IsMasterClient)
         {
-            if (!playersLoaded.ContainsKey(photonView.ViewID)) { playersLoaded.Add(photonView.ViewID, true); }
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "PlayersLoaded", playersLoaded } });
+            if (!playersLoaded.Contains(photonView.OwnerActorNr)) { playersLoaded.Add(photonView.OwnerActorNr); }
+            MasterLoadedEvent();
 
             StartCoroutine(ChangePlayersColor());
         }
-        else
+    }
+
+    #region Event Related
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    private void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+
+        if (eventCode == EventCodes.MASTER_LOADED)
         {
-            StartCoroutine(CheckMasterLoaded());
+            ClientLoadedEvent();
+        }
+
+        if (eventCode == EventCodes.CLIENT_LOADED)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            int actorId = (int)data[0];
+            if (!playersLoaded.Contains(actorId)) { playersLoaded.Add(actorId); }
+
+            if (playersLoaded.Count >= PhotonNetwork.CurrentRoom.PlayerCount)
+            {
+                MultiTargetCamera.allPlayersCreated = true;
+                AllLoadedEvent();
+            }
+        }
+
+        if (eventCode == EventCodes.ALL_LOADED)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            bool allReady = (bool)data[0];
+
+            MultiTargetCamera.allPlayersCreated = allReady;
         }
     }
+
+    private void MasterLoadedEvent()
+    {
+        if (!PhotonNetwork.InRoom) { return; }
+
+        object[] content = new object[] { true };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        PhotonNetwork.RaiseEvent(EventCodes.MASTER_LOADED, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
+    private void ClientLoadedEvent()
+    {
+        if (!PhotonNetwork.InRoom) { return; }
+
+        object[] content = new object[] { photonView.OwnerActorNr };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+        PhotonNetwork.RaiseEvent(EventCodes.CLIENT_LOADED, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
+    private void AllLoadedEvent()
+    {
+        if (!PhotonNetwork.InRoom) { return; }
+
+        object[] content = new object[] { MultiTargetCamera.allPlayersCreated };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        PhotonNetwork.RaiseEvent(EventCodes.ALL_LOADED, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+    #endregion
 
     private void Update()
     {
@@ -49,31 +118,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void KillPlayer()
-    {
-        if (!deadPlayers.Contains(photonView.OwnerActorNr))
-        {
-            deadPlayers.Add(photonView.OwnerActorNr);
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
-        }
-    }
-
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         // Disable player if found in list of players
         if (propertiesThatChanged["DeadPlayers"] != null)
         {
             deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
-        };
-
-        if (propertiesThatChanged["PlayersLoaded"] != null)
-        {
-            playersLoaded = (Dictionary<int, bool>)propertiesThatChanged["PlayersLoaded"];
-
-            if (playersLoaded.Count >= PhotonNetwork.CurrentRoom.PlayerCount)
-            {
-                MultiTargetCamera.allPlayersCreated = true;
-            }
         };
 
         if (propertiesThatChanged["playerColors"] != null)
@@ -90,19 +140,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 player.GetComponent<PlayerStatusEffects>().GetColours();
             }
         }
-    }
-
-    public IEnumerator CheckMasterLoaded()
-    {
-        yield return new WaitUntil(() => playersLoaded.Count >= 1);
-
-        if (!playersLoaded.ContainsKey(photonView.ViewID))
-        {
-            playersLoaded.Add(photonView.ViewID, true);
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "PlayersLoaded", playersLoaded } });
-        }
-
-        yield break;
     }
 
     public IEnumerator ChangePlayersColor()
@@ -126,6 +163,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
 
         yield break;
+    }
+
+    public void KillPlayer()
+    {
+        if (!deadPlayers.Contains(photonView.OwnerActorNr))
+        {
+            deadPlayers.Add(photonView.OwnerActorNr);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
+        }
     }
 
     // Check if player is rendered
