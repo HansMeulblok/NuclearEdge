@@ -9,6 +9,9 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
 
     private Rigidbody2D objectRB;
 
+    public PlayerRender render;
+    public PlayerMovement2D playerMovement;
+
     private Vector2 networkPosition;
     private float networkRotation;
     private float lag;
@@ -16,6 +19,9 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
     [SerializeField]
     float ROTATION_SMOOTHNESS = 100f;
     float DELAY_DISTANCE = 5;
+
+    int rotation = 0;
+    bool justLanded = false;
 
     private void OnEnable()
     {
@@ -38,6 +44,8 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
             {
                 stream.SendNext(objectRB.position);
                 stream.SendNext(objectRB.velocity);
+                stream.SendNext(playerMovement.justLandedLocally);
+                playerMovement.justLandedLocally = false;
             }
 
             if (syncRotation) { stream.SendNext(objectRB.rotation); }
@@ -51,6 +59,7 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
             {
                 networkPosition = (Vector2)stream.ReceiveNext();
                 objectRB.velocity = (Vector2)stream.ReceiveNext();
+                justLanded = (bool)stream.ReceiveNext();
                 networkPosition += objectRB.velocity * lag;
             }
 
@@ -79,5 +88,15 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
         }
 
         if (syncRotation) { objectRB.MoveRotation(networkRotation + Time.fixedDeltaTime * ROTATION_SMOOTHNESS); }
+
+        if (objectRB.velocity.x > 0.1f) rotation = 0;
+        else if (objectRB.velocity.x < -0.1f) rotation = 180;
+        render.transform.rotation = Quaternion.Euler(0, rotation, 0);
+
+        if (justLanded)
+        {
+            render.Land();
+            justLanded = false;
+        }
     }
 }

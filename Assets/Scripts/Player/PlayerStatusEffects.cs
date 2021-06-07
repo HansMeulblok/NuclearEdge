@@ -175,7 +175,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
     public void GetColours()
     {
         // Get current player colour
-        playerColor = GetComponent<SpriteRenderer>().color;
+        playerColor = GetComponentInChildren<SpriteRenderer>().color;
     }
 
     private void ResetStats()

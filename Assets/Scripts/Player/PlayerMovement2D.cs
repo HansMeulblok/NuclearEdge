@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class PlayerMovement2D : MonoBehaviourPun
@@ -81,6 +82,8 @@ public class PlayerMovement2D : MonoBehaviourPun
 
     private PlayerRender render;
     private bool hasLanded = false;
+    int rotation = 0;
+    public bool justLandedLocally = false;
 
     // Start is called before the first frame update
     void Start()
@@ -108,6 +111,8 @@ public class PlayerMovement2D : MonoBehaviourPun
     // FixedUpdate is called at a fixed interval
     void FixedUpdate()
     {
+
+
         // Check for colisions
         CheckColision();
         // Change horizontal movement
@@ -142,7 +147,6 @@ public class PlayerMovement2D : MonoBehaviourPun
         if (Input.GetKey(KeyCode.A))
         {
             leftHold = true;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {
@@ -157,7 +161,6 @@ public class PlayerMovement2D : MonoBehaviourPun
         if (Input.GetKey(KeyCode.D))
         {
             rightHold = true;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
@@ -181,6 +184,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         // Horizontal movement
         // Get the current velocity to prevent clipping
         moveSpeed = rb.velocity;
+        HandleRotation(moveSpeed);
         // Left (and not right input) for moving left
         if (leftHold && !rightHold)
         {
@@ -287,6 +291,13 @@ public class PlayerMovement2D : MonoBehaviourPun
 
         // Apply new speed
         rb.velocity = moveSpeed;
+    }
+
+    private void HandleRotation(Vector3 moveSpeed)
+    {
+        if (moveSpeed.x > 0.1f) rotation = 0;
+        else if (moveSpeed.x < -0.1f) rotation = 180;
+        render.transform.rotation = Quaternion.Euler(0, rotation, 0);
     }
 
     // This funciton handles vertical movement
@@ -466,6 +477,7 @@ public class PlayerMovement2D : MonoBehaviourPun
             grounded = true;
             if (!hasLanded)
             {
+                justLandedLocally = true;
                 render.Land();
                 hasLanded = true;
             }
