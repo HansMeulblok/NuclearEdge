@@ -79,6 +79,9 @@ public class PlayerMovement2D : MonoBehaviourPun
     Vector3 moveSpeed;
     Rigidbody2D rb;
 
+    private PlayerRender render;
+    private bool hasLanded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -89,6 +92,8 @@ public class PlayerMovement2D : MonoBehaviourPun
         rb = GetComponent<Rigidbody2D>();
         // Get the player status effects script
         playerManager = GetComponent<PlayerManager>();
+
+        render = GetComponentInChildren<PlayerRender>();
 
         // Reset movespeed on start
         moveSpeed = Vector3.zero;
@@ -137,6 +142,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         if (Input.GetKey(KeyCode.A))
         {
             leftHold = true;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {
@@ -151,6 +157,7 @@ public class PlayerMovement2D : MonoBehaviourPun
         if (Input.GetKey(KeyCode.D))
         {
             rightHold = true;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
@@ -335,6 +342,9 @@ public class PlayerMovement2D : MonoBehaviourPun
 
                 // Play one shot in FMOD of jump sound
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
+
+                hasLanded = false;
+                render.Jump();
             }
             // When you cling onto a wall do a walljump
             if (onLeftWallCling > 0 && canWallJump)
@@ -347,6 +357,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 onRightWallCling = 0;
 
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
+                render.Jump();
             }
             // When you cling onto a wall do a walljump
             if (onRightWallCling > 0 && canWallJump)
@@ -359,6 +370,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 onLeftWallCling = 0;
 
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
+                render.Jump();
             }
         }
 
@@ -452,6 +464,11 @@ public class PlayerMovement2D : MonoBehaviourPun
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, colisionDistance, sludgeMask))
         {
             grounded = true;
+            if (!hasLanded)
+            {
+                render.Land();
+                hasLanded = true;
+            }
         }
         else
         {
