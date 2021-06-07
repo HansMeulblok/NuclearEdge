@@ -196,10 +196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9d3c52212ca984cbfeb22596c8ef97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turningOffTime: 0.5
-  fallingDownDur: 2
-  fallingSpeed: 5
-  maxDelayTime: 5
+  TURNING_OFF_TIME: 0.5
+  FALLING_DOWN_DUR: 1
+  FALLING_SPEED: 5
+  MAX_DELAY_TIME: 5
 --- !u!114 &5296331813980562998
 MonoBehaviour:
   m_ObjectHideFlags: 0
