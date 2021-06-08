@@ -184,7 +184,6 @@ public class PlayerMovement2D : MonoBehaviourPun
         // Horizontal movement
         // Get the current velocity to prevent clipping
         moveSpeed = rb.velocity;
-        HandleRotation(moveSpeed);
         // Left (and not right input) for moving left
         if (leftHold && !rightHold)
         {
@@ -289,10 +288,13 @@ public class PlayerMovement2D : MonoBehaviourPun
             moveSpeed.x = -maxSpeed;
         }
 
+        // Handle the rotation of the player based on current x speed
+        HandleRotation(moveSpeed);
         // Apply new speed
         rb.velocity = moveSpeed;
     }
 
+    // This fuction rotates the player sprite depending on movement direction
     private void HandleRotation(Vector3 moveSpeed)
     {
         if (moveSpeed.x > 0.1f) rotation = 0;
