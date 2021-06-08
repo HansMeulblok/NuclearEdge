@@ -10,9 +10,9 @@ public class ButtonTriggers : MonoBehaviourPun
 
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
+    public Light2D light;
 
     [SerializeField] private float rotationSpeed;
-    private float scale = 1.25f;
     private float timestamp;
     private Color originalLightColor;
 
@@ -23,12 +23,10 @@ public class ButtonTriggers : MonoBehaviourPun
 
     private void Update()
     {
-        transform.Rotate(new Vector3(0, 0, -1) * (Time.deltaTime * rotationSpeed));
-
         if (timestamp <= Time.time)
         {
             gameObject.GetComponent<SpriteRenderer>().color = originalLightColor;
-            gameObject.GetComponent<Light2D>().enabled = true;
+            light.enabled = true;
         }
     }
 
@@ -37,18 +35,10 @@ public class ButtonTriggers : MonoBehaviourPun
         if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine && timestamp <= Time.time)
         {
             TriggerTrapsEvent();
-            transform.localScale = new Vector3(scale, scale, 1);
+            gameObject.GetComponent<SpriteRenderer>().flipX = !gameObject.GetComponent<SpriteRenderer>().flipX;
             gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
-            gameObject.GetComponent<Light2D>().enabled = false;
+            light.enabled = false;
             timestamp = Time.time + activationCooldown;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

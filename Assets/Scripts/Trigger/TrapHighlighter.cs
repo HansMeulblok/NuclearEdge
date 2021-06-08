@@ -1,7 +1,6 @@
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
 
 public class TrapHighlighter : MonoBehaviourPunCallbacks
 {
