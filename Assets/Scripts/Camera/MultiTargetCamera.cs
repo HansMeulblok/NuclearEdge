@@ -145,7 +145,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         return bounds.center;
     }
 
-    public IEnumerator GetPlayers()
+    private IEnumerator GetPlayers()
     {
         // Finds all players in scene and adds them to the target list
         yield return new WaitUntil(() => allPlayersCreated == true);
@@ -210,7 +210,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
         RemovePlayer(otherPlayer.ActorNumber);
     }
 
-    public void OnEvent(EventData photonEvent)
+    private void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
         if (eventCode == EventCodes.CHECKPOINT)
