@@ -22,12 +22,6 @@ public class StartChunk : MonoBehaviourPunCallbacks
     private void Start()
     {
         multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    startTime = (float)PhotonNetwork.Time;
-        //    startTimer = true;
-        //    PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable { { "StartTime", startTime } });
-        //}
     }
 
     private void Update()
@@ -71,8 +65,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
         {
             players = multiTargetCamera.targets.Count;
             Collider2D[] boxColliders = Physics2D.OverlapBoxAll(box.transform.position, box.transform.localScale, 0, layerMask);
-            Debug.Log(boxColliders.Length);
-            if(boxColliders.Length == players)
+            if (boxColliders.Length == players && players != 0)
             {
                 startTime = (float)PhotonNetwork.Time;
                 startTimer = true;
