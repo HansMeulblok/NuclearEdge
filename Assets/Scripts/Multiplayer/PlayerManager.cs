@@ -17,6 +17,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private List<int> deadPlayers;
     private bool isRendered = false;
 
+    private float mercyTimer;
+    [Header("How many seconds can a player be off screen before it dies")]
+    public float mercyTime;
+
     void Awake()
     {
         if (!photonView.IsMine) { enabled = false; return; }
@@ -43,6 +47,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private void Update()
     {
         // Add player name to list of dead player for server
+
+        // Kill the player off screen
         if (MultiTargetCamera.createdPlayerList && isRendered && !playerSprite.isVisible)
         {
             KillPlayer();
