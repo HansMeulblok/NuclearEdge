@@ -61,8 +61,8 @@ public class PlayerStatusEffects : MonoBehaviourPun
     private void Start()
     {
         playerMovement = gameObject.GetComponent<PlayerMovement2D>();
-        statusVisual = GetComponentsInChildren<SpriteRenderer>()[1];
-        playerSprite = GetComponent<SpriteRenderer>();
+        statusVisual = transform.Find("Status Effect").GetComponent<SpriteRenderer>();
+        playerSprite = transform.Find("PivotOffset/Render").GetComponent<SpriteRenderer>();
 
         originalMaxSpeed = playerMovement.maxSpeed;
         originalJumpStrength = playerMovement.jumpStrenght;
@@ -175,7 +175,7 @@ public class PlayerStatusEffects : MonoBehaviourPun
     public void GetColours()
     {
         // Get current player colour
-        playerColor = GetComponent<SpriteRenderer>().color;
+        playerColor = transform.Find("PivotOffset").GetComponentInChildren<SpriteRenderer>().color;
     }
 
     private void ResetStats()

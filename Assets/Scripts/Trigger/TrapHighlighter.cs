@@ -40,7 +40,7 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
             if (player.GetComponent<PhotonView>().IsMine)
             {
                 updateLines = true;
-                playerColor = player.GetComponent<SpriteRenderer>().color;
+                playerColor = player.transform.Find("PivotOffset/Render").GetComponent<SpriteRenderer>().color;
                 foreach (GameObject lineObject in lines)
                 {
                     LineRenderer line = lineObject.GetComponent<LineRenderer>();
