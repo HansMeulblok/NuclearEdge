@@ -2,28 +2,66 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class ButtonTriggers : MonoBehaviourPun
 {
+    public float activationCooldown = 1f;
+
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
 
     [SerializeField] private float rotationSpeed;
     private float scale = 1.25f;
+    private float timestamp;
+    private Color originalLightColor;
+    private bool inRange = false;
+
+    private void Start()
+    {
+        originalLightColor = gameObject.GetComponent<SpriteRenderer>().color;
+    }
 
     private void Update()
     {
         transform.Rotate(new Vector3(0, 0, -1) * (Time.deltaTime * rotationSpeed));
+
+        if (timestamp <= Time.time)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = originalLightColor;
+            gameObject.GetComponent<Light2D>().enabled = true;
+
+            if (inRange && Input.GetMouseButtonDown(0))
+            {
+                TriggerTrapsEvent();
+                gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
+                gameObject.GetComponent<Light2D>().enabled = false;
+                timestamp = Time.time + activationCooldown;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
         if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
         {
             transform.localScale = new Vector3(scale, scale, 1);
-            TriggerTrapsEvent();
+            inRange = true;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            inRange = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+
     }
 
     private void ActivateTraps()
@@ -80,10 +118,5 @@ public class ButtonTriggers : MonoBehaviourPun
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Trigger");
             }
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        transform.localScale = new Vector3(1, 1, 1);
     }
 }
