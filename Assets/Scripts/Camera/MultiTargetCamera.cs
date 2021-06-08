@@ -161,6 +161,7 @@ public class MultiTargetCamera : MonoBehaviourPunCallbacks
             pvPlayers.Add(player.GetComponent<PhotonView>());
         }
 
+        print("Camera ready");
         createdPlayerList = true;
     }
 

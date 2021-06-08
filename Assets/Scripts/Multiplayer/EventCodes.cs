@@ -22,4 +22,5 @@ public class EventCodes : MonoBehaviour
     public const int MASTER_LOADED = 10;
     public const int CLIENT_LOADED = 11;
     public const int ALL_LOADED = 12;
+    public const int PLAYER_PROPERTY = 13;
 }

@@ -32,9 +32,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             if (!playersLoaded.Contains(photonView.OwnerActorNr)) { playersLoaded.Add(photonView.OwnerActorNr); }
             MasterLoadedEvent();
-
-            StartCoroutine(ChangePlayersColor());
+            print("Master ready");
         }
+
+        StartCoroutine(SetPlayersProperty());
     }
 
     #region Event Related
@@ -78,7 +79,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             bool allReady = (bool)data[0];
 
             MultiTargetCamera.allPlayersCreated = allReady;
-            StartCoroutine(ChangePlayersColor());
+        }
+
+        if (eventCode == EventCodes.PLAYER_PROPERTY)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            playerColors = (Dictionary<int, string>)data[0];
+            playerColors.ToStringFull();
         }
     }
 
@@ -108,6 +115,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         PhotonNetwork.RaiseEvent(EventCodes.ALL_LOADED, content, raiseEventOptions, SendOptions.SendReliable);
     }
+
+    private void SetPropertyEvent()
+    {
+        if (!PhotonNetwork.InRoom) { return; }
+
+        object[] content = new object[] { playerColors };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        PhotonNetwork.RaiseEvent(EventCodes.PLAYER_PROPERTY, content, raiseEventOptions, SendOptions.SendReliable);
+    }
     #endregion
 
     private void Update()
@@ -126,44 +142,42 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             deadPlayers = (propertiesThatChanged["DeadPlayers"] as int[]).ToList();
         };
-
-        if (propertiesThatChanged["playerColors"] != null)
-        {
-            playerColors = propertiesThatChanged["playerColors"] as Dictionary<int, string>;
-
-            // Sets name and color of players
-            foreach (PhotonView player in multiTargetCamera.pvPlayers)
-            {
-                ColorUtility.TryParseHtmlString(playerColors[player.ViewID], out Color colorTemp);
-
-                player.GetComponent<SpriteRenderer>().color = colorTemp;
-                player.GetComponentInChildren<TextMeshPro>().text = player.Owner.NickName;
-                player.GetComponent<PlayerStatusEffects>().GetColours();
-            }
-        }
     }
 
-    public IEnumerator ChangePlayersColor()
+    public IEnumerator SetPlayersProperty()
     {
         yield return new WaitUntil(() => MultiTargetCamera.createdPlayerList == true);
 
-        Dictionary<int, string> playerColors = new Dictionary<int, string>();
-        Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };
+        if (PhotonNetwork.IsMasterClient)
+        {
+            print("Setting property");
+            Dictionary<int, string> playerColors = new Dictionary<int, string>();
+            Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };
 
-        int i = 0;
+            // Master sets colors
+            int i = 0;
+            foreach (PhotonView player in multiTargetCamera.pvPlayers)
+            {
+                string color = $"#{ColorUtility.ToHtmlStringRGBA(playerColor[i])}";
+                playerColors.Add(player.ViewID, color);
+                i++;
+            }
+
+            // When done sends list of players and colors to others
+            SetPropertyEvent();
+            playerColors.ToStringFull();
+        }
+
+        // Sets name and color of players
         foreach (PhotonView player in multiTargetCamera.pvPlayers)
         {
-            string color = $"#{ColorUtility.ToHtmlStringRGBA(playerColor[i])}";
-            playerColors.Add(player.ViewID, color);
-            i++;
-        }
+            print("Setting colors");
+            ColorUtility.TryParseHtmlString(playerColors[player.ViewID], out Color colorTemp);
 
-        if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("playerColors"))
-        {
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "playerColors", playerColors } });
+            player.GetComponent<SpriteRenderer>().color = colorTemp;
+            player.GetComponentInChildren<TextMeshPro>().text = player.Owner.NickName;
+            player.GetComponent<PlayerStatusEffects>().GetColours();
         }
-
-        yield break;
     }
 
     public void KillPlayer()
