@@ -86,7 +86,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
                 var renderObject = player.transform.Find("PivotOffset");
                 renderObject.GetComponentInChildren<SpriteRenderer>().color = colorTemp;
-                print(player.GetComponentInChildren<SpriteRenderer>().name);
                 player.GetComponentInChildren<TextMeshPro>().text = player.Owner.NickName;
                 player.GetComponent<PlayerStatusEffects>().GetColours();
             }
