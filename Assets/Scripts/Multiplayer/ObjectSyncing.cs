@@ -44,8 +44,11 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
             {
                 stream.SendNext(objectRB.position);
                 stream.SendNext(objectRB.velocity);
-                stream.SendNext(playerMovement.justLandedLocally);
-                playerMovement.justLandedLocally = false;
+                if (gameObject.CompareTag("Player"))
+                {
+                    stream.SendNext(playerMovement.justLandedLocally);
+                    playerMovement.justLandedLocally = false;
+                }
             }
 
             if (syncRotation) { stream.SendNext(objectRB.rotation); }
@@ -59,7 +62,10 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
             {
                 networkPosition = (Vector2)stream.ReceiveNext();
                 objectRB.velocity = (Vector2)stream.ReceiveNext();
-                justLanded = (bool)stream.ReceiveNext();
+                if (gameObject.CompareTag("Player"))
+                {
+                    justLanded = (bool)stream.ReceiveNext();
+                }
                 networkPosition += objectRB.velocity * lag;
             }
 
