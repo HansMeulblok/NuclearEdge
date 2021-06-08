@@ -9,7 +9,7 @@ using ExitGames.Client.Photon;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
-    private SpriteRenderer playerSprite;
+    public SpriteRenderer playerSprite;
 
     private MultiTargetCamera multiTargetCamera;
     private List<int> playersLoaded;
@@ -22,7 +22,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine) { enabled = false; return; }
 
-        playerSprite = GetComponent<SpriteRenderer>();
         multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
 
         deadPlayers = new List<int>();
@@ -178,7 +177,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             ColorUtility.TryParseHtmlString(playerColors[player.ViewID], out Color colorTemp);
 
-            player.GetComponent<SpriteRenderer>().color = colorTemp;
+            var renderObject = player.transform.Find("PivotOffset");
+            renderObject.GetComponentInChildren<SpriteRenderer>().color = colorTemp;
             player.GetComponentInChildren<TextMeshPro>().text = player.Owner.NickName;
             player.GetComponent<PlayerStatusEffects>().GetColours();
         }

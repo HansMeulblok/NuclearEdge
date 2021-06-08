@@ -173,4 +173,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncPosition: 1
   syncRotation: 0
+  render: {fileID: 0}
+  playerMovement: {fileID: 0}
   ROTATION_SMOOTHNESS: 100
