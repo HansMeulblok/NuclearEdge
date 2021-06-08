@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class PlayerMovement2D : MonoBehaviourPun
@@ -79,6 +80,11 @@ public class PlayerMovement2D : MonoBehaviourPun
     Vector3 moveSpeed;
     Rigidbody2D rb;
 
+    private PlayerRender render;
+    private bool hasLanded = false;
+    int rotation = 0;
+    public bool justLandedLocally = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -89,6 +95,8 @@ public class PlayerMovement2D : MonoBehaviourPun
         rb = GetComponent<Rigidbody2D>();
         // Get the player status effects script
         playerManager = GetComponent<PlayerManager>();
+
+        render = GetComponentInChildren<PlayerRender>();
 
         // Reset movespeed on start
         moveSpeed = Vector3.zero;
@@ -103,6 +111,8 @@ public class PlayerMovement2D : MonoBehaviourPun
     // FixedUpdate is called at a fixed interval
     void FixedUpdate()
     {
+
+
         // Check for colisions
         CheckColision();
         // Change horizontal movement
@@ -278,8 +288,18 @@ public class PlayerMovement2D : MonoBehaviourPun
             moveSpeed.x = -maxSpeed;
         }
 
+        // Handle the rotation of the player based on current x speed
+        HandleRotation(moveSpeed);
         // Apply new speed
         rb.velocity = moveSpeed;
+    }
+
+    // This fuction rotates the player sprite depending on movement direction
+    private void HandleRotation(Vector3 moveSpeed)
+    {
+        if (moveSpeed.x > 0.1f) rotation = 0;
+        else if (moveSpeed.x < -0.1f) rotation = 180;
+        render.transform.rotation = Quaternion.Euler(0, rotation, 0);
     }
 
     // This funciton handles vertical movement
@@ -335,6 +355,9 @@ public class PlayerMovement2D : MonoBehaviourPun
 
                 // Play one shot in FMOD of jump sound
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
+
+                hasLanded = false;
+                render.Jump();
             }
             // When you cling onto a wall do a walljump
             if (onLeftWallCling > 0 && canWallJump)
@@ -347,6 +370,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 onRightWallCling = 0;
 
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
+                render.Jump();
             }
             // When you cling onto a wall do a walljump
             if (onRightWallCling > 0 && canWallJump)
@@ -359,6 +383,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 onLeftWallCling = 0;
 
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player/Jump");
+                render.Jump();
             }
         }
 
@@ -452,6 +477,12 @@ public class PlayerMovement2D : MonoBehaviourPun
         if (Physics2D.BoxCast(transform.position, transform.localScale, 0, Vector2.down, colisionDistance, sludgeMask))
         {
             grounded = true;
+            if (!hasLanded)
+            {
+                justLandedLocally = true;
+                render.Land();
+                hasLanded = true;
+            }
         }
         else
         {

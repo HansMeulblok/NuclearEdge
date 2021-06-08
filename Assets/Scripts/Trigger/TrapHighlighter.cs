@@ -35,7 +35,7 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
             player = collision.gameObject;
             if (player.GetComponent<PhotonView>().IsMine)
             {
-                playerColor = player.GetComponent<SpriteRenderer>().color;
+                playerColor = player.transform.Find("PivotOffset/Render").GetComponent<SpriteRenderer>().color;
                 for (int i = 0; i < bt.activators.Length; i++)
                 {
                     bt.activators[i].GetComponent<Light2D>().color = playerColor;
