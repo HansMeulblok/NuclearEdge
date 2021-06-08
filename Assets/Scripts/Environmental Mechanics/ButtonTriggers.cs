@@ -31,7 +31,7 @@ public class ButtonTriggers : MonoBehaviourPun
             gameObject.GetComponent<SpriteRenderer>().color = originalLightColor;
             gameObject.GetComponent<Light2D>().enabled = true;
 
-            if (inRange && Input.GetMouseButtonDown(0))
+            if (inRange)
             {
                 TriggerTrapsEvent();
                 gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
