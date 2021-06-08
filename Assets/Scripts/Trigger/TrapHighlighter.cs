@@ -8,22 +8,26 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
     private Color playerColor;
     private ButtonTriggers bt;
     private GameObject player;
-    private List<GameObject> lines = new List<GameObject>();
+    public List<GameObject> lines = new List<GameObject>();
+    private bool updateLines = false;
 
 
     private void Start()
     {
         bt = GetComponentInParent<ButtonTriggers>();
+        for (int i = 0; i < bt.activators.Length; i++)
+        {
+            CreateLine();
+        }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (lines.Count > 0)
+        if (updateLines)
         {
-            for (int i = 0; i < lines.Count; i++)
+            for (int i = 0; i < bt.activators.Length; i++)
             {
-                LineRenderer lineRenderer = lines[i].GetComponent<LineRenderer>();
-                lineRenderer.SetPosition(1, bt.activators[i].transform.position);
+                lines[i].GetComponent<LineRenderer>().SetPosition(1, bt.activators[i].transform.position);
             }
         }
     }
@@ -35,12 +39,14 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
             player = collision.gameObject;
             if (player.GetComponent<PhotonView>().IsMine)
             {
+                updateLines = true;
                 playerColor = player.GetComponent<SpriteRenderer>().color;
-                for (int i = 0; i < bt.activators.Length; i++)
+                foreach (GameObject lineObject in lines)
                 {
-                    bt.activators[i].GetComponent<Light2D>().color = playerColor;
-                    bt.activators[i].GetComponent<Light2D>().enabled = true;
-                    lines.Add(DrawLine(transform.position, bt.activators[i].transform.position, playerColor));
+                    LineRenderer line = lineObject.GetComponent<LineRenderer>();
+                    line.enabled = true;
+                    line.startColor = new Color(playerColor.r, playerColor.g, playerColor.b, 0f);
+                    line.endColor = new Color(playerColor.r, playerColor.g, playerColor.b, 0.2f);
                 }
             }
         }
@@ -48,34 +54,32 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        for (int i = 0; i < bt.activators.Length; i++)
+        if (collision.CompareTag("Player"))
         {
-            bt.activators[i].GetComponent<Light2D>().enabled = false;
+            player = collision.gameObject;
+            if (player.GetComponent<PhotonView>().IsMine)
+            {
+                foreach (GameObject lineObject in lines)
+                {
+                    LineRenderer line = lineObject.GetComponent<LineRenderer>();
+                    line.enabled = false;
+                }
+                updateLines = false;
+            }
         }
-
-        for (int i = 0; i < lines.Count; i++)
-        {
-            Destroy(lines[i]);
-        }
-
-        lines.Clear();
     }
 
-
-    GameObject DrawLine(Vector3 start, Vector3 end, Color color)
+    private void CreateLine()
     {
-        GameObject myLine = new GameObject();
-        myLine.transform.position = start;
-        myLine.AddComponent<LineRenderer>();
-        LineRenderer lr = myLine.GetComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default"));
-        lr.startWidth = 0.25f;
-        lr.endWidth = 0.1f;
-        lr.startColor = new Color(color.r, color.g, color.b, 0f);
-        lr.endColor = new Color(color.r, color.g, color.b, 0.5f);
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
-
-        return myLine;
+        GameObject highlightLine = new GameObject();
+        highlightLine.transform.parent = transform;
+        highlightLine.AddComponent<LineRenderer>();
+        LineRenderer line = highlightLine.GetComponent<LineRenderer>();
+        line.material = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default"));
+        line.startWidth = 0.25f;
+        line.endWidth = 0.1f;
+        line.SetPosition(0, transform.position);
+        line.enabled = false;
+        lines.Add(highlightLine);
     }
 }

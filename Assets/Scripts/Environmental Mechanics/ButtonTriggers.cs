@@ -15,7 +15,6 @@ public class ButtonTriggers : MonoBehaviourPun
     private float scale = 1.25f;
     private float timestamp;
     private Color originalLightColor;
-    private bool inRange = false;
 
     private void Start()
     {
@@ -30,23 +29,18 @@ public class ButtonTriggers : MonoBehaviourPun
         {
             gameObject.GetComponent<SpriteRenderer>().color = originalLightColor;
             gameObject.GetComponent<Light2D>().enabled = true;
-
-            if (inRange)
-            {
-                TriggerTrapsEvent();
-                gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
-                gameObject.GetComponent<Light2D>().enabled = false;
-                timestamp = Time.time + activationCooldown;
-            }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
+        if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine && timestamp <= Time.time)
         {
+            TriggerTrapsEvent();
             transform.localScale = new Vector3(scale, scale, 1);
-            inRange = true;
+            gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
+            gameObject.GetComponent<Light2D>().enabled = false;
+            timestamp = Time.time + activationCooldown;
         }
     }
 
@@ -55,7 +49,6 @@ public class ButtonTriggers : MonoBehaviourPun
         if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
         {
             transform.localScale = new Vector3(1, 1, 1);
-            inRange = false;
         }
     }
 
