@@ -89,14 +89,17 @@ public class ObjectSyncing : MonoBehaviourPun, IPunObservable
 
         if (syncRotation) { objectRB.MoveRotation(networkRotation + Time.fixedDeltaTime * ROTATION_SMOOTHNESS); }
 
-        if (objectRB.velocity.x > 0.1f) rotation = 0;
-        else if (objectRB.velocity.x < -0.1f) rotation = 180;
-        render.transform.rotation = Quaternion.Euler(0, rotation, 0);
-
-        if (justLanded)
+        if (gameObject.CompareTag("Player"))
         {
-            render.Land();
-            justLanded = false;
+            if (objectRB.velocity.x > 0.1f) rotation = 0;
+            else if (objectRB.velocity.x < -0.1f) rotation = 180;
+            render.transform.rotation = Quaternion.Euler(0, rotation, 0);
+
+            if (justLanded)
+            {
+                render.Land();
+                justLanded = false;
+            }
         }
     }
 }
