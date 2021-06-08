@@ -78,6 +78,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             bool allReady = (bool)data[0];
 
             MultiTargetCamera.allPlayersCreated = allReady;
+            StartCoroutine(ChangePlayersColor());
         }
     }
 
