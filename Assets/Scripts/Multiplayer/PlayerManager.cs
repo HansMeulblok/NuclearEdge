@@ -31,8 +31,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             if (!playersLoaded.Contains(photonView.OwnerActorNr)) { playersLoaded.Add(photonView.OwnerActorNr); }
-            MasterLoadedEvent();
-            print("Master ready");
+
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            {
+                MultiTargetCamera.allPlayersCreated = true;
+            }
+            else
+            {
+                MasterLoadedEvent();
+            }
         }
 
         StartCoroutine(SetPlayersProperty());
@@ -150,8 +157,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            print("Setting property");
-            Dictionary<int, string> playerColors = new Dictionary<int, string>();
+            playerColors = new Dictionary<int, string>();
             Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };
 
             // Master sets colors
@@ -165,13 +171,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
             // When done sends list of players and colors to others
             SetPropertyEvent();
-            playerColors.ToStringFull();
         }
 
         // Sets name and color of players
         foreach (PhotonView player in multiTargetCamera.pvPlayers)
         {
-            print("Setting colors");
             ColorUtility.TryParseHtmlString(playerColors[player.ViewID], out Color colorTemp);
 
             player.GetComponent<SpriteRenderer>().color = colorTemp;
