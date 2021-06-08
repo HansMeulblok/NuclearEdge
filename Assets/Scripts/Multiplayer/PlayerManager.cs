@@ -51,7 +51,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // Kill the player off screen
         if (MultiTargetCamera.createdPlayerList && isRendered && !playerSprite.isVisible)
         {
-            KillPlayer();
+            // Keep track of time amount of time the player is off screen
+            mercyTimer += Time.deltaTime;
+            // If the player is longer off screen than the given mercy time kill the player
+            if (mercyTimer > mercyTime)
+            {
+                KillPlayer();
+            }
+        }
+        else
+        {
+            // If the player isn't off screen reset the timer
+            mercyTimer = 0;
         }
     }
 
