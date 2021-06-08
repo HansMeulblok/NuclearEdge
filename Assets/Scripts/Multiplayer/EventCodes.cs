@@ -19,4 +19,8 @@ public class EventCodes : MonoBehaviour
     public const int BULLET_DESTROY = 7;
     public const int SLOW_TRIGGER = 8;
     public const int STUN_TRIGGER = 9;
+    public const int MASTER_LOADED = 10;
+    public const int CLIENT_LOADED = 11;
+    public const int ALL_LOADED = 12;
+    public const int PLAYER_PROPERTY = 13;
 }
