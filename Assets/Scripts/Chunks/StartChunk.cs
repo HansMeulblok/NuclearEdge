@@ -61,10 +61,16 @@ public class StartChunk : MonoBehaviourPunCallbacks
     }
     private void FixedUpdate()
     {
+        // Check if you are the master and the countdown hasn't started
         if(PhotonNetwork.IsMasterClient && !countdownStarted)
         {
+            // Get player count from camera, update this because players can leave or else
             players = multiTargetCamera.targets.Count;
+
+            // Check the colliders in the box with a layerMask so it only checks player objects
             Collider2D[] boxColliders = Physics2D.OverlapBoxAll(box.transform.position, box.transform.localScale, 0, layerMask);
+
+            // If the amount of colliders (Players) in the box is equal to the players in the room start the timer.
             if (boxColliders.Length == players && players != 0)
             {
                 startTime = (float)PhotonNetwork.Time;
