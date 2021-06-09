@@ -2,28 +2,49 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class ButtonTriggers : MonoBehaviourPun
 {
+    public float activationCooldown = 1f;
+
     [Header("Place gameobject with activator here")]
     public BaseActivator[] activators;
+    public Light2D light;
 
     [SerializeField] private float rotationSpeed;
-    private float scale = 1.25f;
+    private float timestamp;
+    private Color originalLightColor;
+
+    private void Start()
+    {
+        originalLightColor = gameObject.GetComponent<SpriteRenderer>().color;
+    }
 
     private void Update()
     {
-        transform.Rotate(new Vector3(0, 0, -1) * (Time.deltaTime * rotationSpeed));
+        if (timestamp <= Time.time)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = originalLightColor;
+            light.enabled = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine)
+        if (other.gameObject.CompareTag("Player") && other.GetComponent<PhotonView>().IsMine && timestamp <= Time.time)
         {
-            transform.localScale = new Vector3(scale, scale, 1);
             TriggerTrapsEvent();
+            gameObject.GetComponent<SpriteRenderer>().flipX = !gameObject.GetComponent<SpriteRenderer>().flipX;
+            gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
+            light.enabled = false;
+            timestamp = Time.time + activationCooldown;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+
     }
 
     private void ActivateTraps()
@@ -80,10 +101,5 @@ public class ButtonTriggers : MonoBehaviourPun
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Trigger");
             }
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        transform.localScale = new Vector3(1, 1, 1);
     }
 }
