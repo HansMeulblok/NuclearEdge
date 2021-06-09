@@ -5095,8 +5095,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf504b6ffdb8b64285a29b4a53d80db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mercyTime: 1
   playerSprite: {fileID: 1579357042}
+  mercyTime: 1
 --- !u!114 &8295133453132718494
 MonoBehaviour:
   m_ObjectHideFlags: 0
