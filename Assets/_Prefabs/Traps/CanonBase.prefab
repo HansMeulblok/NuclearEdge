@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &983175894062527359
 Transform:
   m_ObjectHideFlags: 0
@@ -430,10 +430,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pivot: {fileID: 7306508741832806385}
   firePoint: {fileID: 7306508742359606004}
-  shootingInterval: 2
-  bulletMoveSpeed: 2
-  bulletLifeSpan: 2
   activated: 1
+  SHOOTING_INTERVAL: 2
+  BULLET_SPEED: 2
+  BULLET_LIFESPAN: 2
 --- !u!114 &5229716845314481803
 MonoBehaviour:
   m_ObjectHideFlags: 0
