@@ -348,7 +348,7 @@ public class PlayerMovement2D : MonoBehaviourPun
             jumpBuffer -= Time.fixedDeltaTime;
 
             // When you are on the ground and want to jump
-            if (grounded)
+            if (grounded && jumpBuffer > 0)
             {
                 jumpBuffer = 0;
                 moveSpeed.y = jumpStrenght;
@@ -360,7 +360,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 render.Jump();
             }
             // When you cling onto a wall do a walljump
-            if (onLeftWallCling > 0 && canWallJump)
+            if (onLeftWallCling > 0 && canWallJump && jumpBuffer > 0)
             {
                 jumpBuffer = 0;
                 moveSpeed.x = wallJumpHorizontal;
@@ -373,7 +373,7 @@ public class PlayerMovement2D : MonoBehaviourPun
                 render.Jump();
             }
             // When you cling onto a wall do a walljump
-            if (onRightWallCling > 0 && canWallJump)
+            if (onRightWallCling > 0 && canWallJump && jumpBuffer > 0)
             {
                 jumpBuffer = 0;
                 moveSpeed.x = -wallJumpHorizontal;
