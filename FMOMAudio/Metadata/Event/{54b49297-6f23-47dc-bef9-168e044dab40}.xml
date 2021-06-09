@@ -109,7 +109,7 @@
 			<value>5</value>
 		</property>
 		<property name="pitch">
-			<value>-0.200000003</value>
+			<value>-0.300000012</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{ab0e967f-8014-47e3-84d8-c67694e45ea4}</destination>
@@ -136,13 +136,16 @@
 	</object>
 	<object class="SingleSound" id="{d7180e43-5f11-4966-8481-744745069b9f}">
 		<property name="start">
-			<value>0.019618739903069466</value>
+			<value>0.02001953125</value>
 		</property>
 		<property name="length">
 			<value>0.09375</value>
 		</property>
 		<property name="timelockedOffset">
 			<value>0.03125</value>
+		</property>
+		<property name="pitch">
+			<value>3.79999995</value>
 		</property>
 		<relationship name="automators">
 			<destination>{5805ce8f-3946-4ab3-b4a9-f45524e15114}</destination>
