@@ -61,9 +61,9 @@ public class FallingPlatformMoving : MonoBehaviourPun
         if (eventCode == EventCodes.PLATFORM_MOVING)
         {
             object[] data = (object[])photonEvent.CustomData;
-            Vector3 position = (Vector3)data[0];
+            int viewId = (int)data[0];
 
-            if (position == transform.position)
+            if (viewId == photonView.ViewID)
             {
                 GetComponentInChildren<PlayerMovement2D>()?.UnParent();
                 gameObject.SetActive(false);
@@ -91,7 +91,7 @@ public class FallingPlatformMoving : MonoBehaviourPun
     {
         if (!PhotonNetwork.InRoom) { return; }
 
-        object[] content = new object[] { transform.position }; ;
+        object[] content = new object[] { photonView.ViewID }; ;
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         PhotonNetwork.RaiseEvent(EventCodes.PLATFORM_MOVING, content, raiseEventOptions, SendOptions.SendReliable);
     }
