@@ -10,7 +10,6 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
     private List<GameObject> lines = new List<GameObject>();
     private bool updateLines = false;
 
-
     private void Start()
     {
         bt = GetComponentInParent<ButtonTriggers>();
@@ -39,7 +38,7 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
             if (player.GetComponent<PhotonView>().IsMine)
             {
                 updateLines = true;
-                playerColor = player.transform.Find("PivotOffset/Render").GetComponent<SpriteRenderer>().color;
+                playerColor = player.transform.GetComponentsInChildren<SpriteRenderer>()[1].color;
                 foreach (GameObject lineObject in lines)
                 {
                     LineRenderer line = lineObject.GetComponent<LineRenderer>();
@@ -53,18 +52,15 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        player = collision.gameObject;
+        if (collision.CompareTag("Player") && player.GetComponent<PhotonView>().IsMine)
         {
-            player = collision.gameObject;
-            if (player.GetComponent<PhotonView>().IsMine)
+            foreach (GameObject lineObject in lines)
             {
-                foreach (GameObject lineObject in lines)
-                {
-                    LineRenderer line = lineObject.GetComponent<LineRenderer>();
-                    line.enabled = false;
-                }
-                updateLines = false;
+                LineRenderer line = lineObject.GetComponent<LineRenderer>();
+                line.enabled = false;
             }
+            updateLines = false;
         }
     }
 
