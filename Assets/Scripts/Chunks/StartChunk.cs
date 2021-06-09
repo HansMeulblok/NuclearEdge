@@ -6,22 +6,22 @@ using ExitGames.Client.Photon;
 public class StartChunk : MonoBehaviourPunCallbacks
 {
     public GameObject startingLine;
+    public GameObject box;
+    public MultiTargetCamera multiTargetCamera;
+    public LayerMask layerMask;
     public TMP_Text countdownText;
     public float COUNTDOWN = 5;
 
+    private int players;
     private bool startTimer = false;
     private bool playedSound = false;
+    private bool countdownStarted = false;
     private float startTime;
     private string tempCd = "";
 
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            startTime = (float)PhotonNetwork.Time;
-            startTimer = true;
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable { { "StartTime", startTime } });
-        }
+        multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
     }
 
     private void Update()
@@ -57,6 +57,27 @@ public class StartChunk : MonoBehaviourPunCallbacks
         {
             countdownText.text = "";
             startTimer = false;
+        }
+    }
+    private void FixedUpdate()
+    {
+        // Check if you are the master and the countdown hasn't started
+        if(PhotonNetwork.IsMasterClient && !countdownStarted)
+        {
+            // Get player count from camera, update this because players can leave or else
+            players = multiTargetCamera.targets.Count;
+
+            // Check the colliders in the box with a layerMask so it only checks player objects
+            Collider2D[] boxColliders = Physics2D.OverlapBoxAll(box.transform.position, box.transform.localScale, 0, layerMask);
+
+            // If the amount of colliders (Players) in the box is equal to the players in the room start the timer.
+            if (boxColliders.Length == players && players != 0)
+            {
+                startTime = (float)PhotonNetwork.Time;
+                startTimer = true;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable { { "StartTime", startTime } });
+                countdownStarted = true;
+            }
         }
     }
 
