@@ -117,13 +117,12 @@ public class FallingPlatformStatic : MonoBehaviourPun
     private void ResetStaticPlatform()
     {
         SwitchStaticPlatform(true);
-        //FindObjectOfType<PlayerMovement2D>().UnParent();
         canFall = false;
         isActivated = false;
     }
 
     public void SwitchStaticPlatform(bool isActive)
-    {       
+    {
         if (isActive)
         {
             spriteHolder.enabled = true;
