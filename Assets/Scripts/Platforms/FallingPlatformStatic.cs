@@ -8,7 +8,7 @@ public class FallingPlatformStatic : MonoBehaviourPun
 {
     [Header("Falling variables")]
     public float TURNING_OFF_TIME = 0.5f;
-    public float FALLING_DOWN_DUR = 2;
+    public float FALLING_DOWN_DUR = 1;
     public float FALLING_SPEED = 5;
     public float MAX_DELAY_TIME = 5;
 
@@ -117,7 +117,7 @@ public class FallingPlatformStatic : MonoBehaviourPun
     private void ResetStaticPlatform()
     {
         SwitchStaticPlatform(true);
-        FindObjectOfType<PlayerMovement2D>().UnParent();
+        //FindObjectOfType<PlayerMovement2D>().UnParent();
         canFall = false;
         isActivated = false;
     }
