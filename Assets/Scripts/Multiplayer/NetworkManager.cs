@@ -32,7 +32,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LeaveRoom();
         }
         
-
         if (!PhotonNetwork.IsConnected)
         {
             print("Connecting to server....");
@@ -217,5 +216,4 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
     #endregion
-
 }
