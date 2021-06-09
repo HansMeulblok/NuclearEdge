@@ -26,20 +26,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void ConnectToServer()
     {
-        if (PhotonNetwork.InRoom)
+        // Making sure that player is not in a room when connecting for the first time or when reconnecting
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();
         }
+        
 
-        // TODO: Add local play option
         if (!PhotonNetwork.IsConnected)
         {
             print("Connecting to server....");
 
-            PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.ConnectUsingSettings();    // TODO: Add local play option
         }
         else
         {
+            // Show lobby when returning from room
             menuManager.BackToLobbyScreen();
         }
     }
