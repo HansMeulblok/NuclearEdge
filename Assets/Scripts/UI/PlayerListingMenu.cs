@@ -14,12 +14,6 @@ public class PlayerListingMenu : MonoBehaviourPunCallbacks
 
     private List<PlayerListing> listOfPlayers = new List<PlayerListing>();
 
-    // When the local player leaves room.
-    public override void OnLeftRoom()
-    {
-        menuManager.Back();
-    }
-
     // Gets current players when lobby gets joined
     public override void OnEnable()
     {

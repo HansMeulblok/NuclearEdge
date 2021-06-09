@@ -1,6 +1,7 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,9 +9,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public MenuManager menuManager;
 
+    [SerializeField]
+    private const int MENU_INDEX = 0;
+
+    private bool sceneLoaded = false;
+
     void Start()
     {
         DontDestroyOnLoad(this);
+
+        // Server settings
+        PhotonNetwork.GameVersion = "0.0.2";
+        PhotonNetwork.AutomaticallySyncScene = true;
         ConnectToServer();
     }
 
@@ -26,21 +36,41 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             print("Connecting to server....");
 
-            PhotonNetwork.GameVersion = "0.0.2";
             PhotonNetwork.ConnectUsingSettings();
+        }
+        else
+        {
+            menuManager.BackToLobbyScreen();
         }
     }
 
     public override void OnConnectedToMaster()
     {
         print("Player connected to server.");
-        if (!PhotonNetwork.InLobby) { PhotonNetwork.JoinLobby(); }
-        PhotonNetwork.AutomaticallySyncScene = true;
+
+        if (!PhotonNetwork.InLobby)
+        {
+            print("Joining lobby");
+            PhotonNetwork.JoinLobby();
+        }
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         print("Disconnected from server. Reason: " + cause.ToString());
+
+        // Trying to reconnect player
+        StartCoroutine(ReconnectPlayer());
+    }
+
+    private IEnumerator ReconnectPlayer()
+    {
+        yield return new WaitForSeconds(5);
+
+        print("Attempting to reconnect... ");
+        ConnectToServer();
+
+        yield break;
     }
 
     #region Create Room
@@ -118,34 +148,41 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Game Logic
     public void StartGame()
     {
-        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", true } });
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "StartGame", true } });
         PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = false;
         int i = Random.Range(1, SceneManager.sceneCountInBuildSettings);
-        PhotonNetwork.LoadLevel(i); 
+        PhotonNetwork.LoadLevel(i);
         SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for host
     }
 
     public override void OnLeftRoom()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        PhotonNetwork.LoadLevel(0);
-        Destroy(gameObject);
+        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(MENU_INDEX))
+        {
+            PhotonNetwork.LoadLevel(0);
+            Destroy(gameObject);
+        }
+        else
+        {
+            menuManager.BackToLobbyScreen();
+        }
     }
 
     public void LeaveRoom()
     {
-        if (PhotonNetwork.InRoom) { PhotonNetwork.LeaveRoom(true); print("Player left room."); }
+        if (PhotonNetwork.InRoom) { PhotonNetwork.LeaveRoom(); print("Player left room."); }
     }
 
-    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         if (propertiesThatChanged["StartGame"] != null)
         {
-            if ((bool)propertiesThatChanged["StartGame"])
+            if ((bool)propertiesThatChanged["StartGame"] && !sceneLoaded)
             {
-                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", false } });
+                //PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", false } });
 
                 SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for client
+                sceneLoaded = true;
             }
         };
     }
@@ -162,10 +199,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0) && !playerFound)
+        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(MENU_INDEX) && !playerFound)
         {
             PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
         }
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
