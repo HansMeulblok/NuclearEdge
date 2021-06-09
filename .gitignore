@@ -64,4 +64,6 @@ crashlytics-build.properties
 # Unity editor settings
 UserSettings/
 
+FMOD/AudioManager/.unsaved/
 fmod_editor.log
+Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
