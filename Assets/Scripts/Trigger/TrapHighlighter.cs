@@ -7,7 +7,7 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
     private Color playerColor;
     private ButtonTriggers bt;
     private GameObject player;
-    public List<GameObject> lines = new List<GameObject>();
+    private List<GameObject> lines = new List<GameObject>();
     private bool updateLines = false;
 
 
@@ -45,7 +45,7 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
                     LineRenderer line = lineObject.GetComponent<LineRenderer>();
                     line.enabled = true;
                     line.startColor = new Color(playerColor.r, playerColor.g, playerColor.b, 0f);
-                    line.endColor = new Color(playerColor.r, playerColor.g, playerColor.b, 0.2f);
+                    line.endColor = new Color(playerColor.r, playerColor.g, playerColor.b, .25f);
                 }
             }
         }
