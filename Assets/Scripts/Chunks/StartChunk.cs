@@ -92,6 +92,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("CoolDownStarted"))
         {
             countdownStarted = (bool)PhotonNetwork.CurrentRoom.CustomProperties["CoolDownStarted"];
+            countdownStarted = true;
 
         }
     }
