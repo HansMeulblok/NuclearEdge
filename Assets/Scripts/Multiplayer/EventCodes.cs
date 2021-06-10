@@ -23,4 +23,5 @@ public class EventCodes : MonoBehaviour
     public const int CLIENT_LOADED = 11;
     public const int ALL_LOADED = 12;
     public const int PLAYER_PROPERTY = 13;
+    public const int ENABLE_BORDER = 14;
 }
