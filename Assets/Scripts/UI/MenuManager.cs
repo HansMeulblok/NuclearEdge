@@ -88,12 +88,20 @@ public class MenuManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Back()
+    public void BackToMenuScreen()
     {
         localPanel.SetActive(false);
         multiplayerPanel.SetActive(false);
         lobbyPanel.SetActive(false);
         menuPanel.SetActive(true);
+    }
+
+    public void BackToLobbyScreen()
+    {
+        localPanel.SetActive(false);
+        lobbyPanel.SetActive(false);
+        menuPanel.SetActive(false);
+        multiplayerPanel.SetActive(true);
     }
 
     public void CreateLobby(string roomName)
@@ -133,8 +141,9 @@ public class MenuManager : MonoBehaviourPunCallbacks
             }
         }
 
-        // Reset error message to empty
+        // Set error message  to empty
         inputError.text = "";
+
         return true;
     }
 
@@ -142,18 +151,11 @@ public class MenuManager : MonoBehaviourPunCallbacks
     {
         if (IsInputCorrect(input))
         {
-            // Check if player name already exists
-            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            {
-                if (PhotonNetwork.PlayerList[i].NickName == input.text)
-                {
-                    inputError.text = "Name already in use!";
-                    return false;
-                }
-            }
             PhotonNetwork.NickName = input.text; // Set nickname of player
+            
             return true;
         }
+
         return IsInputCorrect(input);
     }
 
