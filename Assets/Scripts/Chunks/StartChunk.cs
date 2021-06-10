@@ -77,7 +77,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
 
                         // Enable colour switch for everyone
                         object[] content = new object[] { true };
-                        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+                        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
                         PhotonNetwork.RaiseEvent(EventCodes.ENABLE_BORDER, content, raiseEventOptions, SendOptions.SendReliable);
 
                     }
