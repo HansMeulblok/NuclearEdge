@@ -172,7 +172,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             playerColors = new Dictionary<int, string>();
-            Color[] playerColor = { new Color(0.44f,0.66f,0.215f,1f), new Color(0.9f,0.29f,0.196f,1f), new Color(0.17f,0.8f,0.87f, 1f), new Color(0.96f,0.7f,0.13f,1f) };
+            Color[] playerColor = { new Color(0.44f, 0.66f, 0.215f, 1f), new Color(0.9f, 0.29f, 0.196f, 1f), new Color(0.17f, 0.8f, 0.87f, 1f), new Color(0.96f, 0.7f, 0.13f, 1f) };
 
             // Master sets colors
             int i = 0;
