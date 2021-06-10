@@ -10,10 +10,15 @@ public class ColourSwitch : MonoBehaviour
     public Color color1;
     public Image image;
 
+    public bool activate = false;
+
     void Update()
     {
         // Ping pong (interpolate) between two colours
-        float t = Mathf.PingPong(Time.time, duration) / duration;
-        image.color = Color.Lerp(color0, color1, t);
+        if(activate)
+        {
+            float t = Mathf.PingPong(Time.time, duration) / duration;
+            image.color = Color.Lerp(color0, color1, t);
+        }   
     }
 }

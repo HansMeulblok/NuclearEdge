@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using Photon.Realtime;
 using ExitGames.Client.Photon;
 
 public class StartChunk : MonoBehaviourPunCallbacks
@@ -8,6 +9,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
     public GameObject startingLine;
     public GameObject box;
     public MultiTargetCamera multiTargetCamera;
+    public ColourSwitch colourSwitch;
     public LayerMask layerMask;
     public TMP_Text countdownText;
     public float COUNTDOWN = 5;
@@ -22,6 +24,30 @@ public class StartChunk : MonoBehaviourPunCallbacks
     private void Start()
     {
         multiTargetCamera = FindObjectOfType<MultiTargetCamera>();
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    private void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == EventCodes.ENABLE_BORDER)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            bool tempBool = (bool)data[0];
+
+            colourSwitch.activate = tempBool;
+        }
     }
 
     private void Update()
@@ -48,6 +74,12 @@ public class StartChunk : MonoBehaviourPunCallbacks
                         startingLine.GetComponent<TriggerPlatform>().Activate();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/GO");
                         playedSound = !playedSound;
+
+                        // Enable colour switch for everyone
+                        object[] content = new object[] { true };
+                        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+                        PhotonNetwork.RaiseEvent(EventCodes.ENABLE_BORDER, content, raiseEventOptions, SendOptions.SendReliable);
+
                     }
                 }
                 tempCd = countdownText.text;
