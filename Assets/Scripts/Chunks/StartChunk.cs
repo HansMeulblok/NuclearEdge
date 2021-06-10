@@ -75,8 +75,9 @@ public class StartChunk : MonoBehaviourPunCallbacks
             {
                 startTime = (float)PhotonNetwork.Time;
                 startTimer = true;
-                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable { { "StartTime", startTime } });
                 countdownStarted = true;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable { { "StartTime", startTime }});
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable { { "CoolDownStarted", countdownStarted } });
             }
         }
     }
@@ -87,6 +88,10 @@ public class StartChunk : MonoBehaviourPunCallbacks
         {
             startTime = (float)PhotonNetwork.CurrentRoom.CustomProperties["StartTime"];
             startTimer = true;
+        }
+
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("CoolDownStarted"))
+        {
         }
     }
 }
