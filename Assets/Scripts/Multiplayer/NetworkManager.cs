@@ -1,4 +1,4 @@
-using ExitGames.Client.Photon;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -149,7 +149,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Game Logic
     public void StartGame()
     {
-        PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "StartGame", true } });
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", true } });
         PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = false;
         int i = Random.Range(1, SceneManager.sceneCountInBuildSettings);
         PhotonNetwork.LoadLevel(i);
@@ -174,14 +174,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom) { PhotonNetwork.LeaveRoom(); print("Player left room."); }
     }
 
-    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         if (propertiesThatChanged["StartGame"] != null)
         {
             if ((bool)propertiesThatChanged["StartGame"] && !sceneLoaded)
             {
-                //PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "StartGame", false } });
-
                 SceneManager.sceneLoaded += OnSceneLoaded; // Checks if scene is loaded for client
                 sceneLoaded = true;
             }
