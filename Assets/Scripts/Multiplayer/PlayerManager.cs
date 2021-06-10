@@ -16,7 +16,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private Dictionary<int, string> playerColors;
 
     private List<int> deadPlayers;
-    private bool isRendered = false;
 
     private float mercyTimer;
     [Header("How many seconds can a player be off screen before it dies")]
@@ -139,7 +138,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private void Update()
     {
         // Kill the player off screen
-        if (MultiTargetCamera.createdPlayerList && isRendered && !playerSprite.isVisible)
+        if (MultiTargetCamera.createdPlayerList && !playerSprite.isVisible)
         {
             // Keep track of time amount of time the player is off screen
             mercyTimer += Time.deltaTime;
@@ -172,7 +171,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             playerColors = new Dictionary<int, string>();
-            Color[] playerColor = { Color.green, Color.red, Color.blue, Color.yellow };
+            Color[] playerColor = { new Color(0.44f, 0.66f, 0.215f, 1f), new Color(0.9f, 0.29f, 0.196f, 1f), new Color(0.17f, 0.8f, 0.87f, 1f), new Color(0.96f, 0.7f, 0.13f, 1f) };
 
             // Master sets colors
             int i = 0;
@@ -207,12 +206,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             deadPlayers.Add(photonView.OwnerActorNr);
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "DeadPlayers", deadPlayers.ToArray() } });
         }
-    }
-
-    // Check if player is rendered
-    private void OnBecameVisible()
-    {
-        isRendered = true;
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
