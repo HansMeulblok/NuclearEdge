@@ -40,6 +40,7 @@ public class StartChunk : MonoBehaviourPunCallbacks
 
     private void OnEvent(EventData photonEvent)
     {
+        // Turn on border for everyone
         byte eventCode = photonEvent.Code;
         if (eventCode == EventCodes.ENABLE_BORDER)
         {
@@ -125,7 +126,6 @@ public class StartChunk : MonoBehaviourPunCallbacks
         {
             countdownStarted = (bool)PhotonNetwork.CurrentRoom.CustomProperties["CoolDownStarted"];
             countdownStarted = true;
-
         }
     }
 }
