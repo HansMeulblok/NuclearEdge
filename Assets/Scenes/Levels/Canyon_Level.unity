@@ -600,6 +600,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7770755412375934388, guid: 3aa8aff2b88fcf2489be6d11810aec86, type: 3}
+      propertyPath: colourSwitch
+      value: 
+      objectReference: {fileID: 4857986234770293895}
+    - target: {fileID: 7770755412375934388, guid: 3aa8aff2b88fcf2489be6d11810aec86, type: 3}
       propertyPath: countdownText
       value: 
       objectReference: {fileID: 2947704270280715528}
@@ -1207,3 +1211,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8b7da29a1dfc124ca84ee410299448c, type: 3}
+--- !u!114 &4857986234770293895 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4857986234770293896, guid: a8b7da29a1dfc124ca84ee410299448c, type: 3}
+  m_PrefabInstance: {fileID: 4857986234770293894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f50644cbe9afe644b0bb604f5917bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
