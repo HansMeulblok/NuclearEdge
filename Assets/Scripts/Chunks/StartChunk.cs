@@ -118,14 +118,13 @@ public class StartChunk : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("StartTime"))
         {
-            startTime = (float)PhotonNetwork.CurrentRoom.CustomProperties["StartTime"];
+            startTime = (float)propertiesThatChanged["StartTime"];
             startTimer = true;
         }
 
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("CoolDownStarted"))
         {
-            countdownStarted = (bool)PhotonNetwork.CurrentRoom.CustomProperties["CoolDownStarted"];
-            countdownStarted = true;
+            countdownStarted = (bool)propertiesThatChanged["CoolDownStarted"];
         }
     }
 }
