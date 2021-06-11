@@ -15,14 +15,16 @@ public class StartChunk : MonoBehaviourPunCallbacks
 
     [SerializeField] private GameObject countdown;
     [SerializeField] private TMP_Text countdownText;
-    [SerializeField] private const float COUNTDOWN = 5;
     
     private int players;
 
     private bool startTimer = false;
     private bool playedSound = false;
     private bool countdownStarted = false;
+    
     private float startTime;
+    private const float COUNTDOWN = 5;
+
     private string goString = "GOOO!";
     private string tempCd = "";
 
