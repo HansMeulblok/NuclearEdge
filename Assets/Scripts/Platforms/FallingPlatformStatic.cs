@@ -23,6 +23,9 @@ public class FallingPlatformStatic : MonoBehaviourPun
     private BoxCollider2D platformCollider;
     private GameObject newPlatform;
 
+    Vector3 spriteScale;
+    Vector2 spriteSize;
+
     public void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
@@ -63,6 +66,8 @@ public class FallingPlatformStatic : MonoBehaviourPun
     {
         spriteHolder = GetComponentInChildren<SpriteRenderer>();
         platformCollider = GetComponent<BoxCollider2D>();
+        spriteSize = spriteHolder.size;
+        spriteScale = transform.GetChild(0).localScale;
     }
 
     private void Update()
@@ -101,7 +106,7 @@ public class FallingPlatformStatic : MonoBehaviourPun
         if (timer >= TURNING_OFF_TIME && timer < MAX_DELAY_TIME)
         {
             newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatformMoving", transform.position, Quaternion.identity);
-            newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, FALLING_SPEED, FALLING_DOWN_DUR, transform.localScale, transform.GetChild(0).localScale, transform.GetComponentInChildren<SpriteRenderer>().size);
+            newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, FALLING_SPEED, FALLING_DOWN_DUR, transform.localScale, spriteScale, spriteSize);
             SwitchStaticPlatform(false);
 
             // Reset trigger of moving platform
