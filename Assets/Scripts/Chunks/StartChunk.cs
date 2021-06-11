@@ -6,19 +6,24 @@ using ExitGames.Client.Photon;
 
 public class StartChunk : MonoBehaviourPunCallbacks
 {
-    public GameObject startingLine;
-    public GameObject box;
-    public MultiTargetCamera multiTargetCamera;
-    public ColourSwitch colourSwitch;
-    public LayerMask layerMask;
-    public TMP_Text countdownText;
-    public float COUNTDOWN = 5;
+    [SerializeField] private GameObject startingLine, box;
 
+    [SerializeField] private MultiTargetCamera multiTargetCamera;
+
+    [SerializeField] private ColourSwitch colourSwitch;
+    [SerializeField] private LayerMask layerMask;
+
+    [SerializeField] private GameObject countdown;
+    [SerializeField] private TMP_Text countdownText;
+    [SerializeField] private const float COUNTDOWN = 5;
+    
     private int players;
+
     private bool startTimer = false;
     private bool playedSound = false;
     private bool countdownStarted = false;
     private float startTime;
+    private string goString = "GOOO!";
     private string tempCd = "";
 
     private void Start()
@@ -54,27 +59,30 @@ public class StartChunk : MonoBehaviourPunCallbacks
     private void Update()
     {
         if (!startTimer) { return; }
+
         float countdownTimer = COUNTDOWN - (float)(PhotonNetwork.Time - startTime);
 
         if (countdownTimer >= -1)
         {
+            if (!countdown.activeSelf) { countdown.SetActive(true); }
+
             countdownText.text = Mathf.Ceil(countdownTimer).ToString();
             float countdownCeil = Mathf.Ceil(countdownTimer);
 
             if (countdownText.text != tempCd)
             {
-                if (countdownText.text != "GOOO!" && countdownCeil > 0 && countdownCeil <= COUNTDOWN)
+                if (countdownText.text != goString && countdownCeil > 0 && countdownCeil <= COUNTDOWN)
                 {
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/CountDown");
                 }
                 else if (countdownText.text == "0")
                 {
-                    countdownText.text = "GOOO!";
+                    countdownText.text = goString;
                     if (!playedSound)
                     {
                         startingLine.GetComponent<TriggerPlatform>().Activate();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/GO");
-                        playedSound = !playedSound;
+                        playedSound = true;
 
                         // Enable colour switch for everyone
                         object[] content = new object[] { true };
@@ -89,7 +97,9 @@ public class StartChunk : MonoBehaviourPunCallbacks
         else
         {
             countdownText.text = "";
+            countdown.SetActive(false);
             startTimer = false;
+            playedSound = false;
         }
     }
     private void FixedUpdate()
