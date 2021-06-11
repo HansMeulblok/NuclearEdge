@@ -10,8 +10,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public MenuManager menuManager;
 
     [SerializeField] private const int MENU_INDEX = 0;
-    [SerializeField] private const int RECONNECT_DELAY = 0;
-    [SerializeField] private const int MAX_PLAYERS = 0;
+    [SerializeField] private const int RECONNECT_DELAY = 5;
+    [SerializeField] private const int MAX_PLAYERS = 4;
 
     private bool sceneLoaded = false;
 

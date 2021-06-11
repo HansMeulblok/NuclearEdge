@@ -53612,6 +53612,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9091893804817371729, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
       value: 0
@@ -53733,6 +53749,86 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.g
+      value: 0.08466068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightOrder
+      value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightCookieSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ad96a4adc0e8e5141a5022584360c0f6, type: 3}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffSize
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffOffset.y
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].x
+      value: -6.9900475
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].y
+      value: -0.5000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].x
+      value: 6.9929085
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].y
+      value: -0.4678397
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].x
+      value: 7.048813
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].y
+      value: 0.59978604
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].x
+      value: -7.0395775
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].y
+      value: 0.5474611
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
 --- !u!4 &8905593707159080089 stripped
@@ -53794,6 +53890,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -53868,6 +54004,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -54031,6 +54207,22 @@ PrefabInstance:
       propertyPath: editing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!114 &1579234205027965583 stripped
@@ -54180,6 +54372,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9091893804817371729, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
       value: 0
@@ -54292,6 +54500,86 @@ PrefabInstance:
     - target: {fileID: 8735285717185618573, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.g
+      value: 0.08466068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightOrder
+      value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightCookieSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ad96a4adc0e8e5141a5022584360c0f6, type: 3}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffSize
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffOffset.y
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].x
+      value: -2.0046387
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].y
+      value: -0.4730857
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].x
+      value: 2.0005646
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].y
+      value: -0.4678402
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].x
+      value: 2.0258408
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].y
+      value: 0.49769342
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].x
+      value: -2.0161247
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].y
+      value: 0.54333246
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
@@ -54791,6 +55079,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950499306656650216, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9091893804817371729, guid: 710a6894fc53c724784f8cc0efcb0b75, type: 3}
       propertyPath: editing
       value: 0
@@ -55050,6 +55354,22 @@ PrefabInstance:
       propertyPath: editing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!4 &482875202310673128 stripped
@@ -55290,6 +55610,86 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.g
+      value: 0.08466068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightOrder
+      value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightCookieSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ad96a4adc0e8e5141a5022584360c0f6, type: 3}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffSize
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffOffset.y
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].x
+      value: -3.9653015
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].y
+      value: -0.43420362
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].x
+      value: 3.991375
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].y
+      value: -0.506125
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].x
+      value: 3.9553947
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].y
+      value: 0.3445549
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].x
+      value: -3.9767876
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].y
+      value: 0.37134838
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
 --- !u!4 &7957576039915957872 stripped
@@ -55454,6 +55854,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trigger
       objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
       value: 2
@@ -55480,6 +55920,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1681818669621986543}
     m_Modifications:
+    - target: {fileID: 5229716845314481803, guid: 186c1ab0d18df2140955d50ec76a2d02, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229716845314481803, guid: 186c1ab0d18df2140955d50ec76a2d02, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229716845314481803, guid: 186c1ab0d18df2140955d50ec76a2d02, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229716845314481803, guid: 186c1ab0d18df2140955d50ec76a2d02, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7306508742661440884, guid: 186c1ab0d18df2140955d50ec76a2d02, type: 3}
       propertyPath: bulletLifeSpan
       value: 3
@@ -55609,6 +56065,22 @@ PrefabInstance:
     - target: {fileID: 163430844780894332, guid: 90e54784bab69a947baa9ea8a462478c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170316799572919647, guid: 90e54784bab69a947baa9ea8a462478c, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170316799572919647, guid: 90e54784bab69a947baa9ea8a462478c, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170316799572919647, guid: 90e54784bab69a947baa9ea8a462478c, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170316799572919647, guid: 90e54784bab69a947baa9ea8a462478c, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90e54784bab69a947baa9ea8a462478c, type: 3}
@@ -55835,6 +56307,86 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.g
+      value: 0.08466068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightOrder
+      value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightCookieSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ad96a4adc0e8e5141a5022584360c0f6, type: 3}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffSize
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffOffset.y
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].x
+      value: -5.9594193
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].y
+      value: -0.4693718
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].x
+      value: 5.9821854
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].y
+      value: -0.437212
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].x
+      value: 5.976837
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].y
+      value: 0.4670658
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].x
+      value: -5.99823
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].y
+      value: 0.42494774
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
 --- !u!4 &6932779077446724050 stripped
@@ -55896,6 +56448,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -56202,6 +56794,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!4 &3504669108415598638 stripped
@@ -56478,6 +57086,22 @@ PrefabInstance:
       propertyPath: editing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!4 &3706106953646398469 stripped
@@ -56626,6 +57250,22 @@ PrefabInstance:
     - target: {fileID: 3898707194316694104, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
       propertyPath: platformLength
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
@@ -56802,6 +57442,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trigger (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
       value: 2
@@ -56875,6 +57555,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -56969,6 +57689,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -57101,8 +57861,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.g
+      value: 0.08466068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_Intensity
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_LightOrder
@@ -57113,40 +57889,56 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightCookieSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ad96a4adc0e8e5141a5022584360c0f6, type: 3}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_LightVolumeOpacity
-      value: 0.14
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffSize
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffOffset.y
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_ShapePath.Array.data[0].x
-      value: -1.4535713
+      value: -2.0357437
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_ShapePath.Array.data[0].y
-      value: -0.4770223
+      value: -0.472487
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_ShapePath.Array.data[1].x
-      value: 1.5225029
+      value: 2.0005646
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_ShapePath.Array.data[1].y
-      value: -0.43106705
+      value: -0.4678402
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_ShapePath.Array.data[2].x
-      value: 1.5110168
+      value: 2.0258408
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_ShapePath.Array.data[2].y
-      value: 0.5344665
+      value: 0.49769342
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_ShapePath.Array.data[3].x
-      value: -1.4650612
+      value: -2.0472298
       objectReference: {fileID: 0}
     - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_ShapePath.Array.data[3].y
-      value: 0.52297765
+      value: 0.5244893
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
@@ -57278,6 +58070,22 @@ PrefabInstance:
       propertyPath: editing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!114 &4436744566177726993 stripped
@@ -57350,6 +58158,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -58036,6 +58884,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!114 &3014986037696792565 stripped
@@ -58108,6 +58972,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -58271,6 +59175,22 @@ PrefabInstance:
       propertyPath: editing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!114 &2902154618280837906 stripped
@@ -58343,6 +59263,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -58544,6 +59504,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trigger (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
       value: 2
@@ -58638,6 +59638,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trigger (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
       value: 1
@@ -58731,6 +59771,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -58857,6 +59937,86 @@ PrefabInstance:
     - target: {fileID: 8735285717185618573, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.g
+      value: 0.08466068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightOrder
+      value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightCookieSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ad96a4adc0e8e5141a5022584360c0f6, type: 3}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffSize
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapeLightFalloffOffset.y
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].x
+      value: -1.9986
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].y
+      value: -0.4806347
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].x
+      value: 2.0005646
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].y
+      value: -0.4678402
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].x
+      value: 2.0258408
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].y
+      value: 0.49769342
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].x
+      value: -2.010086
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].y
+      value: 0.4862044
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
@@ -58995,6 +60155,22 @@ PrefabInstance:
     - target: {fileID: 3898707194316694104, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
       propertyPath: platformLength
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
@@ -59145,6 +60321,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!114 &6290649856242511977 stripped
@@ -59217,6 +60409,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -59367,6 +60599,22 @@ PrefabInstance:
     - target: {fileID: 3898707194316694104, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
       propertyPath: platformLength
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
@@ -59551,6 +60799,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trigger (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
       value: 2
@@ -59645,6 +60933,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trigger (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
       value: 2
@@ -59738,6 +61066,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -59909,6 +61277,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!114 &4816820335937080221 stripped
@@ -60057,6 +61441,22 @@ PrefabInstance:
     - target: {fileID: 3898707194316694104, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
       propertyPath: platformLength
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
@@ -60266,6 +61666,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trigger (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
       value: 2
@@ -60339,6 +61779,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -60433,6 +61913,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -60604,6 +62124,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!114 &8590828237800788681 stripped
@@ -60676,6 +62212,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -60827,6 +62403,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!4 &8931214037658715152 stripped
@@ -60975,6 +62567,22 @@ PrefabInstance:
     - target: {fileID: 3898707194316694104, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
       propertyPath: platformLength
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
@@ -61129,6 +62737,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!114 &7087113503305563851 stripped
@@ -61201,6 +62825,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -61454,6 +63118,22 @@ PrefabInstance:
       propertyPath: editing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!4 &7214337401929684160 stripped
@@ -61603,6 +63283,22 @@ PrefabInstance:
       propertyPath: platformLength
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
 --- !u!114 &7457096201639293225 stripped
@@ -61675,6 +63371,46 @@ PrefabInstance:
     - target: {fileID: 1949891982451545891, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: m_Name
       value: Trigger (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907437437860569060, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305937792729874989, guid: 7c956b85c25ec554296c01d23aa37d3d, type: 3}
       propertyPath: activators.Array.size
@@ -61980,6 +63716,22 @@ PrefabInstance:
     - target: {fileID: 3898707194316694104, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
       propertyPath: platformLength
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_LightType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_ShapePath.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904073063281183157, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40874acda635d1a47af85bb3d4177aae, type: 3}

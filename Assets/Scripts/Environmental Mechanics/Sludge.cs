@@ -33,6 +33,7 @@ public class Sludge : MonoBehaviour
                 playerStatusEffects.slowJumpModifier = slowJumpModifier;
                 playerStatusEffects.slowedTimer = duration;
             }
+
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Traps/Sludge");
         }
     }
