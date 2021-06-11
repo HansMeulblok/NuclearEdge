@@ -75,21 +75,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     #region Create Room
-    public void CreateRoomLocal()
-    {
-        if (!PhotonNetwork.IsConnected) { return; }
-
-        RoomOptions options = new RoomOptions
-        {
-            MaxPlayers = 4
-        };
-
-        if (menuManager.IsInputCorrect(menuManager.l_createRoomNameInput))
-        {
-            PhotonNetwork.CreateRoom(menuManager.l_createRoomNameInput.text, options, TypedLobby.Default);
-        }
-    }
-
     public void CreateRoomMultiplayer()
     {
         if (!PhotonNetwork.IsConnected) { return; }
@@ -117,14 +102,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Join Room
-    public void JoinRoomLocal()
-    {
-        if (menuManager.IsInputCorrect(menuManager.l_joinNameInput))
-        {
-            PhotonNetwork.JoinRoom(menuManager.l_joinNameInput.text);
-        }
-    }
-
     public void JoinRoomMultiplayer()
     {
         if (menuManager.IsInputCorrect(menuManager.mp_joinNameInput))
