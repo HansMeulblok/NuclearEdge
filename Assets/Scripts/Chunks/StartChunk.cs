@@ -116,13 +116,13 @@ public class StartChunk : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
-        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("StartTime"))
+        if (propertiesThatChanged.ContainsKey("StartTime"))
         {
             startTime = (float)propertiesThatChanged["StartTime"];
             startTimer = true;
         }
 
-        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("CoolDownStarted"))
+        if (propertiesThatChanged.ContainsKey("CoolDownStarted"))
         {
             countdownStarted = (bool)propertiesThatChanged["CoolDownStarted"];
         }
