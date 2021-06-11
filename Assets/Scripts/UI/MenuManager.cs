@@ -13,11 +13,6 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     private TMP_Text inputError;
 
-    [Header("Local")]
-    public GameObject localPanel;
-    public TMP_InputField l_createRoomNameInput;
-    public TMP_InputField l_joinNameInput;
-
     [Header("Multiplayer")]
     public GameObject multiplayerPanel;
     public TMP_InputField mp_createRoomNameInput;
@@ -31,42 +26,6 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     [Header("Network Manager")]
     public NetworkManager networkManager;
-
-    // TODO: Update code for local player.
-    #region Localplayer
-    public void Localplayer()
-    {
-        menuPanel.SetActive(false);
-        localPanel.SetActive(true);
-    }
-
-    public void CreateRoomLocal()
-    {
-        if (string.IsNullOrEmpty(l_createRoomNameInput.text))
-        {
-            l_createRoomNameInput.placeholder.color = Color.red;
-            return;
-        }
-
-        l_createRoomNameInput.placeholder.color = Color.white;
-        localPanel.SetActive(false);
-        lobbyName.text = "Room [" + l_createRoomNameInput.text + "]";
-        lobbyPanel.SetActive(true);
-    }
-
-    public void JoinRoomLocal()
-    {
-        if (string.IsNullOrEmpty(l_joinNameInput.text))
-        {
-            l_joinNameInput.placeholder.color = Color.red;
-            return;
-        }
-
-        l_joinNameInput.placeholder.color = Color.white;
-        localPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
-    }
-    #endregion
 
     public void Multiplayer()
     {
@@ -90,7 +49,6 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public void BackToMenuScreen()
     {
-        localPanel.SetActive(false);
         multiplayerPanel.SetActive(false);
         lobbyPanel.SetActive(false);
         menuPanel.SetActive(true);
@@ -98,7 +56,6 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public void BackToLobbyScreen()
     {
-        localPanel.SetActive(false);
         lobbyPanel.SetActive(false);
         menuPanel.SetActive(false);
         multiplayerPanel.SetActive(true);
@@ -107,7 +64,6 @@ public class MenuManager : MonoBehaviourPunCallbacks
     public void CreateLobby(string roomName)
     {
         multiplayerPanel.SetActive(false);
-        localPanel.SetActive(false);
         lobbyName.text = "Room [" + roomName + "]";
         lobbyPanel.SetActive(true);
     }
