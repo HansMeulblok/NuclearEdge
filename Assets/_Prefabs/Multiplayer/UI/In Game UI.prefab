@@ -316,6 +316,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resultText: {fileID: 8837477918767221347}
+  pauseMenu: {fileID: 0}
+  finishedMenu: {fileID: 0}
 --- !u!1 &8837477920119221682
 GameObject:
   m_ObjectHideFlags: 0
