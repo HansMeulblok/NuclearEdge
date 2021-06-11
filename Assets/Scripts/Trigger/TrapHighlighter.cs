@@ -77,7 +77,7 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
         highlightLine.transform.parent = transform;
         highlightLine.AddComponent<LineRenderer>();
         LineRenderer line = highlightLine.GetComponent<LineRenderer>();
-        line.material = lineMat; /*new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default"));*/
+        line.material = lineMat;
         line.numCapVertices = 5;
         line.startWidth = lineStartWidth;
         line.endWidth = lineEndWidth;
