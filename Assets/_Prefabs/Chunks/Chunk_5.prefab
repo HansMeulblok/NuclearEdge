@@ -57100,6 +57100,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightOrder
+      value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].x
+      value: -1.4535713
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[0].y
+      value: -0.4770223
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].x
+      value: 1.5225029
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[1].y
+      value: -0.43106705
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].x
+      value: 1.5110168
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[2].y
+      value: 0.5344665
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].x
+      value: -1.4650612
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132093006265240599, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
+      propertyPath: m_ShapePath.Array.data[3].y
+      value: 0.52297765
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcd0f131a2ebe546a98dfa2acd4e380, type: 3}
 --- !u!4 &6158908597803888411 stripped
