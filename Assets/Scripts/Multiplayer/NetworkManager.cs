@@ -9,8 +9,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public MenuManager menuManager;
 
-    [SerializeField]
-    private const int MENU_INDEX = 0;
+    [SerializeField] private const int MENU_INDEX = 0;
+    [SerializeField] private const int RECONNECT_DELAY = 0;
+    [SerializeField] private const int MAX_PLAYERS = 0;
 
     private bool sceneLoaded = false;
 
@@ -19,7 +20,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(this);
 
         // Server settings
-        PhotonNetwork.GameVersion = "0.0.2";
+        PhotonNetwork.GameVersion = "1.0";
         PhotonNetwork.AutomaticallySyncScene = true;
         ConnectToServer();
     }
@@ -31,12 +32,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LeaveRoom();
         }
-        
+
         if (!PhotonNetwork.IsConnected)
         {
-            print("Connecting to server....");
-
-            PhotonNetwork.ConnectUsingSettings();    // TODO: Add local play option
+            PhotonNetwork.ConnectUsingSettings();
         }
         else
         {
@@ -47,11 +46,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        print("Player connected to server.");
-
         if (!PhotonNetwork.InLobby)
         {
-            print("Joining lobby");
             PhotonNetwork.JoinLobby();
         }
     }
@@ -66,9 +62,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private IEnumerator ReconnectPlayer()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(RECONNECT_DELAY);
 
-        print("Attempting to reconnect... ");
         ConnectToServer();
 
         yield break;
@@ -81,18 +76,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions
         {
-            MaxPlayers = 4
+            MaxPlayers = MAX_PLAYERS
         };
 
         if (menuManager.IsInputCorrect(menuManager.mp_createRoomNameInput))
         {
             PhotonNetwork.CreateRoom(menuManager.mp_createRoomNameInput.text, options, TypedLobby.Default);
         }
-    }
-
-    public override void OnCreatedRoom()
-    {
-        print("Created room successfully.");
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -112,7 +102,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        print("Joined room successfully.");
         menuManager.CreateLobby(PhotonNetwork.CurrentRoom.Name);
         menuManager.startButton.SetActive(PhotonNetwork.IsMasterClient);
     }
@@ -148,7 +137,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        if (PhotonNetwork.InRoom) { PhotonNetwork.LeaveRoom(); print("Player left room."); }
+        if (PhotonNetwork.InRoom) { PhotonNetwork.LeaveRoom(); }
     }
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
