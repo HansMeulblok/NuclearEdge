@@ -60,12 +60,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d05e7f66706853429dab336574dbf4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineColour: {r: 3253.322, g: 3253.322, b: 3253.322, a: 1}
+  lineColour: {r: 0, g: 1, b: 0.9800043, a: 1}
   lineMat: {fileID: 2100000, guid: 2ba7e459ee564d6448f033e501c3a9c3, type: 2}
-  startAlpha: 0.01
-  endAlpha: 0.88
-  lineStartWidth: 0.2
-  lineEndWidth: 0.2
+  startAlpha: 1
+  endAlpha: 1
+  lineStartWidth: 0.5
+  lineEndWidth: 0.5
 --- !u!1 &1949891982451545891
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.90099955, a: 1}
   m_Intensity: 9.51
   m_LightVolumeOpacity: 0.05
   m_ApplyToSortingLayers: 00000000
