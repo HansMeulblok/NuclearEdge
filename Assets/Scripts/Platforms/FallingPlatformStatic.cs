@@ -101,7 +101,7 @@ public class FallingPlatformStatic : MonoBehaviourPun
         if (timer >= TURNING_OFF_TIME && timer < MAX_DELAY_TIME)
         {
             newPlatform = ObjectPooler.Instance.SpawnFromPool("FallingPlatformMoving", transform.position, Quaternion.identity);
-            newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, FALLING_SPEED, FALLING_DOWN_DUR, transform.localScale);
+            newPlatform.GetComponent<FallingPlatformMoving>().SetValues(canFall, FALLING_SPEED, FALLING_DOWN_DUR, transform.localScale, transform.GetChild(0).localScale, transform.GetComponentInChildren<SpriteRenderer>().size);
             SwitchStaticPlatform(false);
 
             // Reset trigger of moving platform

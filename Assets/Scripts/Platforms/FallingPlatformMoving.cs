@@ -71,12 +71,14 @@ public class FallingPlatformMoving : MonoBehaviourPun
         }
     }
 
-    public void SetValues(bool canFall, float newFallingSpeed, float newMaxTime, Vector3 scale)
+    public void SetValues(bool canFall, float newFallingSpeed, float newMaxTime, Vector3 scale, Vector3 scaleSprite, Vector2 spriteSize)
     {
         fallingSpeed = newFallingSpeed;
         isFalling = canFall;
         maxTime = newMaxTime;
         transform.localScale = scale;
+        transform.GetComponentInChildren<SpriteRenderer>().size = spriteSize;
+        transform.GetChild(0).localScale = scaleSprite;
     }
 
     public void ScalePlatform(int newLength, int newHeight)
