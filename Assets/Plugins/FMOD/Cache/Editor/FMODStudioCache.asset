@@ -997,7 +997,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 637589332269511040
+  lastModified: 637590355060653730
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1385,7 +1385,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637589332269491199
+  lastModified: 637590355058213870
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -1429,7 +1429,7 @@ MonoBehaviour:
   - {fileID: 4585980992117191327}
   StringsBanks:
   - {fileID: -26859695161277634}
-  stringsBankWriteTime: 637589332269491199
+  stringsBankWriteTime: 637590355058213870
   cacheVersion: 6
 --- !u!114 &4976423215005704
 MonoBehaviour:
@@ -2212,7 +2212,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637589332269481279
+  lastModified: 637590355058203732
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -2770,7 +2770,7 @@ MonoBehaviour:
   Path: FMOMAudio/Build/Desktop/MUSIC.bank
   Name: MUSIC
   StudioPath: bank:/MUSIC
-  lastModified: 637589332269471357
+  lastModified: 637590355058193736
   LoadResult: 0
   FileSizes: []
   Exists: 1
