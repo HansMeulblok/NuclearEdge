@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 1
-  color0: {r: 0, g: 1, b: 0.024237156, a: 1}
-  color1: {r: 0.48126557, g: 0.9716981, b: 0.48555332, a: 1}
+  color0: {r: 0, g: 1, b: 0.024237156, a: 0.49019608}
+  color1: {r: 0.48126557, g: 0.9716981, b: 0.48555332, a: 0.49019608}
   image: {fileID: 4857986234008655794}
   activate: 0
 --- !u!1 &4857986234189496323
