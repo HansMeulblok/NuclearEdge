@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class TrapHighlighter : MonoBehaviourPunCallbacks
 {
-    private Color playerColor;
+    [Header("Line values")]
+    [ColorUsageAttribute(true, true)]
+    public Color lineColour;
+    public Material lineMat;
+    public float startAlpha = 0;
+    public float endAlpha = .25f;
+    public float lineStartWidth = .25f;
+    public float lineEndWidth = .1f;
+
     private ButtonTriggers bt;
     private GameObject player;
     private List<GameObject> lines = new List<GameObject>();
@@ -38,13 +46,12 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
             if (player.GetComponent<PhotonView>().IsMine)
             {
                 updateLines = true;
-                playerColor = player.transform.GetComponentsInChildren<SpriteRenderer>()[1].color;
                 foreach (GameObject lineObject in lines)
                 {
                     LineRenderer line = lineObject.GetComponent<LineRenderer>();
                     line.enabled = true;
-                    line.startColor = new Color(playerColor.r, playerColor.g, playerColor.b, 0f);
-                    line.endColor = new Color(playerColor.r, playerColor.g, playerColor.b, .25f);
+                    line.startColor = new Color(lineColour.r, lineColour.g, lineColour.b, startAlpha);
+                    line.endColor = new Color(lineColour.r, lineColour.g, lineColour.b, endAlpha);
                 }
             }
         }
@@ -70,9 +77,10 @@ public class TrapHighlighter : MonoBehaviourPunCallbacks
         highlightLine.transform.parent = transform;
         highlightLine.AddComponent<LineRenderer>();
         LineRenderer line = highlightLine.GetComponent<LineRenderer>();
-        line.material = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default"));
-        line.startWidth = 0.25f;
-        line.endWidth = 0.1f;
+        line.material = lineMat; /*new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default"));*/
+        line.numCapVertices = 5;
+        line.startWidth = lineStartWidth;
+        line.endWidth = lineEndWidth;
         line.SetPosition(0, transform.position);
         line.enabled = false;
         lines.Add(highlightLine);
