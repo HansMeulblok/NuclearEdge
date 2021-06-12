@@ -2,6 +2,7 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -63,3 +64,9 @@ crashlytics-build.properties
 
 # Unity editor settings
 UserSettings/
+
+# FMOD settings
+*.bank
+Assets/Plugins/FMOD/Resources
+FMOD/AudioManager/.unsaved/
+fmod_editor.log
