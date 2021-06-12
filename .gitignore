@@ -66,6 +66,7 @@ UserSettings/
 
 # FMOD settings
 Assets/Plugins/FMOD/Cache/Editor
+Assets/Plugins/FMOD/Resources/
 FMOD/AudioManager/.unsaved/
 fmod_editor.log
 *.bank
