@@ -64,6 +64,6 @@ crashlytics-build.properties
 # FMOD settings
 Assets/Plugins/FMOD/Cache/Editor
 Assets/Plugins/FMOD/Resources/
+FMOMAudio/Build/Desktop/
 FMOD/AudioManager/.unsaved/
 fmod_editor.log
-*.bank
