@@ -61,5 +61,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-# Unity editor settings
-UserSettings/
+# FMOD settings
+Assets/Plugins/FMOD/Resources
+Assets/Plugins/FMOD/Cache/Editor
+FMOD/AudioManager/.unsaved/
+fmod_editor.log
