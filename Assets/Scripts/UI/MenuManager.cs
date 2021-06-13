@@ -19,14 +19,28 @@ public class MenuManager : MonoBehaviourPunCallbacks
     public TMP_InputField mp_joinNameInput;
     public TMP_Text mp_playerCount;
 
-    [Header("Lobby")]
-    public GameObject lobbyPanel;
-    public TMP_Text lobbyName;
+    [Header("Room")]
+    public GameObject roomPanel;
+    public TMP_Text roomName;
     public GameObject startButton;
 
     [Header("Network Manager")]
     public NetworkManager networkManager;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (roomPanel.activeSelf)
+            {
+                BackToLobbyScreen();
+            }
+            else if (multiplayerPanel.activeSelf)
+            {
+                BackToMenuScreen();
+            }
+        }
+    }
     public void Multiplayer()
     {
         if (!PlayerNameCorrect(playerNameInput))
@@ -50,22 +64,23 @@ public class MenuManager : MonoBehaviourPunCallbacks
     public void BackToMenuScreen()
     {
         multiplayerPanel.SetActive(false);
-        lobbyPanel.SetActive(false);
+        roomPanel.SetActive(false);
         menuPanel.SetActive(true);
     }
 
     public void BackToLobbyScreen()
     {
-        lobbyPanel.SetActive(false);
+        roomPanel.SetActive(false);
         menuPanel.SetActive(false);
         multiplayerPanel.SetActive(true);
+        networkManager.LeaveRoom();
     }
 
     public void CreateLobby(string roomName)
     {
         multiplayerPanel.SetActive(false);
-        lobbyName.text = "Room [" + roomName + "]";
-        lobbyPanel.SetActive(true);
+        this.roomName.text = "Room [" + roomName + "]";
+        roomPanel.SetActive(true);
     }
 
     public bool IsInputCorrect(TMP_InputField input)

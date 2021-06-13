@@ -3158,7 +3158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 996680299987934799}
   m_Layer: 5
-  m_Name: Lobby
+  m_Name: Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4350,8 +4350,8 @@ MonoBehaviour:
   mp_createRoomNameInput: {fileID: 996680300004836643}
   mp_joinNameInput: {fileID: 996680300051989363}
   mp_playerCount: {fileID: 8827968633113139188}
-  lobbyPanel: {fileID: 996680299987934798}
-  lobbyName: {fileID: 996680300329927447}
+  roomPanel: {fileID: 996680299987934798}
+  roomName: {fileID: 996680300329927447}
   startButton: {fileID: 996680300579876992}
   networkManager: {fileID: 0}
 --- !u!1 &996680300346127504

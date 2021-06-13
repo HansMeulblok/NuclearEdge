@@ -73,7 +73,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     public void TogglePauseMenu()
     {
         pauseMenuEnabled = !pauseMenuEnabled;
-        if (pauseMenuEnabled)
+        if (pauseMenuEnabled && !finishedMenu.activeSelf)
         {
             pauseMenu.SetActive(true);
         }

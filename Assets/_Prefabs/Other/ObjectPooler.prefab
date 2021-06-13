@@ -43,10 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c797efdeb1fb16741ab756c6e8edf80a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPosition: {x: 0, y: -30}
   pools:
   - tag: Bullet
     prefab: {fileID: 910021367111986399, guid: ef9838641c53688469a2e5eeceaf5136, type: 3}
-    size: 10
+    size: 30
   - tag: FallingPlatformMoving
     prefab: {fileID: 3860048427860164810, guid: afde2062720c3e146bf2f5ed98d45246, type: 3}
     size: 10
+  createdObjectPool: 0
